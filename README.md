@@ -4,6 +4,8 @@
 
 В рамках курса рассматриваются цели контейнеризации, области применения контейнеров, создание образов и запуск контейнеров, создание кластера контейнеров и их оркестрация.
 
+ - [словарь терминов](glossary.md)
+
 ## Темы
 
 1. [Введение / История](01_intro/README.md)
@@ -31,4 +33,5 @@
 5. simust, __Основы контейнеризации (обзор Docker и Podman)__, Habr.com, 2022 (https://habr.com/ru/articles/659049/)
 6. Bibin Wilson, Shishir Khandelwal, __How to Reduce Docker Image Size: 6 Optimization Methods__, devopscube.com, 2022 (https://devopscube.com/reduce-docker-image-size/)
 7. Vaibhav Kohli, Rajdeep Dua, John Wooten, __Troubleshooting Docker__, Packt, 2017
+8. kubernetes, Основы Kubernetes, kubernetes.io, 2020 (https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/)
 
