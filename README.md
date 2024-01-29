@@ -1,30 +1,30 @@
-# Контейнеризация приложений
+# App containerization
 
-Конспект курса "Контейнеризация приложений". Расчитан на 15 теоретических занятий. Для понимания материала необходимо предварительно изучить курсы "Операционные системы", "Компьютерные сети", "Базы данных".
+Course notes "Containerization of applications". Designed for 15 theoretical lessons. To understand the material, you must first study the courses "Operating Systems", "Computer Networks", "Databases".
 
-В рамках курса рассматриваются цели контейнеризации, области применения контейнеров, создание образов и запуск контейнеров, создание кластера контейнеров и их оркестрация.
+The course covers the goals of containerization, applications of containers, creating images and running containers, creating a cluster of containers and their orchestration.
 
- - [словарь терминов](glossary.md)
+Course is available in two languages: [Russian](rus/README.md) and [Romanian](rom/README.md).
 
-## Темы
+## Themes / Lessons
 
-1. [Введение / История](01_intro/README.md)
-2. [Основные понятия](02_definitions/README.md)
-3. [Dockerfile I: инкапсуляция приложений](03_dockerfile_i/README.md)
-4. [Запуск контейнеризированных приложений](04_docker_run/README.md)
-5. [Dockerfile II](05_dockerfile_ii/README.md) 
-6. [Взаимодействие с контейнером](06_container_usage/README.md)
-7. [docker-compose I](07_docker_compose_i/README.md)
-8. [docker-compose II](08_docker_compose_ii/README.md)
-9. [Оркестрация контейнеров в Kubernetes I](09_kubernetes_i/README.md)
-10. [Оркестрация контейнеров в Kubernetes II](10_kubernetes_ii/README.md)
-11. [Ingress Controller](11_ingress/README.md)
-12. [Масштабирование в Kubernetes](12_cluster_scaling/README.md)
-13. [Контейнеры в CI / CD процессах](13_CI_CD/README.md)
-14. [Оптимизация образов](14_image_optimization/README.md)
-15. [Рекомендации при разработке контейнеров (best practices)](15_best_practicies/README.md)
+1. Introduction / History
+2. Basic Concepts
+3. Dockerfile I: Application Encapsulation
+4. Running Containerized Applications
+5. Dockerfile II
+6. Interacting with the container
+7. docker-compose I
+8. docker-compose II
+9. Container orchestration in Kubernetes I
+10. Container orchestration in Kubernetes II
+11. Ingress Controller
+12. Scaling in Kubernetes
+13. Containers in CI/CD processes
+14. Image optimization
+15. Best practices for developing containers
 
-## Библиография
+## Bibliography
 
 1. Лукша Марко, __Kubernetes в действии__, Москва, 2019
 2. Маркелов А. А., __Введение в технологии контейнеров и Kubernetes__ Москва: ДМКб Пресс, 2019.
