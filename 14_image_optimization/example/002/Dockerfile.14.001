@@ -4,4 +4,4 @@ COPY ./files/sample.cpp .
 
 RUN g++ sample.cpp -o sample -static
 
-CMD [ "sample" ]
+CMD [ "/sample" ]
