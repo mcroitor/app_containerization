@@ -99,3 +99,5 @@
 
 ## Библиография
 
+1. [В чем разница между образами Docker и контейнерами?, AWS Amazon](https://aws.amazon.com/ru/compare/the-difference-between-docker-images-and-containers/)
+2. 

@@ -1,3 +1,5 @@
+# Создание образов Docker
+
 - [Создание образов Docker](#создание-образов-docker)
   - [Docker](#docker)
   - [Dockerfile](#dockerfile)
@@ -10,14 +12,13 @@
     - [WORKDIR](#workdir)
     - [USER](#user)
   - [Сборка образа](#сборка-образа)
-
-# Создание образов Docker
+  - [Библиография](#библиография)
 
 ## Docker
 
 **Docker** - это программное обеспечение для автоматизации развёртывания и управления приложениями в среде виртуализации на уровне операционной системы. Docker позволяет «упаковать» приложение со всем его окружением и зависимостями в контейнер, который может быть перенесён на любую Linux-систему с поддержкой cgroups в ядре, а также предоставляет среду по управлению контейнерами.
 
-Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/). 
+Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/).
 
 Для работы с Docker в ОС Windows необходимо установить [Docker Desktop](https://www.docker.com/products/docker-desktop).
 
@@ -229,3 +230,9 @@ docker build -t myimage:1.0 .
 ```bash
 docker build --help
 ```
+
+## Библиография
+
+1. [Dockerfile reference, docker.com](https://docs.docker.com/engine/reference/builder/)
+2. [olemskoi, ENTRYPOINT vs CMD: назад к основам, Слёрм, Habr.com, 2017](https://habr.com/ru/companies/slurm/articles/329138/)
+3. [Overview of best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
