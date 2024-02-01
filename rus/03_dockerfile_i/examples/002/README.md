@@ -1,23 +1,25 @@
-# Создание и запуск первого контейнера
+# Копирование файлов
 
 Создайте `Dockerfile` со следующим содержимым:
 
 ```dockerfile
-FROM debian:latest
+FROM debian:11
 
-CMD ["echo", "hello", "world"]
+COPY ./script.sh .
+
+CMD [ "./script.sh" ]
 ```
 
 Соберите образ:
 
 ```shell
-docker build -t appcnt:002 .
+docker build -t appcnt:003 .
 ```
 
-Будет создан образ `appcnt` с этикеткой (тагом) `002` на базе описанного `Dockerfile` файла.
+Будет создан образ `appcnt` с этикеткой (тагом) `003` на базе описанного `Dockerfile` файла.
 
 Для запуска контейнера на основе созданного образа выполните команду:
 
 ```shell
-docker run --name appcnt_002 appcnt:002
+docker run --name appcnt_003 appcnt:003
 ```
