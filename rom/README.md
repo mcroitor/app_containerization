@@ -10,7 +10,7 @@
 
 1. [Введение / История](01_intro/README.md)
 2. [Основные понятия](02_definitions/README.md)
-3. [Dockerfile I: инкапсуляция приложений](03_dockerfile_i/README.md)
+3. [Создание образов Docker](03_dockerfile_i/README.md)
 4. [Запуск контейнеризированных приложений](04_docker_run/README.md)
 5. [Dockerfile II](05_dockerfile_ii/README.md) 
 6. [Взаимодействие с контейнером](06_container_usage/README.md)
