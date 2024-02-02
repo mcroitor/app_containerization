@@ -107,8 +107,11 @@
 
 **Облаком** называется группа компьютеров, объединенных в единую сеть, с установленным специализированным программным обеспечением, которые предоставляют услуги пользователям. Стандартные услуги облака включают в себя: вычислительные мощности, хранилище данных, сетевые ресурсы, выполнение различных приложений.
 
+Многие компании предоставляют услуги облака, например, [Amazon Web Services](https://aws.amazon.com/ru/), [Microsoft Azure](https://azure.microsoft.com/ru-ru/), [Google Cloud](https://cloud.google.com/).
+
 ## Библиография
 
-1. [В чем разница между образами Docker и контейнерами?, AWS Amazon](https://aws.amazon.com/ru/compare/the-difference-between-docker-images-and-containers/)
-2. [Что такое контейнеризация?, AWS Amazon](https://aws.amazon.com/ru/what-is/containerization/)
-3. [Микрослужбы .NET: Архитектура контейнерных приложений .NET, learn.microsoft.com, 2022](https://learn.microsoft.com/ru-ru/dotnet/architecture/microservices/)
+1. [**В чем разница между образами Docker и контейнерами?**, AWS Amazon](https://aws.amazon.com/ru/compare/the-difference-between-docker-images-and-containers/)
+2. [**Что такое контейнеризация?**, AWS Amazon](https://aws.amazon.com/ru/what-is/containerization/)
+3. [**Микрослужбы .NET: Архитектура контейнерных приложений .NET**, learn.microsoft.com, 2022](https://learn.microsoft.com/ru-ru/dotnet/architecture/microservices/)
+4. [simust, **Основы контейнеризации (обзор Docker и Podman)**, Habr.com, 2022](https://habr.com/ru/articles/659049/)
