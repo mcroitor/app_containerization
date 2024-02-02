@@ -1,3 +1,6 @@
+// intro
+$CATEGORY: 01_intro/knowledge
+
 // ### Операционные системы
 
 ::01k001:: [markdown] Что такое операционная система?
@@ -242,3 +245,105 @@
    ~[markdown] `UPDATE`
    ~[markdown] `MODIFY`
 }
+
+$CATEGORY: 01_intro/usage
+
+$CATEGORY: 01_intro/integration
+
+// definitions
+$CATEGORY: 02_definitions/knowledge
+
+$CATEGORY: 02_definitions/usage
+
+$CATEGORY: 02_definitions/integration
+
+// dockerfile_i
+$CATEGORY: 03_dockerfile_i/knowledge
+
+$CATEGORY: 03_dockerfile_i/usage
+
+$CATEGORY: 03_dockerfile_i/integration
+
+// docker_run
+$CATEGORY: 04_docker_run/knowledge
+
+$CATEGORY: 04_docker_run/usage
+
+$CATEGORY: 04_docker_run/integration
+
+// dockerfile_ii
+$CATEGORY: 05_dockerfile_ii/knowledge
+
+$CATEGORY: 05_dockerfile_ii/usage
+
+$CATEGORY: 05_dockerfile_ii/integration
+
+// container_usage
+$CATEGORY: 06_container_usage/knowledge
+
+$CATEGORY: 06_container_usage/usage
+
+$CATEGORY: 06_container_usage/integration
+
+// docker_compose_i
+$CATEGORY: 07_docker_compose_i/knowledge
+
+$CATEGORY: 07_docker_compose_i/usage
+
+$CATEGORY: 07_docker_compose_i/integration
+
+// docker_compose_ii
+$CATEGORY: 08_docker_compose_ii/knowledge
+
+$CATEGORY: 08_docker_compose_ii/usage
+
+$CATEGORY: 08_docker_compose_ii/integration
+
+// kubernetes_i
+$CATEGORY: 09_kubernetes_i/knowledge
+
+$CATEGORY: 09_kubernetes_i/usage
+
+$CATEGORY: 09_kubernetes_i/integration
+
+// kubernetes_ii
+$CATEGORY: 10_kubernetes_ii/knowledge
+
+$CATEGORY: 10_kubernetes_ii/usage
+
+$CATEGORY: 10_kubernetes_ii/integration
+
+// ingress
+$CATEGORY: 11_ingress/knowledge
+
+$CATEGORY: 11_ingress/usage
+
+$CATEGORY: 11_ingress/integration
+
+// cluster_scaling
+$CATEGORY: 12_cluster_scaling/knowledge
+
+$CATEGORY: 12_cluster_scaling/usage
+
+$CATEGORY: 12_cluster_scaling/integration
+
+// ci_cd
+$CATEGORY: 13_ci_cd/knowledge
+
+$CATEGORY: 13_ci_cd/usage
+
+$CATEGORY: 13_ci_cd/integration
+
+// image_optimization
+$CATEGORY: 14_image_optimization/knowledge
+
+$CATEGORY: 14_image_optimization/usage
+
+$CATEGORY: 14_image_optimization/integration
+
+// best_practices
+$CATEGORY: 15_best_practices/knowledge
+
+$CATEGORY: 15_best_practices/usage
+
+$CATEGORY: 15_best_practices/integration
