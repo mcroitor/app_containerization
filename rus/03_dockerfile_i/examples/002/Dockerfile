@@ -1,3 +1,5 @@
-FROM debian:latest
+FROM debian:11
 
-CMD ["echo", "hello", "world"]
+COPY ./script.sh .
+
+CMD [ "./script.sh" ]
