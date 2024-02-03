@@ -1,3 +1,4 @@
+# Introducere / Istorie
 
 - [Introducere / Istorie](#introducere--istorie)
   - [Idee de izolare a proceselor](#idee-de-izolare-a-proceselor)
@@ -6,8 +7,6 @@
   - [Avantaje și dezavantaje](#avantaje-și-dezavantaje)
   - [Istoria dezvoltării containerizării](#istoria-dezvoltării-containerizării)
   - [Bibliografie:](#bibliografie)
-
-# Introducere / Istorie
 
 ## Idee de izolare a proceselor
 
@@ -70,15 +69,15 @@ Dacă apariția mașinilor virtuale a fost punctul de plecare pentru dezvoltarea
 
 În 2005, Sun Microsystems a prezentat **Solaris Containers** - prima implementare a containerelor. Solaris Containers permitea rularea mai multor instanțe izolate ale sistemului de operare Solaris pe un singur host. Fiecare instanță avea propriile procese, sistem de fișiere, interfețe de rețea și utilizatori. Solaris Containers a fost bazat pe FreeBSD Jail.
 
-În 2007, compania Google a prezentat tehnologia de gestionare a proceselor **cgroups** (control groups). Tehnologic, cgroups este un grup de procese pentru care, la nivelul sistemului de operare, sunt impuse restricții privind utilizarea diferitelor resurse - memorie, intrare-ieșire, rețea. Aceste grupuri izolate de procese pot fi unite în sisteme ierarhice și gestionate. Cgroups implementează nu doar izolarea, dar și prioritizarea (diferitelor grupuri li se poate aloca un volum diferit de resurse) și contabilitatea strictă. În 2008, funcționalitatea cgroups a fost inclusă în nucleul Linux.
+În 2007, compania Google a prezentat tehnologia de gestionare a proceselor **cgroups** (control groups). Tehnologic, `cgroups` este un grup de procese pentru care, la nivelul sistemului de operare, sunt impuse restricții privind utilizarea diferitelor resurse - memorie, intrare-ieșire, rețea. Aceste grupuri izolate de procese pot fi unite în sisteme ierarhice și gestionate. `cgroups` implementează nu doar izolarea, dar și prioritizarea (diferitelor grupuri li se poate aloca un volum diferit de resurse) și contabilitatea strictă. În 2008, funcționalitatea `cgroups` a fost inclusă în nucleul Linux.
 
-În 2013, a fost prezentat sistemul de containerizare **Docker**. Docker permite crearea de imagini ale aplicațiilor, rularea containerelor și gestionarea acestora. De la apariția Docker pe piață și implementarea acestuia de către mulți furnizori de servicii cloud pentru a oferi clienților containere ca serviciu, popularitatea acestei tehnologii a început să crească rapid. De fapt, Docker a devenit pionierul unui întreg ecosistem pentru gestionarea containerelor. Unul dintre reprezentanții de seamă ai acestei familii este, cu dreptate, Kubernetes. 
+În 2013, a fost prezentat sistemul de containerizare **Docker**. Docker permite crearea de imagini ale aplicațiilor, rularea containerelor și gestionarea acestora. De la apariția Docker pe piață și implementarea acestuia de către mulți furnizori de servicii cloud pentru a oferi clienților containere ca serviciu, popularitatea acestei tehnologii a început să crească rapid. De fapt, Docker a devenit pionierul unui întreg ecosistem pentru gestionarea containerelor. Unul dintre reprezentanții de seamă ai acestei familii este, cu dreptate, Kubernetes.
 
 *În cadrul acestui curs, se vor studia în special containerele Docker.*
 
 În 2014, compania Google a prezentat sistemul de gestionare (orchestrare) **Kubernetes**. Kubernetes permite rularea și gestionarea unui număr mare de containere. Kubernetes a devenit foarte rapid cel mai popular sistem pentru automatizarea implementării, scalării și gestionării aplicațiilor containerizate la nivel industrial.
 
-Siguranța și comoditatea containerelor, precum și viteza mare de implementare, au dus la apariția unei direcții separate în DevOps, axată pe dezvoltarea de aplicații containerizate, care reduc timpul de lansare a noilor proiecte pe piață. De la apariția Kubernetes, majoritatea celor mai mari jucători de pe piața tehnologiilor cloud, inclusiv VMWare, Azure, AWS și alții, au anunțat suportul pentru acesta peste propriile lor infrastructuri. Sistemele de containerizare se dezvoltă în continuare, apar noi instrumente pentru crearea și implementarea aplicațiilor containerizate, precum și pentru gestionarea clusterelor mari de containere în centrele de procesare a datelor. Kubernetes suportă clase tot mai complexe de aplicații, permițând companiilor să treacă atât la cloudul hibrid, cât și la arhitecturile de microservicii. Containerizarea a devenit baza infrastructurii software moderne, iar Kubernetes este folosit astăzi în majoritatea proiectelor corporative mari.
+Siguranța și comoditatea containerelor, precum și viteza mare de implementare, au dus la apariția unei direcții separate în DevOps, axată pe dezvoltarea de aplicații containerizate, care reduc timpul de lansare a noilor proiecte pe piață. De la apariția Kubernetes, majoritatea celor mai mari jucători de pe piața tehnologiilor cloud, inclusiv VMWare, Azure, AWS și alții, au anunțat suportul pentru acesta peste propriile lor infrastructuri. Sistemele de containerizare se dezvoltă în continuare, apar noi instrumente pentru crearea și implementarea aplicațiilor containerizate, precum și pentru gestionarea clusterelor mari de containere în centrele de procesare a datelor. Kubernetes suportă clase tot mai complexe de aplicații, permițând companiilor să treacă atât la cloud-ul hibrid, cât și la arhitecturile de microservicii. Containerizarea a devenit baza infrastructurii software moderne, iar Kubernetes este folosit astăzi în majoritatea proiectelor corporative mari.
 
 ## Bibliografie:
 

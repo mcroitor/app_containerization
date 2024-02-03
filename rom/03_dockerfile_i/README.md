@@ -1,7 +1,9 @@
-- [Создание образов Docker](#создание-образов-docker)
+# Crearea imaginilor Docker
+
+- [Crearea imaginilor Docker](#crearea-imaginilor-docker)
   - [Docker](#docker)
   - [Dockerfile](#dockerfile)
-  - [Синтаксис Dockerfile](#синтаксис-dockerfile)
+  - [Sintaxa Dockerfile](#sintaxa-dockerfile)
     - [FROM](#from)
     - [COPY](#copy)
     - [RUN](#run)
@@ -9,9 +11,7 @@
     - [ENTRYPOINT](#entrypoint)
     - [WORKDIR](#workdir)
     - [USER](#user)
-  - [Сборка образа](#сборка-образа)
-
-# Создание образов Docker
+  - [Asamblarea imaginii](#asamblarea-imaginii)
 
 ## Docker
 
@@ -39,7 +39,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 После того, как образ собран, его можно запустить и получить контейнер.
 
-## Синтаксис Dockerfile
+## Sintaxa Dockerfile
 
 Следующая таблица содержит список команд, которые можно использовать в файле `Dockerfile`.
 
@@ -202,7 +202,7 @@ USER user
 
 В целях безопасности, рекомендуется выполнять команды `CMD`, `ENTRYPOINT` от имени пользователя, отличного от `root`.
 
-## Сборка образа
+## Asamblarea imaginii
 
 После того, как файл `Dockerfile` создан, можно приступить к сборке образа. Сборка образа выполняется обычно из командной строки и для сборки образа используется команда `docker build`. Команда `docker build` имеет следующий синтаксис:
 
