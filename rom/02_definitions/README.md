@@ -64,7 +64,7 @@ Dezvoltarea aplicațiilor cu o arhitectură multi-componentă este o sarcină di
 - **Scalabilitate** - scalarea aplicației în cazul unei arhitecturi multi-componentă este orizontală, ceea ce permite creșterea performanței aplicației prin adăugarea de componente suplimentare;
 - **Actualizare** - în acest caz, se actualizează doar componentele care au suferit modificări.
 
-Un caz particular al arhitecturii multi-componentă este arhitectura cu microservicii, în care rolul modulelor este jucat de servicii web (microservicii).
+Un caz particular al arhitecturii multi-componentă este **arhitectura cu microservicii**, în care rolul modulelor este jucat de servicii web (microservicii).
 
 Pentru a simplifica dezvoltarea și întreținerea aplicațiilor, se folosesc containere. Fiecare componentă a aplicației este rulată într-un container separat, ceea ce permite dezvoltatorilor să se concentreze pe implementarea funcționalității componentei, nu pe integrarea acesteia cu celelalte componente. Pentru a rula aplicația, trebuie să pornești fiecare container care conține componentele aplicației și să configurezi interacțiunea între ele.
 
@@ -117,3 +117,4 @@ Multe companii oferă servicii de cloud, cum ar fi [Amazon Web Services](https:/
 2. [**Что такое контейнеризация?**, AWS Amazon](https://aws.amazon.com/ru/what-is/containerization/)
 3. [**Микрослужбы .NET: Архитектура контейнерных приложений .NET**, learn.microsoft.com, 2022](https://learn.microsoft.com/ru-ru/dotnet/architecture/microservices/)
 4. [simust, **Основы контейнеризации (обзор Docker и Podman)**, Habr.com, 2022](https://habr.com/ru/articles/659049/)
+5. [**Что такое облачные вычисления?**, AWS Amazon](https://aws.amazon.com/ru/what-is-cloud-computing/)
