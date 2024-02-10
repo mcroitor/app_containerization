@@ -50,7 +50,7 @@ Adăugați în directorul proiectului următoarele fișiere:
 
 ### 5. Adăugarea descrierii proiectului
 
-Ăn fișier `readme.md` adăugați:
+În fișier `readme.md` adăugați:
 
 1. Salutare
 2. Foto / avatar
@@ -60,7 +60,7 @@ Adăugați în directorul proiectului următoarele fișiere:
    1. care le cunoașteți
    2. care le învățați
    3. care le doriți să le învățați
-6. Cum să vă contactați
+6. Cum să vă contactez
 
 ### 6. Publicarea codului pe GitHub
 
