@@ -19,7 +19,7 @@ Pentru a înțelege un anumit domeniu, este necesar să cunoașteți termenii di
 
 ## Imagine
 
-**Imaginea** reprezintă un fișier care conține tot ce este necesar pentru a rula o aplicație. Aceasta include aplicația în sine, bibliotecile dinamice necesare pentru rularea aplicației, fișierele de configurare și datele. Imaginile sunt create pe baza fișierului `Dockerfile`, care descrie ce trebuie inclus în imagine. Imaginile sunt stocate într-un repository, fie local, fie la distanță.
+**Imaginea** reprezintă un fișier care conține tot ce este necesar pentru a rula o aplicație. Aceasta include aplicația în sine, bibliotecile dinamice necesare pentru rularea aplicației, fișierele de configurare și datele. Imaginile se crează pe baza fișierului `Dockerfile`, care descrie ce trebuie inclus în imagine. Imaginile se stochează într-un repozitoriu, fie local, fie la distanță.
 
 ## Container
 
@@ -96,7 +96,7 @@ Un set de containere în care este rulată o aplicație se numește **cluster de
 
 ## Orchestrare
 
-**Orchestrarea** se referă la procesul de gestionare a unui cluster de containere. Orchestration permite pornirea, oprirea, repornirea containerelor și gestionarea interacțiunii între ele. Orchestration permite gestionarea clusterului de containere ca o entitate unitară, nu ca o colecție de containere separate.
+**Orchestrarea** se referă la procesul de gestionare a unui cluster de containere. Orchestrarea permite pornirea, oprirea, repornirea containerelor și gestionarea interacțiunii între ele. Orchestrarea permite gestionarea clusterului de containere ca o entitate unitară, nu ca o colecție de containere separate.
 
 Orchestratorii oferă următoarele funcționalități:
 
@@ -109,7 +109,11 @@ Orchestratorii oferă următoarele funcționalități:
 
 **Cloud-ul** se referă la un grup de calculatoare conectate într-o rețea unică, cu software specializat instalat, care oferă servicii utilizatorilor. Serviciile standard ale cloud-ului includ: putere de calcul, stocare de date, resurse de rețea, rularea diferitelor aplicații.
 
-Multe companii oferă servicii de cloud, cum ar fi [Amazon Web Services](https://aws.amazon.com/ru/), [Microsoft Azure](https://azure.microsoft.com/ru-ru/), [Google Cloud](https://cloud.google.com/).
+Multe companii oferă servicii de cloud, cum ar fi
+
+- [Amazon Web Services](https://aws.amazon.com/ru/),
+- [Microsoft Azure](https://azure.microsoft.com/ru-ru/),
+- [Google Cloud](https://cloud.google.com/).
 
 ## Bibliografie
 
