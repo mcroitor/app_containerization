@@ -15,7 +15,7 @@
 
 ## Docker
 
-**Docker** - это программное обеспечение для автоматизации развёртывания и управления приложениями в среде виртуализации на уровне операционной системы. Docker позволяет «упаковать» приложение со всем его окружением и зависимостями в контейнер, который может быть перенесён на любую Linux-систему с поддержкой cgroups в ядре, а также предоставляет среду по управлению контейнерами.
+**Docker** este un produs software pentru automatizarea implementării și gestionării aplicațiilor într-un mediu de virtualizare la nivel de sistem de operare. Docker permite "împachetarea" aplicației cu întregul său mediu și dependențele sale într-un container care poate fi mutat pe orice sistem Linux cu suport pentru `cgroups` în nucleu, precum și oferă un mediu pentru gestionarea containerelor.
 
 Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/). 
 
