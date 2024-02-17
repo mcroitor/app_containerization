@@ -6,12 +6,14 @@
   - [Sintaxa Dockerfile](#sintaxa-dockerfile)
     - [FROM](#from)
     - [COPY](#copy)
+    - [ADD](#add)
     - [RUN](#run)
     - [CMD](#cmd)
     - [ENTRYPOINT](#entrypoint)
     - [WORKDIR](#workdir)
     - [USER](#user)
   - [Asamblarea imaginii](#asamblarea-imaginii)
+  - [Bibliografie](#bibliografie)
 
 ## Docker
 
@@ -23,81 +25,99 @@
 
 ## Dockerfile
 
-Образы Docker создаются на основе файла `Dockerfile`. В этом файле описывается, какие команды нужно выполнить, чтобы собрать образ. Выполнение каждой команды создаёт промежуточный образ, называемый *слоем*, который используется для создания следующего образа. Создание промежуточных образов позволяет повторно использовать их при сборке других образов, что позволяет существенно сократить время сборки образа.
+Imaginile Docker se creează pe baza unui fișier `Dockerfile`. Acest fișier descrie ce comenzi trebuie executate pentru a construi imaginea. Executarea fiecărei comenzi creează o imagine intermediară, numită *strat*, care este utilizată pentru a crea următoarea imagine. Crearea imaginilor intermediare permite reutilizarea lor în construirea altor imagini, ceea ce permite reducerea semnificativă a timpului de construire a imaginii.
 
-Пример файла `Dockerfile`:
+Un exemplu de fișier `Dockerfile`:
 
 ```dockerfile
+# in baza imaginii de bază ubuntu:18.04
 FROM ubuntu:18.04
 
+# imbunatatirea listei de pachete si a pachetelor in sine
 RUN apt-get update && apt-get -y upgrade
+# instalarea pachetului nginx
 RUN apt-get install -y nginx
+# crearea fișierului index.html
 RUN echo "Hello, world!" > /var/www/html/index.html
 
+# pornirea nginx
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-После того, как образ собран, его можно запустить и получить контейнер.
+După ce imaginea este construită, aceasta poate fi pornită și obținut un container.
 
 ## Sintaxa Dockerfile
 
-Следующая таблица содержит список команд, которые можно использовать в файле `Dockerfile`.
+Tabelul următor conține o listă de comenzi care pot fi utilizate în fișierul `Dockerfile`.
 
-| Команда | Описание |
+| Comanda | Descriere |
 | --- | --- |
-| `FROM` | Указывает базовый образ, на основе которого будет создан новый образ. |
-| `COPY` | Копирует файлы и директории из контекста сборки в файловую систему образа. |
-| `RUN` | Выполняет команду в контейнере. Результат выполнения команды сохраняется в образе. |
-| `CMD` | Задаёт команду, которая будет выполнена при запуске контейнера. |
-| `ENTRYPOINT` | Задаёт команду, которая будет выполнена при запуске контейнера. Команда, заданная в `ENTRYPOINT`, не может быть переопределена при запуске контейнера. |
-| `WORKDIR` | Задаёт рабочую директорию для команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `USER` | Задаёт пользователя, от имени которого будут выполняться команды `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `ENV` | Задаёт переменные окружения. |
-| `ARG` | Задаёт аргументы, которые можно передать при сборке образа. |
-| `EXPOSE` | Открывает порты для взаимодействия с контейнером. |
-| `VOLUME` | Создаёт точки монтирования для взаимодействия с контейнером. |
-| `SHELL` | Задаёт командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `MAINTAINER` | Задаёт имя и адрес электронной почты автора образа. |
-| `LABEL` | Задаёт метаданные образа. |
-| `ONBUILD` | Задаёт команды, которые будут выполнены при сборке образа, на основе которого будет создан новый образ. |
-| `HEALTHCHECK` | Задаёт команду, которая будет выполняться для проверки состояния контейнера. |
-| `STOPSIGNAL` | Задаёт сигнал, который будет отправлен контейнеру для остановки. |
+| `FROM` | Indică imaginea de bază în baza cărui va fi creată imaginea nouă. |
+| `COPY` | Copiază fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii. |
+| `ADD` | Copiază fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii. Permite, de asemenea, descărcarea fișierelor de pe internet și dezarhivarea arhivelor. |
+| `RUN` | Rulează o comandă în container. Rezultatul executării comenzii este salvat în imagine. |
+| `CMD` | Specifică comanda care va fi executată la pornirea containerului. |
+| `ENTRYPOINT` | Definește o comandă care va fi executată la pornirea containerului. Comanda specificată în `ENTRYPOINT` nu poate fi redefinită la pornirea containerului. |
+| `WORKDIR` | Specifică directoriu de lucru pentru comanzi `RUN`, `CMD`, `ENTRYPOINT`, `COPY` și `ADD`. |
+| `USER` | Definește utilizator din numele cărui va fi executate comenzile `RUN`, `CMD`, `ENTRYPOINT`, `COPY` și `ADD`. |
+| `ENV` | Setează variabile de mediu. |
+| `ARG` | Setează argumentele care pot fi transmise în timpul asamblării imaginii.  |
+| `EXPOSE` | Deschide porturile pentru interacțiunea cu containerul. |
+| `VOLUME` | Creează puncte de montare pentru interacțiunea cu containerul. |
+| `SHELL` | Definește interpretator de comenzi care va fi utilizat pentru executarea comenzilor `RUN`, `CMD`, `ENTRYPOINT`, `COPY` și `ADD`. |
+| `MAINTAINER` | Definește nume și email a autorului imaginii. |
+| `LABEL` | Specifică datele meta a imaginii. |
+| `ONBUILD` | Specifică comenzile care vor fi executate la construirea unei imagini, pe baza căreia va fi creată o nouă imagine. |
+| `HEALTHCHECK` | Specifică comanda care va fi executată pentru verificarea stării containerului. |
+| `STOPSIGNAL` | Specifică semnalul care va fi trimis containerului pentru oprire. |
 
 ### FROM
 
-Каждый новый образ создаётся на основе базового образа. Базовый образ указывается в команде `FROM`. Например, следующая команда создаст образ на основе базового образа `ubuntu:18.04`.
+Fiecare imagine nouă este creată pe baza unei imagini de bază. Imaginea de bază este specificată în comanda `FROM`. De exemplu, următoarea comandă va crea o imagine pe baza imaginii de bază `ubuntu:18.04`:
 
 ```dockerfile
 FROM ubuntu:18.04
 ```
 
-Созданный образ в данном случае будет включать в себя минимальный набор файлов, необходимых для работы операционной системы Ubuntu 18.04.
+În cazul dat imaginea creată va include un set minim de fișiere necesare pentru funcționarea sistemului de operare Ubuntu 18.04.
 
-Базовый образ должен быть указан в первой строке файла `Dockerfile`. Если базовый образ не указан, то будет использован базовый образ `scratch`, который не содержит никаких файлов, что эквивалентно записи `FROM scratch`.
+Comanda `FROM` trebuie să fie specificată în prima linie a fișierului `Dockerfile`. Dacă imaginea de bază nu este specificată, atunci va fi utilizată imaginea de bază `scratch`, care nu conține niciun fișier, ceea ce este echivalent cu comanda `FROM scratch`.
 
-При указании базового образа можно указать тег, который будет использоваться для образа. **Тегом** называется специальная текстовая метка, указывающая, например, версию образа или его характеристики. Если тег не указан, то будет использован тег `latest`, который указывает всегда на последний собранный образ.
+La specificarea imaginii de bază poate fi indicat tag-ul imaginii care este legat cu versiunea concretă a imaginii de bază. **Tag-ul** este o etichetă text care indică, de exemplu, versiunea imaginii sau caracteristicile acesteia. Dacă tag-ul nu este specificat, atunci va fi utilizat tag-ul `latest`, care indică întotdeauna ultima imagine construită.
 
 ### COPY
 
-Команда `COPY` копирует файлы и директории из контекста сборки в файловую систему образа. **Контекст сборки** - это директория, в которой находится файл `Dockerfile`. Команда `COPY` имеет следующий синтаксис:
+Comanda `COPY` copiază fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii. **Contextul de construire** este directorul în care se află fișierul `Dockerfile`. Comanda `COPY` are următorul sintaxă:
 
 ```dockerfile
 СOPY <src> <dest>
 ```
 
-где `<src>` - путь к файлу или директории в контексте сборки, `<dest>` - путь к файлу или директории в файловой системе образа.
+unde `<src>` - calea către fișierul sau directorul din contextul de construire, `<dest>` - calea către fișierul sau directorul din sistemul de fișiere al imaginii.
+
+### ADD
+
+Comanda `ADD` copiază fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii. Permite, de asemenea, descărcarea fișierelor de pe internet și dezarhivarea arhivelor. Comanda `ADD` are următorul sintaxă:
+
+```dockerfile
+ADD <src> <dest>
+```
+
+unde `<src>` - calea către fișierul sau directorul din contextul de construire, `<dest>` - calea către fișierul sau directorul din sistemul de fișiere al imaginii. Dacă `<src>` - URL, atunci fișierul va fi descărcat de pe internet. Dacă `<src>` - arhivă, atunci aceasta va fi dezarhivată în sistemul de fișiere al imaginii.
+
+Comanda `ADD` are mai multe posibilități decât comanda `COPY`, dar în scopuri de securitate se recomandă utilizarea comenzii `COPY` în locul comenzii `ADD`.
 
 ### RUN
 
-Команда `RUN` выполняет команду в контейнере. Результат выполнения команды сохраняется в образе. Команда `RUN` имеет следующий синтаксис:
+Comanda `RUN` execută o comandă în container. Rezultatul executării comenzii este salvat în imagine. Comanda `RUN` are următorul sintaxă:
 
 ```dockerfile
 RUN <command>
 ```
 
-где `<command>` - команда, которая будет выполнена в контейнере.
+unde `<command>` - comanda care va fi executată în container.
 
-Пример обновления списка пакетов и, собственно, самих пакетов в образе Ubuntu:
+Exemplu de actualizare a listei de pachete și, de fapt, a pachetelor în imaginea Ubuntu:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -107,21 +127,21 @@ RUN apt-get update && apt-get -y upgrade
 
 ### CMD
 
-Команда `CMD` задаёт команду, которая будет выполнена при запуске контейнера. Команда `CMD` имеет следующий синтаксис:
+Comanda `CMD` specifică comanda care va fi executată la pornirea containerului. Comanda `CMD` are următorul sintaxă:
 
 ```dockerfile
 CMD <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при запуске контейнера, или в виде массива:
+unde `<command>` - comanda care va fi executată la pornirea containerului, sau în formă de masiv:
 
 ```dockerfile
 CMD ["<command>", "<arg1>", "<arg2>", ...]
 ```
 
-Разница между выполнением команды в виде строки и в виде массива заключается в том, что при выполнении команды в виде строки команда будет выполнена внутри оболочки (shell, sh, bash), а при выполнении команды в виде массива команда будет выполнена напрямую, без оболочки.
+Diferența dintre executarea comenzii sub formă de șir și sub formă de masiv constă în faptul că la executarea comenzii sub formă de șir comanda va fi executată în interiorul unui interpretator de comenzi (shell, sh sau bash), iar la executarea comenzii sub formă de masiv comanda va fi executată direct, fără interpretator de comenzi.
 
-Пример запуска контейнера с командой `echo`:
+Exemplu de pornire a containerului cu comanda `echo`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -129,7 +149,7 @@ FROM ubuntu:18.04
 CMD echo "Hello, world!"
 ```
 
-или, в виде массива:
+sau în formă de masiv:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -139,19 +159,19 @@ CMD ["echo", "Hello, world!"]
 
 ### ENTRYPOINT
 
-Команда `ENTRYPOINT` задаёт команду, которая будет выполнена при запуске контейнера. Команда, заданная в `ENTRYPOINT`, не может быть переопределена при запуске контейнера. Команда `ENTRYPOINT` имеет следующий синтаксис:
+Comanda `ENTRYPOINT` specifică comanda care va fi executată la pornirea containerului. Această comandă nu poate fi redefinită la pornirea containerului. Comanda `ENTRYPOINT` are următorul sintaxă:
 
 ```dockerfile
 ENTRYPOINT <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при запуске контейнера, или в виде массива:
+unde `<command>` - comanda care va fi executată la pornirea containerului, sau în formă de masiv:
 
 ```dockerfile
 ENTRYPOINT ["<command>", "<arg1>", "<arg2>", ...]
 ```
 
-Пример запуска контейнера с командой `echo`:
+Un exemplu de pornire a containerului cu comanda `echo`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -159,19 +179,19 @@ FROM ubuntu:18.04
 ENTRYPOINT echo "Hello, world!"
 ```
 
-Разница между командами `CMD` и `ENTRYPOINT` заключается в том, что команда, заданная в `CMD`, может быть переопределена при запуске контейнера, а команда, заданная в `ENTRYPOINT`, не может быть переопределена.
+Diferența dintre comenzile `CMD` și `ENTRYPOINT` constă în faptul că comanda specificată în `CMD` poate fi redefinită la pornirea containerului, iar comanda specificată în `ENTRYPOINT` nu poate fi redefinită.
 
 ### WORKDIR
 
-Команда `WORKDIR` задаёт рабочую директорию для команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. Команда `WORKDIR` имеет следующий синтаксис:
+Comanda `WORKDIR` specifică directoriu de lucru pentru comenzi `RUN`, `CMD`, `ENTRYPOINT`, `COPY` și `ADD`. Comanda `WORKDIR` are următorul sintaxă:
 
 ```dockerfile
 WORKDIR <path>
 ```
 
-где `<path>` - путь к рабочей директории. Если рабочая директория не существует, то она будет создана.
+unde `<path>` - calea către directorul de lucru. Dacă directorul de lucru nu există, atunci va fi creat.
 
-Пример задания рабочей директории:
+Exemplu de specificare a directorului de lucru:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -182,15 +202,15 @@ CMD ["ls", "-l"]
 
 ### USER
 
-Команда `USER` задаёт пользователя, от имени которого будут выполняться команды `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. Команда `USER` имеет следующий синтаксис:
+Comanda `USER` specifică utilizatorul, în numele căruia vor fi executate comenzile `RUN`, `CMD`, `ENTRYPOINT`, `COPY` și `ADD`. Comanda `USER` are următorul sintaxă:
 
 ```dockerfile
 USER <user>
 ```
 
-где `<user>` - имя пользователя. Пользователь должен существовать в образе. По умолчанию, команды выполняются от имени пользователя `root`.
+unde `<user>` - numele utilizatorului. Utilizatorul trebuie să existe în imagine. În mod implicit, comenzile sunt executate de pe numele utilizatorului `root`.
 
-Пример задания пользователя:
+Exemplu de specificare a utilizatorului `user`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -200,32 +220,38 @@ RUN apt-get update && apt-get -y upgrade
 USER user
 ```
 
-В целях безопасности, рекомендуется выполнять команды `CMD`, `ENTRYPOINT` от имени пользователя, отличного от `root`.
+În scopuri de securitate, se recomandă executarea comenzilor `CMD`, `ENTRYPOINT` în numele unui utilizator diferit de `root`.
 
 ## Asamblarea imaginii
 
-После того, как файл `Dockerfile` создан, можно приступить к сборке образа. Сборка образа выполняется обычно из командной строки и для сборки образа используется команда `docker build`. Команда `docker build` имеет следующий синтаксис:
+După ce fișierul `Dockerfile` este creat, puteți începe să construiți imaginea. Construirea imaginii se face de obicei din linia de comandă și pentru construirea imaginii se utilizează comanda `docker build`. Comanda `docker build` are următorul sintaxă:
 
 ```bash
 docker build [OPTIONS] PATH | URL | -
 ```
 
-где `PATH` - путь к директории, в которой находится файл `Dockerfile`, `URL` - URL-адрес репозитория Git, в котором находится файл `Dockerfile`, `-` - стандартный ввод.
+unde `PATH` - calea către directorul în care se află fișierul `Dockerfile`, `URL` - adresa URL a depozitului Git în care se află fișierul `Dockerfile`, `-` - intrare standard.
 
-В случае, если файл `Dockerfile` находится в текущей директории, то для сборки образа достаточно выполнить команду:
+În caz dacă fișierul `Dockerfile` se află în directorul curent, atunci pentru construirea imaginii este suficient să se execute comanda:
 
 ```bash
 docker build .
 ```
 
-В этом случае будет использована текущая директория в качестве контекста сборки и создастся образ с произвольным именем и тегом `latest`. Если необходимо задать имя и тег образа, то это можно сделать с помощью опции `-t`:
+În acest caz va fi utilizat directorul curent ca context de construire și va fi creată o imagine cu un nume arbitrar și tag `latest`. Dacă este necesar să se specifice numele și tag-ul imaginii, atunci acest lucru poate fi făcut cu ajutorul opțiunii `-t`:
 
 ```bash
 docker build -t myimage:1.0 .
 ```
 
-Для детального ознакомления с опциями команды `docker build` можно выполнить команду:
+Pentru a vă familiariza în detaliu cu opțiunile comenzii `docker build`, puteți executa comanda:
 
 ```bash
 docker build --help
 ```
+
+## Bibliografie
+
+1. [Dockerfile reference, docker.com](https://docs.docker.com/engine/reference/builder/)
+2. [olemskoi, ENTRYPOINT vs CMD: назад к основам, Слёрм, Habr.com, 2017](https://habr.com/ru/companies/slurm/articles/329138/)
+3. [Overview of best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
