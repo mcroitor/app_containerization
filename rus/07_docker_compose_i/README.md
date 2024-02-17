@@ -137,6 +137,55 @@ services:
 
 ## Пример кластера
 
+Следующий пример показывает описание сервисного приложения, состоящего из сервисов:
+
+- `nginx` - веб-сервер, который обслуживает статические файлы и перенаправляет запросы к приложению.
+- `php-fpm` - интерпретатор PHP, который обрабатывает динамические запросы.
+- `mariadb` - сервер базы данных, который хранит данные приложения.
+
+Сайт располагается в монтируемой к контейнерам `nginx` и `php-fpm` директории `/path/to/web`, а база данных в монтируемой к контейнеру `mariadb` директории `/path/to/db`.
+
+```yaml
+version: '3'
+
+services:
+    nginx:
+        image: nginx:1.23.3
+        ports:
+            - "8080:80"
+        volumes:
+            - /path/to/web:/usr/share/nginx/html
+        networks:
+            - frontend
+            - backend
+        environment:
+            - NGINX_PORT=80
+        depends_on:
+            - mariadb
+    php-fpm:
+        image: php:7.4-fpm
+        volumes:
+            - /path/to/web:/usr/share/nginx/html
+        networks:
+            - backend
+        environment:
+            - PHP_PORT=9000
+        depends_on:
+            - mariadb
+    mariadb:
+        image: mariadb:10.5
+        volumes:
+            - /path/to/db:/var/lib/mysql
+        networks:
+            - backend
+        environment:
+            - MYSQL_ROOT_PASSWORD=secret
+
+networks:
+    frontend:
+    backend:
+```
+
 ## Управление кластером контейнеров
 
 Файл `docker-compose.yaml` описывает сервисы приложения и взаимодействия между ними. Чтобы построить контейнеры сервисов, определить инфраструктуру, необходимо выполнить команду
@@ -145,5 +194,40 @@ services:
 docker-compose build .
 ```
 
+Чтобы запустить контейнеры сервисов, необходимо выполнить команду
+
+```bash
+docker-compose up -d
+```
+
+Ключ `-d` означает, что контейнеры будут запущены в фоновом режиме.
+
+Чтобы остановить контейнеры сервисов, необходимо выполнить команду
+
+```bash
+docker-compose down
+```
+
+Иногда возникает необходимость перестроить полностью контейнеры сервисов. Для этого необходимо выполнить команду
+
+```bash
+docker-compose build --no-cache .
+```
+
+Немаловажным свойством является просмотр журналов контейнеров сервисов. Для этого необходимо выполнить команду
+
+```bash
+docker-compose logs -f <service-name>
+```
+
+Наконец, для выполнения некоторой команды `command` внутри контейнера сервиса необходимо выполнить команду
+
+```bash
+docker-compose exec <service-name> <command>
+```
 
 ## Полезные ссылки
+
+1. [Docker Compose overview, docs.docker.com](https://docs.docker.com/compose/)
+2. [Gaël Thomas, A beginner’s guide to Docker — how to create a client/server side with docker-compose, https://www.freecodecamp.org](https://www.freecodecamp.org/news/a-beginners-guide-to-docker-how-to-create-a-client-server-side-with-docker-compose-12c8cf0ae0aa)
+3. [Gaël Thomas, Руководство по Docker Compose для начинающих, перевод статьи https://www.freecodecamp.org, habr.com](https://habr.com/ru/companies/ruvds/articles/450312/)
