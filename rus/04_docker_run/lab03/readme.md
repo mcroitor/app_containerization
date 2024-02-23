@@ -48,7 +48,7 @@ service apache2 start
 
 ```bash
 ls -l /var/www/html/
-echo "<h1>Hello, World!</h1>" > /var/www/html/index.html
+echo '<h1>Hello, World!</h1>' > /var/www/html/index.html
 ```
 
 Обновите страницу в браузере. Что вы видите?
