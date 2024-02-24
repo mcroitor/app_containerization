@@ -12,7 +12,6 @@
     - [ENTRYPOINT](#entrypoint)
     - [WORKDIR](#workdir)
     - [USER](#user)
-  - [Asamblarea imaginii](#asamblarea-imaginii)
   - [Bibliografie](#bibliografie)
 
 ## Docker
@@ -221,34 +220,6 @@ USER user
 ```
 
 În scopuri de securitate, se recomandă executarea comenzilor `CMD`, `ENTRYPOINT` în numele unui utilizator diferit de `root`.
-
-## Asamblarea imaginii
-
-După ce fișierul `Dockerfile` este creat, puteți începe să construiți imaginea. Construirea imaginii se face de obicei din linia de comandă și pentru construirea imaginii se utilizează comanda `docker build`. Comanda `docker build` are următorul sintaxă:
-
-```bash
-docker build [OPTIONS] PATH | URL | -
-```
-
-unde `PATH` - calea către directorul în care se află fișierul `Dockerfile`, `URL` - adresa URL a depozitului Git în care se află fișierul `Dockerfile`, `-` - intrare standard.
-
-În caz dacă fișierul `Dockerfile` se află în directorul curent, atunci pentru construirea imaginii este suficient să se execute comanda:
-
-```bash
-docker build .
-```
-
-În acest caz va fi utilizat directorul curent ca context de construire și va fi creată o imagine cu un nume arbitrar și tag `latest`. Dacă este necesar să se specifice numele și tag-ul imaginii, atunci acest lucru poate fi făcut cu ajutorul opțiunii `-t`:
-
-```bash
-docker build -t myimage:1.0 .
-```
-
-Pentru a vă familiariza în detaliu cu opțiunile comenzii `docker build`, puteți executa comanda:
-
-```bash
-docker build --help
-```
 
 ## Bibliografie
 
