@@ -7,10 +7,10 @@ RUN apt-get update && apt-get install -y apache2
 RUN useradd -ms /bin/bash www-run
 
 # Set the user to run the container
-USER www-run
+# USER www-run
 
 # Copy site into the container
-COPY site/ /var/www/html/
+# COPY site/ /var/www/html/
 
 # Start apache2
 CMD ["apache2ctl", "-D", "FOREGROUND"]

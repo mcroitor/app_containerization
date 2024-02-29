@@ -1,9 +1,9 @@
-# Crearea imaginilor Docker
+# Sintaxa Dockerfile
 
-- [Crearea imaginilor Docker](#crearea-imaginilor-docker)
+- [Sintaxa Dockerfile](#sintaxa-dockerfile)
   - [Docker](#docker)
   - [Dockerfile](#dockerfile)
-  - [Sintaxa Dockerfile](#sintaxa-dockerfile)
+  - [Instructiuni Dockerfile](#instructiuni-dockerfile)
     - [FROM](#from)
     - [COPY](#copy)
     - [ADD](#add)
@@ -18,7 +18,7 @@
 
 **Docker** este un produs software pentru automatizarea implementării și gestionării aplicațiilor într-un mediu de virtualizare la nivel de sistem de operare. Docker permite "împachetarea" aplicației cu întregul său mediu și dependențele sale într-un container care poate fi mutat pe orice sistem Linux cu suport pentru `cgroups` în nucleu, precum și oferă un mediu pentru gestionarea containerelor.
 
-Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/). 
+Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/).
 
 Для работы с Docker в ОС Windows необходимо установить [Docker Desktop](https://www.docker.com/products/docker-desktop).
 
@@ -45,7 +45,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 După ce imaginea este construită, aceasta poate fi pornită și obținut un container.
 
-## Sintaxa Dockerfile
+## Instructiuni Dockerfile
 
 Tabelul următor conține o listă de comenzi care pot fi utilizate în fișierul `Dockerfile`.
 
