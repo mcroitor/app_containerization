@@ -1,9 +1,9 @@
-# Создание образов Docker
+# Синтаксис Dockerfile
 
-- [Создание образов Docker](#создание-образов-docker)
+- [Синтаксис Dockerfile](#синтаксис-dockerfile)
   - [Docker](#docker)
   - [Dockerfile](#dockerfile)
-  - [Синтаксис Dockerfile](#синтаксис-dockerfile)
+  - [Инструкции Dockerfile](#инструкции-dockerfile)
     - [FROM](#from)
     - [COPY](#copy)
     - [ADD](#add)
@@ -12,7 +12,6 @@
     - [ENTRYPOINT](#entrypoint)
     - [WORKDIR](#workdir)
     - [USER](#user)
-  - [Сборка образа](#сборка-образа)
   - [Библиография](#библиография)
 
 ## Docker
@@ -46,7 +45,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 После того, как образ собран, его можно запустить и получить контейнер.
 
-## Синтаксис Dockerfile
+## Инструкции Dockerfile
 
 Следующая таблица содержит список команд, которые можно использовать в файле `Dockerfile`.
 
