@@ -1,6 +1,6 @@
 # App containerization
 
-Course notes "Containerization of applications". Designed for 15 theoretical lessons. To understand the material, you must first study the courses "Operating Systems", "Computer Networks", "Databases".
+Course notes "Containerization of applications". Designed for 11 theoretical lessons. To understand the material, you must first study the courses "Operating Systems", "Computer Networks", "Databases".
 
 The course covers the goals of containerization, applications of containers, creating images and running containers, creating a cluster of containers and their orchestration.
 
@@ -16,13 +16,10 @@ Course is available in two languages: [Russian](rus/README.md) and [Romanian](ro
 6. Interacting with the container
 7. docker-compose I
 8. docker-compose II
-9. Container orchestration in Kubernetes I
-10. Container orchestration in Kubernetes II
-11. Ingress Controller
-12. Scaling in Kubernetes
-13. Containers in CI/CD processes
-14. Image optimization
-15. Best practices for developing containers
+9. Multi-stage builds
+10. Containers in CI/CD processes
+11. Image optimization
+12. Best practices for developing containers
 
 ## Bibliography
 

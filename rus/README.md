@@ -2,7 +2,7 @@
 
 Конспект курса "Контейнеризация приложений". Рассчитан на 15 теоретических занятий. Для понимания материала необходимо предварительно изучить курсы "Операционные системы", "Компьютерные сети", "Базы данных".
 
-В рамках данного курса рассматриваются основные технологии контейнеризации приложений. В качестве основной технологии используется Docker. Рассматриваются основные понятия, создание образов, запуск контейнеров, взаимодействие с контейнерами, оркестрация контейнеров в Kubernetes, CI / CD процессы, оптимизация образов.
+В рамках данного курса рассматриваются основные технологии контейнеризации приложений. В качестве основной технологии используется Docker. Рассматриваются основные понятия, создание образов, запуск контейнеров, взаимодействие с контейнерами, оркестрация контейнеров, CI / CD процессы, оптимизация образов.
 
 Репозиторий с материалами курса доступен на [GitHub](https://github.com/mcroitor/app_containerization).
 
@@ -12,19 +12,16 @@
 
 1. [Введение / История](01_intro/README.md)
 2. [Основные понятия](02_definitions/README.md)
-3. [Создание образов Docker](03_dockerfile_i/README.md)
+3. [Синтаксис Dockerfile](03_dockerfile_i/README.md)
 4. [Запуск контейнеризированных приложений](04_docker_run/README.md)
-5. [Dockerfile II](05_dockerfile_ii/README.md) 
+5. [Дополнительные директивы Dockerfile](05_dockerfile_ii/README.md) 
 6. [Взаимодействие с контейнером](06_container_usage/README.md)
 7. [docker-compose I](07_docker_compose_i/README.md)
 8. [docker-compose II](08_docker_compose_ii/README.md)
-9. [Оркестрация контейнеров в Kubernetes I](09_kubernetes_i/README.md)
-10. [Оркестрация контейнеров в Kubernetes II](10_kubernetes_ii/README.md)
-11. [Ingress Controller](11_ingress/README.md)
-12. [Масштабирование в Kubernetes](12_cluster_scaling/README.md)
-13. [Контейнеры в CI / CD процессах](13_CI_CD/README.md)
-14. [Оптимизация образов](14_image_optimization/README.md)
-15. [Рекомендации при разработке контейнеров (best practices)](15_best_practicies/README.md)
+9. [Многоэтапное построение образов](09_multistage/README.md)
+10. [Контейнеры в CI / CD процессах](10_CI_CD/README.md)
+11. [Оптимизация образов](11_image_optimization/README.md)
+12. [Рекомендации при разработке контейнеров (best practices)](12_best_practicies/README.md)
 
 ## Библиография
 
