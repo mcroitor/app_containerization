@@ -1,6 +1,6 @@
 # App containerization
 
-Course notes "Containerization of applications". Designed for 11 theoretical lessons. To understand the material, you must first study the courses "Operating Systems", "Computer Networks", "Databases".
+Course notes "Containerization of applications". Designed for 12 theoretical lessons. To understand the material, you must first study the courses "Operating Systems", "Computer Networks", "Databases".
 
 The course covers the goals of containerization, applications of containers, creating images and running containers, creating a cluster of containers and their orchestration.
 
