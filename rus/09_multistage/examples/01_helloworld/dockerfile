@@ -1,0 +1,19 @@
+# create a base image from debian
+# copy helloworld.cpp and compile it.
+# after that create image from scratch, copy the binary from base and run it.
+# for building the image use the following command:
+# docker build -t helloworld .
+# for running the image use the following command:
+# docker run --name helloworld helloworld
+# for removing the image use the following command:
+# docker rm helloworld
+
+FROM debian as builder
+COPY helloworld.cpp /helloworld.cpp
+RUN apt-get update && apt-get install -y g++
+RUN g++ -o /helloworld /helloworld.cpp -static
+
+FROM gcr.io/distroless/cc
+
+COPY --from=builder /helloworld /helloworld
+CMD ["/helloworld"]

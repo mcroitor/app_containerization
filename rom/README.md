@@ -15,16 +15,13 @@ Materialele cursului sunt disponibile pe [GitHub](https://github.com/mcroitor/ap
 3. [Crearea imaginilor Docker](03_dockerfile_i/README.md)
 4. [Pornirea aplicațiilor containerizate](04_docker_run/README.md)
 5. [Dockerfile II](05_dockerfile_ii/README.md)
-6. [Взаимодействие с контейнером](06_container_usage/README.md)
+6. [Comunicare cu container](06_container_usage/README.md)
 7. [docker-compose I](07_docker_compose_i/README.md)
 8. [docker-compose II](08_docker_compose_ii/README.md)
-9. [Orchestrarea containerelor în Kubernetes I](09_kubernetes_i/README.md)
-10. [Orchestrarea containerelor în Kubernetes II](10_kubernetes_ii/README.md)
-11. [Ingress Controller](11_ingress/README.md)
-12. [Scalarea Kubernetes](12_cluster_scaling/README.md)
-13. [Containere în procese CI / CD](13_CI_CD/README.md)
-14. [Optimizarea imaginilor](14_image_optimization/README.md)
-15. [Practici bune în elaborarea containerelor](15_best_practicies/README.md)
+9. [COnstruirea imaginilor in mai multe etape](09_multistage/README.md)
+10. [Containere în procese CI / CD](10_CI_CD/README.md)
+11. [Optimizarea imaginilor](11_image_optimization/README.md)
+12. [Practici bune în elaborarea containerelor](12_best_practicies/README.md)
 
 ## Bibliografie
 
@@ -36,4 +33,3 @@ Materialele cursului sunt disponibile pe [GitHub](https://github.com/mcroitor/ap
 6. [Bibin Wilson, Shishir Khandelwal, __How to Reduce Docker Image Size: 6 Optimization Methods__, devopscube.com, 2022](https://devopscube.com/reduce-docker-image-size/)
 7. Vaibhav Kohli, Rajdeep Dua, John Wooten, __Troubleshooting Docker__, Packt, 2017
 8. [kubernetes, Основы Kubernetes, kubernetes.io, 2020](https://kubernetes.io/ru/docs/tutorials/kubernetes-basics/explore/explore-intro/)
-
