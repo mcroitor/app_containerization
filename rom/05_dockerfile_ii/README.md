@@ -4,37 +4,35 @@
   - [Variabile la construirea imaginii](#variabile-la-construirea-imaginii)
     - [ARG](#arg)
     - [ENV](#env)
-    - [Файл `.env`](#файл-env)
-  - [Взаимодействие с контейнером](#взаимодействие-с-контейнером)
+  - [Interacțiunea cu containerul](#interacțiunea-cu-containerul)
     - [EXPOSE](#expose)
     - [VOLUME](#volume)
-  - [Метаданные образа](#метаданные-образа)
-    - [MAINTAINER](#maintainer)
+  - [Metadatele imaginii](#metadatele-imaginii)
     - [LABEL](#label)
-  - [Дополнительные команды](#дополнительные-команды)
+  - [Comenzile suplimentare](#comenzile-suplimentare)
     - [SHELL](#shell)
     - [ONBUILD](#onbuild)
     - [HEALTHCHECK](#healthcheck)
     - [STOPSIGNAL](#stopsignal)
-  - [Библиография](#библиография)
+  - [Bibliografie](#bibliografie)
 
 ## Variabile la construirea imaginii
 
-При построении образа контейнера часто возникает необходимость передать в образ некоторые параметры. Например, можно иметь общий `Dockerfile` для нескольких проектов, в котором различаются только некоторые параметры. Кроме того, можно передать в образ некоторые конфиденциальные данные, такие как пароли, токены и т.п.
+La construirea imaginii, adesea este necesar să se transmită în imagine anumite parametri. De exemplu, se poate avea un `Dockerfile` comun pentru mai multe proiecte, în care diferă doar anumite parametri. De asemenea, se pot transmite în imagine anumite date confidențiale, cum ar fi parole, token-uri etc.
 
-Также во время построения образа можно использовать переменные окружения, которые будут доступны во время выполнения контейнера.
+Totodată, în timpul construirii imaginii se pot folosi variabile de mediu, care vor fi disponibile în timpul rulării containerului.
 
 ### ARG
 
-Команда `ARG` задаёт аргументы, которые можно передать при сборке образа. Аргументы могут быть использованы в командах `FROM`, `RUN`, `CMD`, `LABEL` и `MAINTAINER`. Аргументы могут быть переданы при сборке образа с помощью флага `--build-arg`.
+Comanda `ARG` definește argumentele care pot fi transmise la construirea imaginii. Argumentele pot fi folosite în comenzile `FROM`, `RUN`, `CMD`, `LABEL` și `MAINTAINER`. Argumentele pot fi transmise la construirea imaginii cu ajutorul opțiunii `--build-arg`.
 
 ```dockerfile
 ARG <name>[=<default value>]
 ```
 
-где `<name>` - имя аргумента, `<default value>` - значение аргумента по умолчанию.
+unde `<name>` - numele argumentului, `<default value>` - valoarea implicită a argumentului.
 
-Пример использования аргументов:
+Exemplu de utilizare a argumentelor:
 
 ```dockerfile
 ARG VERSION=latest
@@ -42,7 +40,7 @@ ARG VERSION=latest
 FROM ubuntu:$VERSION
 ```
 
-Пример передачи аргументов при сборке образа:
+Argumentele pot fi transmise la construirea imaginii cu ajutorul opțiunii `--build-arg`:
 
 ```bash
 docker build --build-arg VERSION=18.04 -t myimage .
@@ -50,15 +48,15 @@ docker build --build-arg VERSION=18.04 -t myimage .
 
 ### ENV
 
-Команда `ENV` задаёт переменные окружения. Переменные окружения будут доступны во время выполнения контейнера. Переменные окружения могут быть использованы в командах `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, `ADD` и `WORKDIR`.
+Comanda `ENV` definește variabilele de mediu. Variabilele de mediu vor fi disponibile în timpul rulării containerului. Variabilele de mediu pot fi folosite în comenzile `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, `ADD` și `WORKDIR`.
 
 ```dockerfile
 ENV <key> <value>
 ```
 
-где `<key>` - имя переменной окружения, `<value>` - значение переменной окружения.
+unde `<key>` - numele variabilei de mediu, `<value>` - valoarea variabilei de mediu.
 
-Пример использования переменных окружения:
+Exemplu utilizare variabile de mediu:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -67,7 +65,7 @@ ENV MY_NAME="John Doe"
 RUN echo "Hello, $MY_NAME"
 ```
 
-Разница между `ARG` и `ENV` заключается в том, что `ARG` используется только во время сборки образа, а `ENV` - во время выполнения контейнера. Если необходимо передать информацию для использования во время выполнения контейнера, то можно воспользоваться определением `ENV` через `ARG`:
+Diferenta dintre `ARG` și `ENV` constă în faptul că `ARG` este folosit doar în timpul construirii imaginii, iar `ENV` - în timpul rulării containerului. Dacă este necesar să se transmită informație pentru utilizare în timpul rulării containerului, atunci se poate folosi definirea `ENV` prin `ARG`:
 
 ```dockerfile
 ARG MY_NAME="John Doe"
@@ -77,47 +75,51 @@ ENV MY_NAME=$MY_NAME
 RUN echo "Hello, $MY_NAME"
 ```
 
-Переменные окружения можно переопределить при запуске контейнера с помощью флага `-e` команды `docker run`:
+Variabilele de mediu pot fi suprascrise la rularea containerului cu ajutorul opțiunii `-e` a comenzii `docker run`:
 
 ```bash
 docker run -e MY_NAME="Jane Doe" myimage
 ```
 
-### Файл `.env`
+## Interacțiunea cu containerul
 
-Для передачи переменных окружения при сборке образа можно использовать файл `.env`. В файле `.env` можно указать переменные окружения в формате `key=value`. Переменные окружения из файла `.env` будут доступны во время сборки образа.
-
-Пример файла `.env`:
-
-```env
-MY_NAME="John Doe"
-```
-
-## Взаимодействие с контейнером
-
-Контейнер является изолированной сущностью, поэтому, чтобы контейнер мог взаимодействовать с внешними системами, необходимо определить некоторые параметры контейнера. Например, можно определить порты, которые контейнер будет использовать для взаимодействия с внешними системами, а также определить тома, которые контейнер будет использовать для хранения данных.
+Containerul este o entitate izolată, de aceea, pentru ca containerul să poată interacționa cu sistemele externe, este necesar să se definească anumite parametri ai containerului. De exemplu, se pot defini porturile pe care le va folosi containerul pentru interacțiune cu sistemele externe, de asemenea, se pot defini volumele pe care le va folosi containerul pentru stocarea datelor.
 
 ### EXPOSE
 
-Команда `EXPOSE` определяет порты, которые контейнер будет использовать для взаимодействия с внешними системами. Команда `EXPOSE` имеет следующий синтаксис:
+Comanda `EXPOSE` definește porturile pe care le va folosi containerul pentru interacțiune cu sistemele externe. Comanda `EXPOSE` are următorul sintaxă:
 
 ```dockerfile
 EXPOSE <port> [<port>...]
 ```
 
-где `<port>` - номер открываемого для доступа в контейнер порта.
+unde `<port>` - numărul portului, care va fi deschis pentru accesul în container.
+
+Porturile, definite cu ajutorul comenzii `EXPOSE`, sunt disponibile pentru alte containere, care sunt conectate la același rețea, dar nu sunt disponibile pentru gazdă (host). Pentru a face porturile disponibile pentru gazdă, acestea trebuie să fie redirecționate pe porturile gazdei cu ajutorul opțiunii `-p` (sau `--publish`) a comenzii `docker run`.
+
+```bash
+docker run -p 80 myimage
+```
+
+In acest caz portul 80 al containerului va fi asociat cu un port aleator al gazdei. Pentru a specifica portul gazdei, se poate folosi următoarea sintaxă:
+
+```bash
+docker run -p 8080:80 myimage
+```
+
+In acest caz portul 80 al containerului va fi asociat cu portul 8080 al gazdei.
 
 ### VOLUME
 
-Команда `VOLUME` определяет тома, которые контейнер будет использовать для хранения данных. Команда `VOLUME` имеет следующий синтаксис:
+Comanda `VOLUME` definește volumele, care vor fi folosite de container pentru stocarea datelor. Comanda `VOLUME` are următorul sintaxă:
 
 ```dockerfile
 VOLUME <path> [<path>...]
 ```
 
-где `<path>` - путь к тому, который будет использоваться контейнером. Данный том будет доступен для записи во время выполнения контейнера, размещается в файловой системе хоста и, по завершении контейнера, данные, записанные контейнером сохраняются.
+unde `<path>` - calea către volum, care va fi folosit de container. Acest volum va fi disponibil pentru scriere în timpul rulării containerului, este plasat în sistemul de fișiere al gazdei și, după terminarea containerului, datele scrise de container sunt păstrate.
 
-Пример использования команды `VOLUME`:
+Un exemplu de utilizare a comenzii `VOLUME`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -125,43 +127,33 @@ FROM ubuntu:18.04
 VOLUME /var/www
 ```
 
-Можно также определить томы во время выполнения контейнера с помощью флага `-v` команды `docker run`:
+Totodată, se pot defini volume în timpul rulării containerului cu ajutorul opțiunii `-v` a comenzii `docker run`:
 
 ```bash
 docker run -v /var/www myimage
 ```
 
-Также можно монтировать папки хоста в контейнер с помощью флага `-v` команды `docker run`:
+Poate fi definită și o cale a volumului în timpul rulării containerului:
 
 ```bash
 docker run -v /path/to/host:/path/to/container myimage
 ```
 
-## Метаданные образа
+## Metadatele imaginii
 
-Метаданные образа - это информация о создателе образа, описании образа, контактной информации и т.п. Метаданные образа могут быть использованы для поиска образов, для автоматизации процесса сборки образов, для автоматизации процесса развертывания образов.
-
-### MAINTAINER
-
-Команда `MAINTAINER` определяет автора образа. Команда `MAINTAINER` имеет следующий синтаксис:
-
-```dockerfile
-MAINTAINER <name>
-```
-
-где `<name>` - имя автора образа.
+Metadatele imaginii - este informația despre creatorul imaginii, descrierea imaginii, informația de contact etc. Metadatele imaginii pot fi folosite pentru căutarea imaginilor, pentru automatizarea procesului de construire a imaginilor, pentru automatizarea procesului de rulare a imaginilor.
 
 ### LABEL
 
-Команда `LABEL` определяет метаданные образа (метки). Команда `LABEL` имеет следующий синтаксис:
+Comanda `LABEL` definește metadatele imaginii. Comanda `LABEL` are următorul sintaxă:
 
 ```dockerfile
 LABEL <key> = <value> <key> = <value>...
 ```
 
-где `<key>` - ключ метки, `<value>` - её значение. Метаданные могут быть использованы для поиска образов, для автоматизации процесса сборки образов, для автоматизации процесса развертывания образов.
+unde `<key>` - cheia metadatei, `<value>` - valoarea metadatei. Metadatele pot fi folosite pentru căutarea imaginilor, pentru automatizarea procesului de construire a imaginilor, pentru automatizarea procesului de rulare a imaginilor.
 
-Пример использования команды `LABEL`:
+Un exemplu de utilizare a comenzii `LABEL`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -171,27 +163,33 @@ LABEL version="1.0"
 RUN echo "Hello, world"
 ```
 
-При определении метаданных образа следует придерживаться следующих рекомендаций:
+Metadatele imaginii pot fi afișate cu ajutorul comenzii `docker inspect`:
 
-- авторы сторонних пакетов должны использовать префикс для ключа, который представляет инвертированную доменную запись, например, `com.example-vendor=ACME Incorporated`. Данный префикс представляет собой пространство имен;
-- используйте префиксы ключей (пространства имён) только с разрешения владельца домена;
-- префиксы `com.docker.*`, `io.docker.*`, и `org.dockerproject.*` зарезервированы для внутреннего использования Docker.
-- ключ метки должен начинаться строчной буквой и заканчиваться ею же, должен содержать только строчные буквы, цифры или символы `.`, `-`. Не разрешается последовательное использование специальных символов.
-- символ точки `.` разделяют вложенные пространства имён. Ключи меток без пространства имён используются в консольном (CLI) режиме, для того чтобы помечать объекты Docker используя короткие, дружественные для записи строки.
+```bash
+docker inspect myimage
+```
 
-## Дополнительные команды
+Sunt următoarele recomandări pentru definirea metadatelor imaginii:
+
+- autorii pachetelor terțe trebuie să folosească prefixul cheii, care reprezintă o înregistrare de domeniu inversă, de exemplu, `com.example-vendor=ACME Incorporated`. Acest prefix reprezintă un spațiu de nume;
+- utilizați prefixele cheilor (spațiile de nume) numai cu permisiunea proprietarului domeniului;
+- prefixele `com.docker.*`, `io.docker.*`, și `org.dockerproject.*` sunt rezervate pentru uz intern Docker;
+- cheia unui label trebuie să înceapă cu o literă mică sau cu un număr și să conțină numai litere mici, cifre și caracterele `.`, `-`. Nu se permite utilizarea caracterelor speciale consecutive.
+- simbolul `.` separă spațiile de nume încorporate. Cheile label-urilor fără spațiu de nume sunt folosite în mod implicit în modul de linie de comandă (CLI) pentru a eticheta obiectele Docker cu șiruri scurte, prietenoase pentru utilizator.
+
+## Comenzile suplimentare
 
 ### SHELL
 
-Команда `SHELL` определяет командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD`, `ENTRYPOINT`. Команда `SHELL` имеет следующий синтаксис:
+Comanda `SHELL` definește teminal care va fi folosit pentru rularea comenzilor `RUN`, `CMD`, `ENTRYPOINT`. Comanda `SHELL` are următorul sintaxă:
 
 ```dockerfile
 SHELL ["executable", "parameters"]
 ```
 
-где `executable` - исполняемый файл командной оболочки, `parameters` - параметры командной оболочки.
+unde `executable` - executabilul terminalului, `parameters` - parametrii terminalului.
 
-Пример использования команды `SHELL`:
+Exemplu de utilizare a comenzii `SHELL`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -201,32 +199,32 @@ SHELL ["/bin/bash", "-c"]
 RUN echo "Hello, world"
 ```
 
-В описании образа оболочку можно переопределять несколько раз, и это будет влиять на все последующие команды `RUN`, `CMD` и `ENTRYPOINT`, вплоть до следующего определения команды `SHELL`:
+In descrierea imaginii, terminalul poate fi redefinit de mai multe ori și acest lucru va afecta toate comenzile `RUN`, `CMD` și `ENTRYPOINT` ulterioare, până la următoarea definire a comenzii `SHELL`:
 
 ```dockerfile
 FROM microsoft/windowsservercore
 
-# проверяем оболочку по умолчанию
+# verificăm terminalul implicit
 RUN echo default shell is %COMSPEC%
 
-# переопределяем оболочку
+# redefinim terminalul
 SHELL ["powershell", "-Command"]
 
-# проверяем оболочку
+# verificăm terminalul
 RUN Write-Host default shell is %COMSPEC%
 ```
 
 ### ONBUILD
 
-Команда `ONBUILD` определяет команды, которые будут выполнены при сборке образа, на основе которого будет создан новый образ. Команда `ONBUILD` имеет следующий синтаксис:
+Comanda `ONBUILD` definește comenzile care vor fi executate la construirea imaginii, pe baza căreia va fi construită o altă imagine. Comanda `ONBUILD` are următorul sintaxă:
 
 ```dockerfile
 ONBUILD <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при сборке образа, на основе которого будет создан новый образ.
+unde `<command>` - comanda, care va fi executată la construirea imaginii, pe baza căreia va fi construită o altă imagine.
 
-Пример использования команды `ONBUILD`:
+Exemplu de utilizare a comenzii `ONBUILD`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -237,35 +235,31 @@ ONBUILD RUN /usr/local/bin/python-build --dir /app/src
 
 ### HEALTHCHECK
 
-Инструкция `HEALTHCHECK` определяет команду, которая будет выполняться для проверки состояния контейнера. Команда `HEALTHCHECK` имеет следующий синтаксис:
+Instrucțiunea `HEALTHCHECK` definește comanda care va fi executată pentru verificarea stării containerului. Comanda `HEALTHCHECK` are următorul sintaxă:
 
 ```dockerfile
 HEALTHCHECK [OPTIONS] CMD command
 ```
 
-где `OPTIONS` - опции команды, `CMD` - команда, которая будет выполнена для проверки состояния контейнера.
+unde `OPTIONS` - opțiunile comenzii, `CMD` - comanda care va fi executată pentru verificarea stării containerului.
 
-Также можно отключить проверку состояния контейнера с помощью команды `HEALTHCHECK`:
+Verificarea starii containerului poate fi dezactivată cu ajutorul comenzii `HEALTHCHECK NONE`:
 
-```dockerfile
-HEALTHCHECK NONE
-```
+Inainte de directiva `CMD` pot fi specificate urmatoarele proprietati:
 
-Свойства, которые можно определить перед `CMD`:
+- `--interval=DURATION` - intervalul dintre verificările stării containerului. Implicit, intervalul este de 30 de secunde;
+- `--timeout=DURATION` - timpul de așteptare pentru executarea comenzii de verificare a stării containerului. Implicit, timpul de așteptare este de 30 de secunde;
+- `--start-period=DURATION` - timpul de așteptare înainte de începerea executării comenzii de verificare a stării containerului. Implicit, timpul de așteptare este de 0 secunde;
+- `--start-interval=DURATION` - intervalul dintre încercările de a executa comanda de verificare a stării containerului la pornire. Implicit, intervalul este de 5 secunde. Pentru a folosi această proprietate, este necesar să aveți versiunea Docker Engine 25.0 sau mai mare;
+- `--retries=N` - numărul de încercări de a executa comanda de verificare a stării containerului. Implicit, numărul de încercări este de 3.
 
-- `--interval=DURATION` - интервал между проверками состояния контейнера. По умолчанию интервал составляет 30 секунд;
-- `--timeout=DURATION` - время ожидания выполнения команды проверки состояния контейнера. По умолчанию время ожидания составляет 30 секунд;
-- `--start-period=DURATION` - время ожидания перед началом выполнения команды проверки состояния контейнера. По умолчанию время ожидания составляет 0 секунд;
-- `--start-interval=DURATION` - интервал между попытками выполнения команды проверки состояния контейнера при запуске. По умолчанию интервал составляет 5 секунд. Для использования данного свойства необходимо иметь версию Docker Engine 25.0 или выше;
-- `--retries=N` - количество попыток выполнения команды проверки состояния контейнера. По умолчанию количество попыток составляет 3.
+Comanda, specificată după `CMD`, trebuie să returneze un cod de stare:
 
-Команда, указанная после `CMD`, должна возвращать код состояния
+- `0` - starea containerului este sănătoasă;
+- `1` - starea containerului este nesănătoasă.
+- `2` - starea containerului este rezervată pentru viitoră utilizare, nu folosiți în prezent.
 
-- `0` - контейнер готов к работе;
-- `1` - контейнер работает с ошибками;
-- `2` - зарезервировано для будущего использования, не использовать в настоящее время.
-
-Пример использования команды `HEALTHCHECK`:
+Exemplu de utilizare a comenzii `HEALTHCHECK`:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -276,24 +270,26 @@ HEALTHCHECK --interval=5m --timeout=3s \
 
 ### STOPSIGNAL
 
-Команда `STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для остановки. Команда `STOPSIGNAL` имеет следующий синтаксис:
+Comanda `STOPSIGNAL` definește semnalul care va fi trimis containerului pentru oprire. Comanda `STOPSIGNAL` are următorul sintaxă:
 
 ```dockerfile
 STOPSIGNAL signal
 ```
 
-где `signal` - сигнал, который будет отправлен контейнеру для остановки. Сигнал может быть указан в виде числа или в виде имени сигнала. Наиболее часто используемые сигналы:
+unde `signal` - semnalul care va fi trimis containerului pentru oprire. Semnalul poate fi specificat sub formă de număr sau sub formă de nume de semnal. Cele mai frecvente semnale sunt:
 
-- `SIGTERM` - сигнал завершения процесса, имеет числовое значение `15`, по умолчанию используется данный сигнал;
-- `SIGKILL` - сигнал немедленного завершения процесса, имеет числовое значение `9`.
+- `SIGTERM` - semnalul implicit cu codul `15`, care este trimis containerului pentru oprire;
+- `SIGKILL` - semnalul cu codul `9` care trimite containerului pentru oprire imediată.
+- `SIGINT` - semnalul cu codul `2` care trimite containerului pentru intrerupere.
+- `SIGQUIT` - semnalul cu codul `3` care trimite containerului pentru oprire imediată.
 
-Значение сигнала остановки можно переопределить при запуске контейнера с помощью флага `--stop-signal` команды `docker run`:
+Valoarea semnalului de oprire poate fi suprascrisă la rularea containerului cu ajutorul opțiunii `--stop-signal` a comenzii `docker run`:
 
 ```bash
 docker run --stop-signal=SIGKILL myimage
 ```
 
-## Библиография
+## Bibliografie
 
 1. [Dockerfile reference, docker.com](https://docs.docker.com/engine/reference/builder/)
 2. [vsupalov, __Docker ARG vs ENV__, vsupalov.com](https://vsupalov.com/docker-arg-vs-env/)
