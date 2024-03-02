@@ -95,6 +95,20 @@ EXPOSE <port> [<port>...]
 
 unde `<port>` - numărul portului, care va fi deschis pentru accesul în container.
 
+Porturile, definite cu ajutorul comenzii `EXPOSE`, sunt disponibile pentru alte containere, care sunt conectate la același rețea, dar nu sunt disponibile pentru gazdă (host). Pentru a face porturile disponibile pentru gazdă, acestea trebuie să fie redirecționate pe porturile gazdei cu ajutorul opțiunii `-p` (sau `--publish`) a comenzii `docker run`.
+
+```bash
+docker run -p 80 myimage
+```
+
+In acest caz portul 80 al containerului va fi asociat cu un port aleator al gazdei. Pentru a specifica portul gazdei, se poate folosi următoarea sintaxă:
+
+```bash
+docker run -p 8080:80 myimage
+```
+
+In acest caz portul 80 al containerului va fi asociat cu portul 8080 al gazdei.
+
 ### VOLUME
 
 Comanda `VOLUME` definește volumele, care vor fi folosite de container pentru stocarea datelor. Comanda `VOLUME` are următorul sintaxă:
