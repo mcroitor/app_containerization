@@ -1,178 +1,170 @@
-// # Вопросы на тему "Основные понятия контейнеризации"
+// # Intrebari la tema "Notiuni de bază ale containerizării"
 $CATEGORY: 02_definitions/1_knowledge
 
-::02k001:: [markdown] Файл, который содержит в себе все необходимое для запуска приложения (само приложение, динамические библиотеки, необходимые для запуска приложения, конфигурационные файлы, данные) называется:
+::02k001:: [markdown] Fișierul care conține tot ce este necesar pentru a rula o aplicație (aplicația în sine, bibliotecile dinamice necesare pentru a rula aplicația, fișierele de configurare, datele) se numește:
 {
-    =[markdown] образом
-    ~[markdown] контейнером
-    ~[markdown] сервисом
-    ~[markdown] приложением
+    =[markdown] imagine
+    ~[markdown] container
+    ~[markdown] serviciu
+    ~[markdown] aplicație
 }
 
-::02k002:: [markdown] Экземпляр образа, который запущен в оперативной памяти, называется:
+::02k002:: [markdown] Exemplarul imaginii care rulează în memoria RAM se numește:
 {
-    =[markdown] контейнером
-    ~[markdown] образом
-    ~[markdown] сервисом
-    ~[markdown] приложением
+    =[markdown] container
+    ~[markdown] imagine
+    ~[markdown] serviciu
+    ~[markdown] aplicație
 }
 
-::02k003:: [markdown] Программа, обычно запускаемая на сервере, которая предоставляет узкоспециализированные услуги клиентам, называется:
+::02k003:: [markdown] Programul care rulează de obicei pe un server și oferă servicii specializate clienților se numește:
 {
-    =[markdown] сервисом
-    ~[markdown] образом
-    ~[markdown] контейнером
-    ~[markdown] приложением
+    =[markdown] serviciu
+    ~[markdown] imagine
+    ~[markdown] container
+    ~[markdown] aplicație
 }
 
-::02k004:: [markdown] Сервис, который предоставляет услуги посредством протокола HTTP, называется:
+::02k004:: [markdown] Aplicatia care ofera servicii prin protocolul HTTP se numeste:
 {
-   =[markdown] Web сервисом
-   ~[markdown] сервером
-   ~[markdown] кластером
-   ~[markdown] контейнером
+    =[markdown] Web serviciu
+    ~[markdown] server
+    ~[markdown] cluster
+    ~[markdown] container
 }
 
-::02k005:: [markdown] Хранилище каких-либо файлов (например, образов, пакетов) называется:
+::02k005:: [markdown] Un server de stocare a unor fișiere (de exemplu, imagini, pachete) se numește:
 {
-    =[markdown] репозиторием
-    ~[markdown] кластером
-    ~[markdown] контейнером
-    ~[markdown] сервисом
+    =[markdown] repozitoriu
+    ~[markdown] cluster
+    ~[markdown] container
+    ~[markdown] serviciu
 }
 
-::02k006:: [markdown] Специализированный компьютер, на котором запускается серверное программное обеспечение, называется:
+::02k006:: [markdown] Un calculator specializat pe care rulează software-ul serverului se numește:
 {
-    =[markdown] сервером
-    ~[markdown] клиентом
-    ~[markdown] контейнером
-    ~[markdown] сервисом
+    =[markdown] server
+    ~[markdown] client
+    ~[markdown] container
+    ~[markdown] serviciu
 }
 
-::02k007:: [markdown] Группа компьютеров, на которых запускается приложение, развернутое в контейнерах, называется:
+::02k007:: [markdown] Grupul de calculatoare pe care rulează aplicația desfășurată în containere se numește:
 {
-    =[markdown] кластером
-    ~[markdown] репозиторием
-    ~[markdown] контейнером
-    ~[markdown] сервисом
+    =[markdown] cluster
+    ~[markdown] repozitoriu
+    ~[markdown] container
+    ~[markdown] serviciu
 }
 
-::02k008:: [markdown] Процесс увеличения производительности приложения путем увеличения количества ресурсов, выделяемых для его работы, называется:
+::02k008:: [markdown] Procesul de creștere a performanței unei aplicații prin creșterea resurselor alocate pentru funcționarea sa se numește:
 {
-    =[markdown] масштабированием
-    ~[markdown] контейнеризацией
-    ~[markdown] кластеризацией
-    ~[markdown] виртуализацией
+    =[markdown] scalare
+    ~[markdown] containerizare
+    ~[markdown] clusterizare
+    ~[markdown] virtualizare
 }
 
-::02k009:: [markdown] Увеличение производительности приложения путем увеличения ресурсов, выделяемых для его работы на одном сервере, называется:
+::02k009:: [markdown] Creșterea performanței unei aplicații prin creșterea numărului de servere pe care rulează aplicația se numește:
 {
-    =[markdown] вертикальным масштабированием
-    ~[markdown] горизонтальным масштабированием
-    ~[markdown] масштабированием
-    ~[markdown] кластеризацией
+    =[markdown] scalare orizontală
+    ~[markdown] scalare verticală
+    ~[markdown] clusterizare
+    ~[markdown] virtualizare
 }
 
-::02k010:: [markdown] Увеличение производительности приложения путем увеличения количества серверов, на которых запущено приложение, называется:
+::02k010:: [markdown] Creșterea performanței unei aplicații prin creșterea resurselor alocate pentru funcționarea sa se numește:
 {
-    =[markdown] горизонтальным масштабированием
-    ~[markdown] вертикальным масштабированием
-    ~[markdown] масштабированием
-    ~[markdown] кластеризацией
+    =[markdown] scalare verticală
+    ~[markdown] scalare orizontală
+    ~[markdown] clusterizare
+    ~[markdown] virtualizare
 }
 
-::02k011:: [markdown] Программа, которая предоставляет определенные услуги клиентам
+::02k011:: [markdown] Aplicația care oferă servicii specializate clienților se numește:
 {
-    =[markdown] сервис
-    ~[markdown] контейнер
-    ~[markdown] сервер
-    ~[markdown] клиент
+    =[markdown] serviciu
+    ~[markdown] container
+    ~[markdown] server
+    ~[markdown] client
 }
 
-::02k012:: [markdown] Основным свойством серверов является
+::02k012:: [markdown] Proprietate de bază a serverelor este:
 {
-    =[markdown] надежность
-    ~[markdown] производительность
-    ~[markdown] масштабируемость
-    ~[markdown] управляемость
+    =[markdown] fiabilitatea
+    ~[markdown] performanța
+    ~[markdown] scalabilitatea
+    ~[markdown] gestionabilitatea
 }
 
-::02k013:: [markdown] Способность сервера обрабатывать запросы клиентов за минимальное время
+::02k013:: [markdown] Capacitatea serverului de a procesa cererile clienților într-un timp minim se numește:
 {
-    =[markdown] производительность
-    ~[markdown] надежность
-    ~[markdown] масштабируемость
-    ~[markdown] управляемость
+    =[markdown] performanța
+    ~[markdown] fiabilitatea
+    ~[markdown] scalabilitatea
+    ~[markdown] gestionabilitatea
 }
 
-::02k014:: [markdown] Способность сервера увеличивать производительность путем увеличения ресурсов, выделяемых для его работы
+::02k014:: [markdown] Capacitatea serverului de a crește performanța prin creșterea resurselor alocate pentru funcționarea sa se numește:
 {
-    =[markdown] масштабируемость
-    ~[markdown] надежность
-    ~[markdown] производительность
-    ~[markdown] управляемость
+    =[markdown] scalabilitatea
+    ~[markdown] fiabilitatea
+    ~[markdown] performanța
+    ~[markdown] gestionabilitatea
 }
 
-::02k015:: [markdown] Способность сервера управляться удаленно, без необходимости физического присутствия администратора
+::02k015:: [markdown] Arhitectura aplicației în care tot codul aplicației se află într-un singur component se numește:
 {
-    =[markdown] управляемость
-    ~[markdown] надежность
-    ~[markdown] производительность
-    ~[markdown] масштабируемость
+    =[markdown] monolitică
+    ~[markdown] multicompontentă
+    ~[markdown] microservicii
+    ~[markdown] modulară
 }
 
-::02k016:: [markdown] Архитектура приложения, в которой весь код приложения находится в одном компоненте, называется
+::02k016:: [markdown] Arhitectura aplicației, în care codul aplicației este împărțit în module independente, se numește:
 {
-    =[markdown] монолитная
-    ~[markdown] многокомпонентная
-    ~[markdown] микросервисная
-    ~[markdown] модульная
+    =[markdown] multicompontentă
+    ~[markdown] monolitică
+    ~[markdown] client-server
+    ~[markdown] multistrat
 }
 
-::02k017:: [markdown] Архитектура приложения, в которой код приложения разделен на независимые модули, называется
+::02k017:: [markdown] Procesul de gestionare a unui set de containere se numește:
 {
-    =[markdown] многокомпонентная
-    ~[markdown] монолитная
-    ~[markdown] клиент-серверная
-    ~[markdown] многоуровневая
+    =[markdown] orchestrare
+    ~[markdown] virtualizare
+    ~[markdown] containerizare
+    ~[markdown] clusterizare
 }
 
-::02k018:: [markdown] Процесс управления набором контейнеров называется
+::02k018:: [markdown] Grupul de calculatoare, care sunt conectate la o rețea comună și care rulează software specializat, care oferă servicii utilizatorilor, se numește:
 {
-    =[markdown] оркестрацией
-    ~[markdown] виртуализацией
-    ~[markdown] контейнеризацией
-    ~[markdown] кластеризацией
+    =[markdown] cloud
+    ~[markdown] cluster
+    ~[markdown] server
+    ~[markdown] container
 }
 
-::02k019:: [markdown] Группа компьютеров, объединенных в единую сеть, с установленным специализированным программным обеспечением, которые предоставляют услуги пользователям
+::02k019:: [markdown] Tehnologia care permite rularea unui exemplar al unui sistem de operare în cadrul altui sistem de operare se numește:
 {
-    =[markdown] облако
-    ~[markdown] кластер
-    ~[markdown] сервер
-    ~[markdown] контейнер
+    =[markdown] virtualizare
+    ~[markdown] containerizare
+    ~[markdown] orchestrare
+    ~[markdown] clusterizare
 }
 
-::02k020:: [markdown] Технология, которая позволяет запускать экземпляр некоторой операционной системы в рамках другой операционной системы, называется
+::02k020:: [markdown] Tehnologia care permite rularea unui exemplar al unei aplicații într-un mediu izolat se numește:
 {
-    =[markdown] виртуализацией
-    ~[markdown] контейнеризацией
-    ~[markdown] оркестрацией
-    ~[markdown] кластеризацией
+    =[markdown] containerizare
+    ~[markdown] virtualizare
+    ~[markdown] orchestrare
+    ~[markdown] clusterizare
 }
 
-::02k021:: [markdown] Технология, которая позволяет запускать экземпляр приложения в изолированной среде, называется
+::02k021:: [markdown] Calculator, care oferă resursele sale (de exemplu, resurse de calcul, rețea, stocare) pentru containere, se numește:
 {
-    =[markdown] контейнеризацией
-    ~[markdown] виртуализацией
-    ~[markdown] оркестрацией
-    ~[markdown] кластеризацией
-}
-
-::02k022:: [markdown] Компьютер, который предоставляет свои ресурсы (вычислительные, сетевые, хранилища) контейнерам, называется
-{
-    =[markdown] хост
-    ~[markdown] сервер
-    ~[markdown] клиент
-    ~[markdown] образ
+    =[markdown] host
+    ~[markdown] server
+    ~[markdown] client
+    ~[markdown] imagine
 }

@@ -1,16 +1,16 @@
-// # Вопросы на тему "Синтаксис Dockerfile"
+// # Intrebari la tema "Sintaxa Dockerfile"
 
 $CATEGORY: 03_dockerfile_i/1_knowledge
 
-::03k001:: [markdown] Что такое контекст сборки?
+::03k001:: [markdown] Ce este contextul de construire?
 {
-    =[markdown] Это директория, в которой находится файл `Dockerfile`.
-    ~[markdown] Это директория, в которой находится файл `docker-compose.yml`.
-    ~[markdown] Это директория, из которой выполняется команда `docker build`.
-    ~[markdown] Это образ, который используется для сборки других образов.
+    =[markdown] Este directorul în care se află fișierul `Dockerfile`.
+    ~[markdown] Este directorul în care se află fișierul `docker-compose.yml`.
+    ~[markdown] Este directorul din care se execută comanda `docker build`.
+    ~[markdown] Este imaginea folosită pentru construirea altor imagini.
 }
 
-::03k002:: [markdown] Какой командой задается базовый образ?
+::03k002:: [markdown] Prin care comandă se specifică imaginea de bază?
 {
     =[markdown] `FROM`
     ~[markdown] `BASE`
@@ -18,15 +18,15 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `BASE_IMAGE_NAME`
 }
 
-::03k003:: [markdown] Специальная текстовая метка, указывающая, например, версию образа или его характеристики, называется
+::03k003:: [markdown] Eticheta text specială care indică, de exemplu, versiunea imaginii sau caracteristicile sale se numește
 {
-    =[markdown] `тегом`
-    ~[markdown] `версией`
-    ~[markdown] `метаданными`
-    ~[markdown] `атрибутом`
+    =[markdown] `tag`
+    ~[markdown] `versiune`
+    ~[markdown] `metadate`
+    ~[markdown] `atribut`
 }
 
-::03k004:: [markdown] При задании базового образа можно указать тег, который соответствует конкретной версии базового образа. Если тег не указан, то будет использован тег
+::03k004:: [markdown] La specificarea imaginii de bază se poate specifica eticheta care corespunde versiunii specifice a imaginii de bază. Dacă eticheta nu este specificată, atunci va fi utilizată eticheta
 {
     =[markdown] `latest`
     ~[markdown] `current`
@@ -34,7 +34,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `recent`
 }
 
-::03k005:: [markdown] Если базовый образ не указан, то будет использован базовый образ
+::03k005:: [markdown] Dacă imaginea de bază nu este specificată, atunci va fi utilizată imaginea de bază
 {
     =[markdown] `scratch`
     ~[markdown] `empty`
@@ -42,7 +42,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `null`
 }
 
-::03k006:: [markdown] Какой командой задается метаданные образа?
+::03k006:: [markdown] Prin care comandă se specifică metadatele imaginii?
 {
     =[markdown] `LABEL`
     ~[markdown] `META`
@@ -50,7 +50,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `METAINFO`
 }
 
-::03k007:: [markdown] Какой командой задается аргумент сборки?
+::03k007:: [markdown] Prin care comandă se specifică argumentele de construire?
 {
     =[markdown] `ARG`
     ~[markdown] `ARGUMENT`
@@ -58,7 +58,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `BUILD_ARGUMENT`
 }
 
-::03k008:: [markdown] Какой командой задается точка входа для запуска контейнера?
+::03k008:: [markdown] Prin care comandă se specifică punctul de intrare pentru rularea containerului?
 {
     =[markdown] `CMD`
     ~[markdown] `EXEC`
@@ -66,7 +66,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `START`
 }
 
-::03k009:: [markdown] Чтобы скопировать файлы и директории из контекста сборки в файловую систему образа, используется команда:
+::03k009:: [markdown] Pentru a copia fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii, se folosește comanda:
 {
     =[markdown] `COPY`
     ~[markdown] `MOVE`
@@ -74,7 +74,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `PASTE`
 }
 
-::03k010:: [markdown] Образ контейнера строится по умолчанию на базе описания файла
+::03k010:: [markdown] Imaginea containerului este construită implicit pe baza descrierii fișierului
 {
     =[markdown] `Dockerfile`
     ~[markdown] `docker-compose.yaml`
@@ -82,7 +82,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `image.json`
 }
 
-::03k011:: [markdown] Скачать архив по URL ссылке, распаковать его и записать в образ можно при помощи команды
+::03k011:: [markdown] Pentru a descărca un arhivă de la o adresă URL, dezarhiva și copia fișierele în imaginea de bază, se folosește comanda
 {
     =[markdown] `ADD`
     ~[markdown] `COPY`
@@ -90,7 +90,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `DOWNLOAD`
 }
 
-::03k012:: [markdown] Выполнение некоторой команды при построении образа контейнера определяется директивой
+::03k012:: [markdown] Executarea unei anumite comenzi la construirea imaginii containerului este determinată de directiva
 {
     =[markdown] `RUN`
     ~[markdown] `EXEC`
@@ -98,7 +98,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `DO`
 }
 
-::03k013:: [markdown] Определить рабочую директорию в образе можно при помощи команды
+::03k013:: [markdown] Pentru a specifica directorul de lucru în care se vor executa toate următoarele comenzi, se folosește comanda
 {
     =[markdown] `WORKDIR`
     ~[markdown] `WORK`
@@ -106,7 +106,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `CD`
 }
 
-::03k014:: [markdown] Сменить пользователя в образе можно при помощи команды
+::03k014:: [markdown] Schimbarea utilizatorului în imagine se poate face cu ajutorul comenzii
 {
     =[markdown] `USER`
     ~[markdown] `CHANGE_USER`
@@ -114,7 +114,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `CHOWN`
 }
 
-::03k015:: [markdown] Чтобы скопировать файл `php-fpm.conf` из папки `files/configs` в образ в папку `/etc/php` образа, нужно использовать команду
+::03k015:: [markdown] Pentru copierea fisierului `php-fpm.conf` din directorul `files/configs` în directorul `/etc/php` al imaginii, se folosește comanda
 {
     =[markdown] `COPY files/configs/php-fpm.conf /etc/php`
     ~[markdown] `COPY /etc/php files/configs/php-fpm.conf`
@@ -122,7 +122,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `COPY /files/configs/php-fpm.conf /etc/php`
 }
 
-::03k016:: [markdown] Чтобы создать директорию `/var/www` в образе, нужно использовать команду
+::03k016:: [markdown] Pentru a crea directorul `/var/www` în imagine, se folosește comanda
 {
     =[markdown] `RUN mkdir /var/www`
     ~[markdown] `COPY /var/www`
@@ -130,7 +130,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `MKDIR /var/www`
 }
 
-::03k017:: [markdown] Для установки пакета `nginx` в образе, нужно использовать команду
+::03k017:: [markdown] Pentru a instala pachetul `nginx` în imagine, se folosește comanda
 {
     =[markdown] `RUN apt-get install -y nginx`
     ~[markdown] `COPY apt-get install -y nginx`
@@ -138,7 +138,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `ADD apt-get install -y nginx`
 }
 
-::03k018:: [markdown] Чтобы выполнять команду `nginx -g "daemon off;"` при запуске контейнера, нужно использовать команду
+::03k018:: [markdown] Pentru a executa comanda `nginx -g "daemon off;"` la rularea containerului, se folosește comanda
 {
     =[markdown] `CMD ["nginx", "-g", "daemon off;"]`
     ~[markdown] `RUN ["nginx", "-g", "daemon off;"]`
@@ -146,7 +146,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `EXEC ["nginx", "-g", "daemon off;"]`
 }
 
-::03k019:: [markdown] Обновить списки пакетов и сами пакеты в образе на базе OS Ubuntu можно при помощи команды
+::03k019:: [markdown] Reinnoirea listelor de pachete și a pachetelor în imaginea pe baza OS Ubuntu se poate face cu ajutorul comenzii
 {
     =[markdown] `RUN apt-get update && apt-get -y upgrade`
     ~[markdown] `RUN apt-get update`
@@ -154,10 +154,10 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `UPGRADE packages`
 }
 
-::03k020:: [markdown] Разница между командами `CMD` и `ENTRYPOINT` заключается в том, что
+::03k020:: [markdown] Diferența dintre comenzile `CMD` și `ENTRYPOINT` constă în faptul că
 {
-    =[markdown] `CMD` позволяет переопределить команду при запуске контейнера, а `ENTRYPOINT` - нет.
-    ~[markdown] `ENTRYPOINT` позволяет переопределить команду при запуске контейнера, а `CMD` - нет.
-    ~[markdown] `CMD` и `ENTRYPOINT` выполняют одни и те же действия.
-    ~[markdown] `CMD` и `ENTRYPOINT` выполняют разные действия.
+    =[markdown] `CMD` permite redefinirea comenzii la rularea containerului, iar `ENTRYPOINT` - nu.
+    ~[markdown] `ENTRYPOINT` permite redefinirea comenzii la rularea containerului, iar `CMD` - nu.
+    ~[markdown] `CMD` și `ENTRYPOINT` efectuează aceleași acțiuni.
+    ~[markdown] `CMD` și `ENTRYPOINT` efectuează acțiuni diferite.
 }
