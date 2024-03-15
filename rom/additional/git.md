@@ -39,39 +39,38 @@ Sisteme de control al versiunilor permit dezvoltatorilor să gestioneze dezvolta
 
 Creați un cont GITHUB. După finalizarea puteți crea repozitoriile proprii cât publice atât și private.
 
-Для взаимодействия с GITHUB сначала надо установить GIT. Для его скачивания и знакомства с процессом установки перейдите на страницу [Установка GIT](https://git-scm.com/book/ru/v2/Введение-Установка-Git) и выполните указанные инструкции.
+Pentru interacțiunea cu GITHUB trebuie să instalați GIT. Pentru descărcare și instalare urmați instrucțiunile de pe pagina [Instalarea GIT](https://git-scm.com/book/ru/v2/Введение-Установка-Git).
 
-## ключ безопасности
+## cheie de securitate
 
-Пусть вы зарегистрировали аккаунт на почтовый адрес `my@cool.email`.
+Presupunem că ați înregistrat un cont pe adresa de e-mail `my@cool.email`.
 
-После установки GIT в меню ОС появится GIT BASH. Откройте эту консоль и создайте ключи аутентификации для GITHUB. Для этого выполните следующую команду:
+După instalarea GIT, în meniul OS va apărea GIT BASH. Deschideți această consolă și creați cheile de autentificare pentru GITHUB. Pentru aceasta executați următoarea comandă:
 
 ```shell
 ssh-keygen -C "my@cool.email"
 ```
 
-В папке пользователя компьютера (`~/.ssh`) будут созданы два файла: приватный и публичный ключи. Публичный ключ необходимо зарегистрировать в github.
-> При желании можно задать своё имя ключам, тогда необходимо создать файл `~/.ssh/config` в котором
-> прописывается имя ключа для конкретного клиента - github.
+În directorul utilizatorului computerului (`~/.ssh`) vor fi create două fișiere: cheile private și publice. Cheia publică trebuie înregistrată în GITHUB.
+> Dacă doriți, puteți seta numele cheilor, atunci trebuie să creați fișierul `~/.ssh/config` în care se specifică numele cheii pentru clientul specific - github.
 
-## создание репозитория
+## crearea unui repozitoriu
 
-Простейшим способом создания репозитория будет создание его через Web интерфейс с последующим его клонированием.
+Cea mai simplă metodă de a crea un repozitoriu este de a-l crea prin intermediul interfeței web și apoi de a-l clona.
 
-## Минимальный рабочий сценарий
+## Un scenariu de lucru minim
 
-Минимальный рабочий сценарий включает в себя следующие шаги:
+Un scenariu de lucru minim include următoarele etape:
 
-1. переключение на главную ветку
-2. получение последних изменений с удаленного сервера
-3. создание новой ветки (для новой функциональности) и переход на неё
-4. _реализация новой функциональности - к GIT не имеет отношения_
-5. добавление измененных файлов к отслеживаемым файлам
-6. создание точки изменения (commit, коммит)
-7. отправка точки изменения на сервер
+1. trecerea la ramura principală
+2. obținerea ultimelor modificări de pe serverul extern
+3. crearea unei noi ramuri (pentru o nouă funcționalitate) și trecerea la aceasta
+4. _implementarea unei noi funcționalități - GIT nu are legătură_
+5. adăugarea fișierelor modificate la fișierele urmărite
+6. crearea unui punct de schimbare (commit)
+7. trimiterea punctului de schimbare pe server
 
-На удаленном сервере будет создана новая ветка, которую надо будет влить в главную ветку. Для этого создаётся запрос (pull request или merge request) через web интерфейс репозитория. После проверки кода и его одобрения новая ветка вливается в главную.
+Pe serverul extern va fi creată o nouă ramură, care trebuie să fie îmbinată în ramura principală. Pentru aceasta se creează o cerere (pull request sau merge request) prin intermediul interfeței web a repozitoriului. După verificarea codului și aprobarea acestuia, noua ramură este îmbinată în ramura principală.
 
 ```shell
 git checkout main

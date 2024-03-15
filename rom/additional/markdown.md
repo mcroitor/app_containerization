@@ -1,93 +1,95 @@
-# Описание Markdown формата
+# Descrierea formatului Markdown
 
-__Markdown__ [^1] - это легковесный язык разметки, созданный с целью написания читаемого и легко редактируемого текста, который может быть преобразован в HTML и другие форматы. Он был разработан Джоном Грубером и Аароном Шварцем в 2004 году.
+__Markdown__ [^1] este un limbaj de marcare ușor, creat pentru a scrie texte ușor de citit și editat, care poate fi transformat în HTML și alte formate. A fost dezvoltat de John Gruber și Aaron Swartz în 2004.
 
-## Форматирование текста
+## Formatarea textului
 
-Сплошной текст можно разбить на абзацы, разделяя их двумя переводами строки. Отделение строк только одним переводом строки не приведет к разделению абзацев [^2].
-
-```markdown
-Первый абзац.
-Тот же абзац.
-
-Второй абзац.
-```
-
-Язык разметки позволяет создавать текстовые выделения:
+Un text continuu poate fi împărțit în paragrafe, separându-le cu două linii goale. Separarea liniilor cu o singură linie nu va duce la separarea paragrafelor [^2].
 
 ```markdown
-*курсив*
-**жирный**
-~~зачеркнутый~~
+Primul paragraf.
+Același paragraf.
+
+Al doilea paragraf.
 ```
 
-## Заголовки
-
-Язык разметки позволяет создавать заголовки шести уровней:
+Limbaj de marcare permite crearea formatării textului:
 
 ```markdown
-# Заголовок 1
-## Заголовок 2
-## Заголовок 3
-### Заголовок 4
-#### Заголовок 5
-#### Заголовок 6
+*italic*
+**bold**
+~~stroke~~
 ```
 
-## Списки
+## Antete
 
-Язык разметки позволяет создавать упорядоченные и неупорядоченные списки.
-
-Пример определения неупорядоченного списка:
+Limbaj de marcare permite crearea antetelor de șase niveluri:
 
 ```markdown
-* элемент 1
-* элемент 2
-  * вложенный элемент 2.1
-  * вложенный элемент 2.2
-* элемент 3
+# Antet 1
+## Antet 2
+## Antet 3
+### Antet 4
+#### Antet 5
+#### Antet 6
 ```
 
-Пример определения упорядоченного списка:
+## Liste
+
+Limbajul de marcare permite crearea listelor neordonate și ordonate.
+
+Un exemplu de definire a unei liste neordonate:
 
 ```markdown
-1. элемент 1
-2. элемент 2
-3. элемент 3
+* element 1
+* element 2
+  * element imbricat 2.1
+  * element imbricat 2.2
+* element 3
 ```
 
-## Ссылки
+Un exemplu de definire a unei liste ordonate:
 
-Ссылки определяются с помощью квадратных скобок и круглых скобок, в которых указывается текст ссылки и адрес ссылки соответственно. Пример ссылок на внешние ресурсы:
+```markdown
+1. element 1
+2. element 2
+  1. element 2.1
+  2. element 2.2
+3. element 3
+```
+
+## Referințe
+
+Referințele sunt definite cu ajutorul parantezelor pătrate și rotunde, în care se specifică textul linkului și adresa linkului, respectiv. Exemple de linkuri către resurse externe:
 
 ```markdown
 [Wiki GIT](https://ru.wikipedia.org/wiki/Git)
 [Pro GIT](https://git-scm.com/book/ru/v2)
 ```
 
-Внутренние ссылки ссылаются на заголовки внутри документа.
+Referințe interne se referă la antetele din document.
 
 ```markdown
-[текст ссылки](#заголовок)
+[corpul referintei](#antet)
 ```
 
-## Изображения
+## Imagini
 
-Для вставки изображений используется синтаксис ссылок, но перед адресом ссылки ставится восклицательный знак.
+Pentru inserarea imaginilor se utilizează sintaxa linkurilor, dar înainte de adresa linkului se pune semnul exclamării.
 
 ```markdown
-![alt-текст](адрес_изображения)
+![alt-text](referinta-la-imagine)
 ```
 
-## Код
+## Cod sursă
 
-Для вставки кода в строке используются символы обратной кавычки.
+Pentru inserarea codului sursă într-o singură linie, se folosesc ghilimele inverse.
 
 ```markdown
-`код`
+`cod sursă`
 ```
 
-Если необходимо вставить блок кода, то используются три обратные кавычки. В этом случае, сразу после открытия блока указывается язык программирования (стилей, разметки).
+Dacă există necesitatea inserării unui bloc de cod, atunci se folosesc trei ghilimele inverse. În acest caz, imediat după deschiderea blocului se specifică limbajul de programare (stiluri, marcare).
 
 ```cpp
 #include <iostream>
