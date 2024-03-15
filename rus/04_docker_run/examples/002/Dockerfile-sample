@@ -1,3 +1,0 @@
-FROM debian
-
-CMD ["echo", "It is a copy of the original Dockerfile!"]

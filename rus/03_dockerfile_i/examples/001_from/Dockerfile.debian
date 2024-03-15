@@ -1,3 +1,0 @@
-FROM debian
-# FROM debian:latest
-# The debian image is a minimal image based on the Debian operating system.
