@@ -7,7 +7,10 @@
   - [Crearea unui container](#crearea-unui-container)
   - [Pornirea containerului](#pornirea-containerului)
   - [Comunicarea cu containerul](#comunicarea-cu-containerul)
-  - [Visualizarea containerelor](#visualizarea-containerelor)
+  - [Repornirea containerului](#repornirea-containerului)
+  - [Copierea fișierelor din container](#copierea-fișierelor-din-container)
+  - [Copierea fișierelor în container](#copierea-fișierelor-în-container)
+  - [Vizualizarea containerelor](#vizualizarea-containerelor)
   - [Oprirea containerului](#oprirea-containerului)
   - [Stergerea containerului](#stergerea-containerului)
   - [Bibliografie](#bibliografie)
@@ -140,7 +143,7 @@ La pornirea containerului se execută comanda, specificată în fișierul `Docke
 docker run <image_name> <command>
 ```
 
-Uneoori apare necesitatea de a porni containerul în modul interactiv, de exemplu, pentru depanare. Comunicarea cu containerul permite să se vizualizeze conținutul său, să se execute în el comenzi (de exemplu, să se instaleze un anumit pachet).
+Uneori apare necesitatea de a porni containerul în modul interactiv, de exemplu, pentru depanare. Comunicarea cu containerul permite să se vizualizeze conținutul său, să se execute în el comenzi (de exemplu, să se instaleze un anumit pachet).
 
 Pentru a porni containerul în modul interactiv se utilizează opțiunea `-it`, care combină două opțiuni `-i` (interactive) și `-t` (pseudo-TTY):
 
@@ -154,7 +157,31 @@ De exemplu, pentru a porni containerul cu imaginea `ubuntu` în modul interactiv
 docker run -it ubuntu /bin/bash
 ```
 
-## Visualizarea containerelor
+## Repornirea containerului
+
+Pentru repornirea containerului se utilizează comanda `docker restart`. De exemplu, pentru repornirea containerului cu numele `my_container` se utilizează următoarea comandă:
+
+```bash
+docker restart my_container
+```
+
+## Copierea fișierelor din container
+
+Pentru copierea fișierelor din container se utilizează comanda `docker cp`. De exemplu, pentru copierea fișierului `file.txt` din containerul cu numele `my_container` în directorul curent se utilizează următoarea comandă:
+
+```bash
+docker cp my_container:/path/to/file.txt .
+```
+
+## Copierea fișierelor în container
+
+Pentru copierea fișierelor în container se utilizează comanda `docker cp`. De exemplu, pentru copierea fișierului `file.txt` în containerul cu numele `my_container` din directorul curent se utilizează următoarea comandă:
+
+```bash
+docker cp file.txt my_container:/path/to/file.txt
+```
+
+## Vizualizarea containerelor
 
 Pentru vizualizarea containerelor pornite se utilizează comanda `docker ps`:
 

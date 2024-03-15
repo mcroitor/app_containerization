@@ -24,9 +24,6 @@ COPY ./site/ /var/www/html/
 CMD ["sh", "-c", "echo hello from $HOSTNAME"]
 ```
 
-В той же папке проекта создайте папку `site`. В новой папке создайте файл `index.html` с произвольным
-содержимым.
-
 În aceeași director de proiect creați directorul `site`. În noul director creați fișierul `index.html` cu conținut arbitrar.
 
 ## Pornire și testare
@@ -37,7 +34,7 @@ Deschideți terminalul în directorul `containers02` și executați comanda:
 docker build -t containers02 .
 ```
 
--Cât timp a durat crearea imaginii?_
+_Cât timp a durat crearea imaginii?_
 
 Executați comanda pentru a porni containerul:
 
