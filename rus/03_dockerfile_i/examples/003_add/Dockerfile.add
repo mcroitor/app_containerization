@@ -1,4 +1,0 @@
-FROM debian
-
-# Add a file from the host to the container
-ADD site.zip /var/www/

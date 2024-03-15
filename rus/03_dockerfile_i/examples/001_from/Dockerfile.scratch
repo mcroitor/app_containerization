@@ -1,2 +1,0 @@
-FROM scratch
-# The scratch image is a minimal image that is empty. It is used as a starting point for building images from scratch.
