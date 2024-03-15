@@ -164,7 +164,7 @@ COPY files/php/php.ini /etc/php/8.2/apache2/php.ini
 COPY files/mariadb/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # copy the supervisor configuration file
-COPY files/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY files/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ```
 
 - для функционирования mariadb создайте папку `/var/run/mysqld` и установите права на неё:
