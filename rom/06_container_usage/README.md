@@ -1,76 +1,132 @@
-# Взаимодействие с контейнером
+# Interacțiunea containerelor
 
-- [Взаимодействие с контейнером](#взаимодействие-с-контейнером)
-  - [Запуск контейнера](#запуск-контейнера)
-  - [Остановка контейнера](#остановка-контейнера)
-  - [Удаление контейнера](#удаление-контейнера)
-  - [Перезапуск контейнера](#перезапуск-контейнера)
-  - [Подключение к контейнеру](#подключение-к-контейнеру)
-  - [Копирование файлов из контейнера](#копирование-файлов-из-контейнера)
-  - [Копирование файлов в контейнер](#копирование-файлов-в-контейнер)
+- [Interacțiunea containerelor](#interacțiunea-containerelor)
+  - [Sistem de fișiere](#sistem-de-fișiere)
+    - [Lucrul cu volume](#lucrul-cu-volume)
+    - [Montarea volumelor](#montarea-volumelor)
+    - [Exemplu](#exemplu)
+  - [Rețea](#rețea)
+    - [Gestionarea rețelelor în Docker](#gestionarea-rețelelor-în-docker)
+    - [Pornirea containerelor în rețea](#pornirea-containerelor-în-rețea)
+  - [Bibliografie](#bibliografie)
 
-В этом разделе мы рассмотрим основные команды для взаимодействия с контейнером.
+Sisteme informaționale complexe sunt de obicei compuse din mai multe componente. Fiecare componentă poate fi dezvoltată și întreținută de o echipă separată. În astfel de cazuri este important să se asigure interacțiunea între componente.
 
-## Запуск контейнера
+Interacțiunea între containere poate fi realizată prin rețea sau sistem de fișiere.
 
-Для создания и запуска контейнера на базе образа используется команда `docker run`. Например, для запуска контейнера с именем `my_container` и образом `my_image` используется следующая команда:
+## Sistem de fișiere
 
-```bash
-docker run --name my_container my_image
-```
+Două containere pot interacționa prin sistemul de fișiere, dacă acestea montează același volum. De exemplu, containerul `A` poate scrie un fișier în volum, iar containerul `B` poate citi acest fișier. În acest caz, containerele pot interacționa între ele, chiar dacă sunt rulate în rețele diferite.
 
-Параметр `--name` задает имя контейнера, а `my_image` - имя образа.
+### Lucrul cu volume
 
-Если контейнер уже существует, то для его запуска используется команда `docker start`. Например, для запуска контейнера с именем `my_container` используется следующая команда:
+Volumele în Docker reprezintă mecanismul de stocare a datelor, care poate fi utilizat de mai multe containere. Volumele pot fi create, listate, șterse și atașate la containere.
 
-```bash
-docker start my_container
-```
+Pentru lucrul cu volume se utilizează următoarele comenzi:
 
-## Остановка контейнера
+- `docker volume create <VOLUME>` - creează un volum cu numele `<VOLUME>`;
+- `docker volume ls` - afișează lista volumelor;
+- `docker volume rm <VOLUME>` - șterge volumul cu numele `<VOLUME>`;
+- `docker volume inspect <VOLUME>` - afișează informații despre volumul cu numele `<VOLUME>`;
+- `docker volume prune` - șterge toate volumele neutilizate.
 
-Для остановки контейнера используется команда `docker stop`. Например, для остановки контейнера с именем `my_container` используется следующая команда:
+### Montarea volumelor
 
-```bash
-docker stop my_container
-```
-
-## Удаление контейнера
-
-Для удаления контейнера используется команда `docker rm`. Например, для удаления контейнера с именем `my_container` используется следующая команда:
+Pentru a monta volumul la container se utilizează opțiunea `-v` a comenzii `docker run`. De exemplu, pentru a monta volumul cu numele `myvolume` la containerul `mycontainer`, se utilizează următoarea comandă:
 
 ```bash
-docker rm my_container
+docker run -v opt:/opt --name mycontainer myimage
 ```
 
-## Перезапуск контейнера
+În acest caz, volumul `opt` va fi disponibil în containerul `mycontainer` la calea `/opt`.
 
-Для перезапуска контейнера используется команда `docker restart`. Например, для перезапуска контейнера с именем `my_container` используется следующая команда:
+### Exemplu
+
+Să analizăm un exemplu, în care un container scrie fiecare 5 secunde un număr aleatoriu într-un fișier, iar alt container citește acest fișier și afișează conținutul său în consolă. Pentru containerul care scrie `dockerfile.write` arată astfel:
+
+```Dockerfile
+FROM debian:latest
+
+ARG TIMEOUT=5
+ENV TIMEOUT=${TIMEOUT}
+
+VOLUME [ "/opt" ]
+
+CMD ["sh", "-c", "while true; do shuf -i1-10 -n1 > /opt/data.txt; sleep ${TIMEOUT}; done"]
+```
+
+Pentru containerul care citește fișierul `dockerfile.read` arată astfel:
+
+```Dockerfile
+FROM debian:latest
+
+ARG TIMEOUT=5
+ENV TIMEOUT=${TIMEOUT}
+
+VOLUME [ "/opt" ]
+
+CMD ["sh", "-c", "while true; do cat opt/data.txt; sleep ${TIMEOUT}; done"]
+```
+
+Creăm un volum comun `opt`:
 
 ```bash
-docker restart my_container
+docker volume create opt
 ```
 
-## Подключение к контейнеру
-
-Для подключения к контейнеру используется команда `docker exec`. Например, для подключения к контейнеру с именем `my_container` используется следующая команда:
+După aceea, asamblăm imaginile:
 
 ```bash
-docker exec -it my_container /bin/bash
+docker build -t read -f dockerfile.read .
+docker build -t write -f dockerfile.write .
 ```
 
-## Копирование файлов из контейнера
-
-Для копирования файлов из контейнера используется команда `docker cp`. Например, для копирования файла `file.txt` из контейнера с именем `my_container` в текущий каталог используется следующая команда:
+Pornim containerele:
 
 ```bash
-docker cp my_container:/path/to/file.txt .
+docker run -d -v opt:/opt --name write write
+docker run -d -v opt:/opt --name read read
 ```
 
-## Копирование файлов в контейнер
+## Rețea
 
-Для копирования файлов в контейнер используется команда `docker cp`. Например, для копирования файла `file.txt` в контейнер с именем `my_container` из текущего каталога используется следующая команда:
+Două containere pot interacționa prin rețea. În Docker rețeaua reprezintă mecanismul de conectare a mai multor containere. Rețeaua poate fi creată, listată, ștearsă și containerele pot fi conectate la rețea.
+
+### Gestionarea rețelelor în Docker
+
+Pentru a lucra cu rețelele se utilizează următoarele comenzi:
+
+- `docker network create <NETWORK>` - creează o rețea cu numele `<NETWORK>`;
+- `docker network ls` - afișează lista rețelelor;
+- `docker network rm <NETWORK>` - șterge rețeaua cu numele `<NETWORK>`;
+- `docker network inspect <NETWORK>` - afișează informații despre rețeaua cu numele `<NETWORK>`;
+- `docker network connect <NETWORK> <CONTAINER>` - conectează containerul cu numele `<CONTAINER>` la rețeaua cu numele `<NETWORK>`;
+- `docker network disconnect <NETWORK> <CONTAINER>` - deconectează containerul cu numele `<CONTAINER>` de la rețeaua cu numele `<NETWORK>`;
+- `docker network prune` - șterge toate rețelele neutilizate.
+
+### Pornirea containerelor în rețea
+
+Există două posibilități de a porni containerele în rețea:
+
+- conectarea containerului la rețea după pornirea lui;
+- conectarea containerului la rețea la pornirea lui.
+
+În primul caz se utilizează comanda `docker network connect`, în al doilea - opțiunea `--network` a comenzii `docker run`.
+
+Presupunem că există două containere `frontend` și `backend`, care trebuie să comunice între ele prin rețea `local`, pentru aceasta este necesar:
+
+- să se creeze rețeaua `local`;
+- să se pornească containerul `backend` în rețeaua `local`;
+- să se pornească containerul `frontend` în rețeaua `local`.
 
 ```bash
-docker cp file.txt my_container:/path/to/file.txt
+docker network create local
+docker run -d --name backend --network local backend
+docker run -d --name frontend --network local frontend
 ```
+
+## Bibliografie
+
+1. [Швалов А., Хранение данных в Docker, Слерм](https://slurm.io/blog/tpost/i5ikrm9fj1-hranenie-dannih-v-docker)
+2. [Docker Networking, Docker](https://docs.docker.com/network/)
+3. [Docker Volumes, Docker](https://docs.docker.com/storage/volumes/)
