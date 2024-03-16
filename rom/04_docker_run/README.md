@@ -8,8 +8,8 @@
   - [Pornirea containerului](#pornirea-containerului)
   - [Comunicarea cu containerul](#comunicarea-cu-containerul)
   - [Repornirea containerului](#repornirea-containerului)
-  - [Copierea fișierelor din container](#copierea-fișierelor-din-container)
-  - [Copierea fișierelor în container](#copierea-fișierelor-în-container)
+  - [Copierea fișierelor](#copierea-fișierelor)
+  - [Citirea log-urilor containerului](#citirea-log-urilor-containerului)
   - [Vizualizarea containerelor](#vizualizarea-containerelor)
   - [Oprirea containerului](#oprirea-containerului)
   - [Stergerea containerului](#stergerea-containerului)
@@ -165,20 +165,38 @@ Pentru repornirea containerului se utilizează comanda `docker restart`. De exem
 docker restart my_container
 ```
 
-## Copierea fișierelor din container
+## Copierea fișierelor
 
-Pentru copierea fișierelor din container se utilizează comanda `docker cp`. De exemplu, pentru copierea fișierului `file.txt` din containerul cu numele `my_container` în directorul curent se utilizează următoarea comandă:
+Pentru copierea fișierelor se utilizează comanda `docker cp`. Sintaxa generală a comenzii `docker cp` arată în felul următor:
+
+```bash
+docker cp <source> <destination>
+```
+
+De exemplu, pentru copierea fișierului `file.txt` din containerul cu numele `my_container` în directorul curent se utilizează următoarea comandă:
 
 ```bash
 docker cp my_container:/path/to/file.txt .
 ```
 
-## Copierea fișierelor în container
-
-Pentru copierea fișierelor în container se utilizează comanda `docker cp`. De exemplu, pentru copierea fișierului `file.txt` în containerul cu numele `my_container` din directorul curent se utilizează următoarea comandă:
+În caz dacă este necesar să se copieze `file.txt` din calculator gazdă în containerul cu numele `my_container` din directorul curent se utilizează următoarea comandă:
 
 ```bash
 docker cp file.txt my_container:/path/to/file.txt
+```
+
+## Citirea log-urilor containerului
+
+Pentru a citi log-urile containerului se utilizează comanda `docker logs`. De exemplu, pentru a citi log-urile containerului cu numele `my_container` se utilizează următoarea comandă:
+
+```bash
+docker logs my_container
+```
+
+Dacă este necesar să se vizualizeze log-urile în timp real, atunci se utilizează opțiunea `-f`:
+
+```bash
+docker logs -f my_container
 ```
 
 ## Vizualizarea containerelor

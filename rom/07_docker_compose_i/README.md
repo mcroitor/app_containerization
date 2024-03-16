@@ -1,1 +1,1 @@
-# docker-compose I
+# Crearea unui cluster de containere cu ajutorul Docker Compose
