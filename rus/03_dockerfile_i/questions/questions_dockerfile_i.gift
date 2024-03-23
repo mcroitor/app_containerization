@@ -42,23 +42,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `null`
 }
 
-::03k006:: [markdown] Какой командой задается метаданные образа?
-{
-    =[markdown] `LABEL`
-    ~[markdown] `META`
-    ~[markdown] `METADATA`
-    ~[markdown] `METAINFO`
-}
-
-::03k007:: [markdown] Какой командой задается аргумент сборки?
-{
-    =[markdown] `ARG`
-    ~[markdown] `ARGUMENT`
-    ~[markdown] `BUILD_ARG`
-    ~[markdown] `BUILD_ARGUMENT`
-}
-
-::03k008:: [markdown] Какой командой задается точка входа для запуска контейнера?
+::03k006:: [markdown] Какой командой задается точка входа для запуска контейнера?
 {
     =[markdown] `CMD`
     ~[markdown] `EXEC`
@@ -66,7 +50,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `START`
 }
 
-::03k009:: [markdown] Чтобы скопировать файлы и директории из контекста сборки в файловую систему образа, используется команда:
+::03k007:: [markdown] Чтобы скопировать файлы и директории из контекста сборки в файловую систему образа, используется команда
 {
     =[markdown] `COPY`
     ~[markdown] `MOVE`
@@ -74,7 +58,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `PASTE`
 }
 
-::03k010:: [markdown] Образ контейнера строится по умолчанию на базе описания файла
+::03k008:: [markdown] Образ контейнера строится по умолчанию на базе описания файла
 {
     =[markdown] `Dockerfile`
     ~[markdown] `docker-compose.yaml`
@@ -82,15 +66,15 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `image.json`
 }
 
-::03k011:: [markdown] Скачать архив по URL ссылке, распаковать его и записать в образ можно при помощи команды
+::03k009:: [markdown] Скачать архив по URL ссылке и записать в образ можно при помощи команды
 {
     =[markdown] `ADD`
     ~[markdown] `COPY`
-    ~[markdown] `UNPACK`
+    ~[markdown] `GET`
     ~[markdown] `DOWNLOAD`
 }
 
-::03k012:: [markdown] Выполнение некоторой команды при построении образа контейнера определяется директивой
+::03k010:: [markdown] Выполнение некоторой команды при построении образа контейнера определяется директивой
 {
     =[markdown] `RUN`
     ~[markdown] `EXEC`
@@ -98,7 +82,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `DO`
 }
 
-::03k013:: [markdown] Определить рабочую директорию в образе можно при помощи команды
+::03k011:: [markdown] Определить рабочую директорию в образе можно при помощи команды
 {
     =[markdown] `WORKDIR`
     ~[markdown] `WORK`
@@ -106,7 +90,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `CD`
 }
 
-::03k014:: [markdown] Сменить пользователя в образе можно при помощи команды
+::03k012:: [markdown] Сменить пользователя в образе можно при помощи команды
 {
     =[markdown] `USER`
     ~[markdown] `CHANGE_USER`
@@ -114,7 +98,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `CHOWN`
 }
 
-::03k015:: [markdown] Чтобы скопировать файл `php-fpm.conf` из папки `files/configs` в образ в папку `/etc/php` образа, нужно использовать команду
+::03k013:: [markdown] Чтобы скопировать файл `php-fpm.conf` из папки `files/configs` в образ в папку `/etc/php` образа, нужно использовать команду
 {
     =[markdown] `COPY files/configs/php-fpm.conf /etc/php`
     ~[markdown] `COPY /etc/php files/configs/php-fpm.conf`
@@ -122,7 +106,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `COPY /files/configs/php-fpm.conf /etc/php`
 }
 
-::03k016:: [markdown] Чтобы создать директорию `/var/www` в образе, нужно использовать команду
+::03k014:: [markdown] Чтобы создать директорию `/var/www` в образе, нужно использовать команду
 {
     =[markdown] `RUN mkdir /var/www`
     ~[markdown] `COPY /var/www`
@@ -130,7 +114,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `MKDIR /var/www`
 }
 
-::03k017:: [markdown] Для установки пакета `nginx` в образе, нужно использовать команду
+::03k015:: [markdown] Для установки пакета `nginx` в образе, нужно использовать команду
 {
     =[markdown] `RUN apt-get install -y nginx`
     ~[markdown] `COPY apt-get install -y nginx`
@@ -138,7 +122,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `ADD apt-get install -y nginx`
 }
 
-::03k018:: [markdown] Чтобы выполнять команду `nginx -g "daemon off;"` при запуске контейнера, нужно использовать команду
+::03k016:: [markdown] Чтобы выполнять команду `nginx -g "daemon off;"` при запуске контейнера, нужно использовать команду
 {
     =[markdown] `CMD ["nginx", "-g", "daemon off;"]`
     ~[markdown] `RUN ["nginx", "-g", "daemon off;"]`
@@ -146,7 +130,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `EXEC ["nginx", "-g", "daemon off;"]`
 }
 
-::03k019:: [markdown] Обновить списки пакетов и сами пакеты в образе на базе OS Ubuntu можно при помощи команды
+::03k017:: [markdown] Обновить списки пакетов и сами пакеты в образе на базе OS Ubuntu можно при помощи команды
 {
     =[markdown] `RUN apt-get update && apt-get -y upgrade`
     ~[markdown] `RUN apt-get update`
@@ -154,7 +138,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `UPGRADE packages`
 }
 
-::03k020:: [markdown] Разница между командами `CMD` и `ENTRYPOINT` заключается в том, что
+::03k018:: [markdown] Разница между командами `CMD` и `ENTRYPOINT` заключается в том, что
 {
     =[markdown] `CMD` позволяет переопределить команду при запуске контейнера, а `ENTRYPOINT` - нет.
     ~[markdown] `ENTRYPOINT` позволяет переопределить команду при запуске контейнера, а `CMD` - нет.

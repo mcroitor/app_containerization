@@ -66,7 +66,7 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `START`
 }
 
-::03k009:: [markdown] Pentru a copia fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii, se folosește comanda:
+::03k009:: [markdown] Pentru a copia fișiere și directoare din contextul de construire în sistemul de fișiere al imaginii, se folosește comanda
 {
     =[markdown] `COPY`
     ~[markdown] `MOVE`
@@ -82,11 +82,11 @@ $CATEGORY: 03_dockerfile_i/1_knowledge
     ~[markdown] `image.json`
 }
 
-::03k011:: [markdown] Pentru a descărca un arhivă de la o adresă URL, dezarhiva și copia fișierele în imaginea de bază, se folosește comanda
+::03k011:: [markdown] Pentru a descărca un arhivă de la o adresă URL și copia în imaginea se folosește comanda
 {
     =[markdown] `ADD`
     ~[markdown] `COPY`
-    ~[markdown] `UNPACK`
+    ~[markdown] `GET`
     ~[markdown] `DOWNLOAD`
 }
 
