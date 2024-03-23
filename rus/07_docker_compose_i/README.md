@@ -3,9 +3,14 @@
 - [Создание кластера контейнеров при помощи Docker Compose](#создание-кластера-контейнеров-при-помощи-docker-compose)
   - [Цель Docker Compose](#цель-docker-compose)
   - [Синтаксис docker-compose.yml](#синтаксис-docker-composeyml)
+    - [Описание сервиса](#описание-сервиса)
+    - [Описание тома](#описание-тома)
+    - [Описание сети](#описание-сети)
+    - [Описание конфигурации](#описание-конфигурации)
+    - [Описание секрета](#описание-секрета)
   - [Пример кластера](#пример-кластера)
   - [Управление кластером контейнеров](#управление-кластером-контейнеров)
-  - [Полезные ссылки](#полезные-ссылки)
+  - [Библиография](#библиография)
 
 ## Цель Docker Compose
 
@@ -89,6 +94,8 @@ secrets:
 
 В стандартном описании кластера контейнеров в файле `docker-compose.yml` обязательно должен присутствовать раздел `services`, в котором описываются сервисы, представляющие собой контейнеры. Остальные разделы (`volumes`, `networks`, `configs`, `secrets`) являются опциональными и используются для описания томов, сетей, конфигураций и секретов соответственно.
 
+### Описание сервиса
+
 Раздел `services` содержит список сервисов, каждый из которых представляет собой отдельный контейнер. Описание сервиса содержит следующие ключи:
 
 - `image` - имя образа контейнера, который будет использован для создания сервиса.
@@ -129,11 +136,100 @@ services:
             - MYSQL_ROOT_PASSWORD=secret
 ```
 
+### Описание тома
+
 Раздел `volumes` содержит список томов, которые будут использованы в кластере контейнеров. Описание тома содержит следующие ключи:
 
 - `driver` - драйвер, который будет использован для создания тома.
 - `driver_opts` - опции драйвера, которые будут использованы для создания тома.
 - `external` - имя внешнего тома, который будет использован в кластере контейнеров.
+- `labels` - список меток, которые будут установлены для тома.
+- `name` - имя тома.
+
+Пример описания тома:
+
+```yaml
+volumes:
+    web:
+        driver: local
+        driver_opts:
+            type: none
+            device: /path/to/web
+            o: bind
+    db:
+        driver: local
+        driver_opts:
+            type: none
+            device: /path/to/db
+            o: bind
+```
+
+### Описание сети
+
+Раздел `networks` содержит список сетей, которые будут использованы в кластере контейнеров. Описание сети содержит следующие ключи:
+
+- `driver` - драйвер, который будет использован для создания сети.
+- `driver_opts` - опции драйвера, которые будут использованы для создания сети.
+- `external` - имя внешней сети, которая будет использована в кластере контейнеров.
+- `attachable` - флаг, который указывает, что контейнеры могут присоединяться к сети.
+- `internal` - флаг, который указывает, что сеть является внутренней сетью.
+- `labels` - список меток, которые будут установлены для сети.
+- `name` - имя сети.
+- `enable_ipv6` - флаг, который указывает, что сеть поддерживает IPv6.
+- `ipam` - параметры IPAM для сети.
+
+Пример описания сети:
+
+```yaml
+networks:
+    frontend:
+        driver: bridge
+        driver_opts:
+            com.docker.network.bridge.name: frontend
+    backend:
+        driver: bridge
+        driver_opts:
+            com.docker.network.bridge.name: backend
+```
+
+### Описание конфигурации
+
+Раздел `configs` содержит список конфигураций, которые будут использованы в кластере контейнеров. Описание конфигурации содержит следующие ключи:
+
+- `file` - путь к файлу, который будет использован для создания конфигурации.
+- `environment` - список переменных окружения, которые будут установлены для конфигурации.
+- `external` - имя внешней конфигурации, которая будет использована в кластере контейнеров.
+- `name` - имя конфигурации.
+- `content` - конфигурация создается на базе содержимого.
+
+Пример описания конфигурации:
+
+```yaml
+configs:
+    nginx.conf:
+        file: /path/to/nginx.conf
+    php.ini:
+        file: /path/to/php.ini
+```
+
+### Описание секрета
+
+Раздел `secrets` содержит список секретов (паролей, приватных ключей, сертификатов), которые будут использованы в кластере контейнеров. Описание секрета содержит следующие ключи:
+
+- `file` - путь к файлу, который будет использован для создания секрета.
+- `environment` - секрет создаётся на базе переменной окружения.
+
+Пример описания секрета:
+
+```yaml
+secrets:
+    db_password:
+        environment: DB_PASSWORD
+    db_user:
+        environment: DB_USER
+    certificate:
+        file: ./certificate.pem
+```
 
 ## Пример кластера
 
@@ -180,6 +276,9 @@ services:
             - backend
         environment:
             - MYSQL_ROOT_PASSWORD=secret
+            - MYSQL_DATABASE=app
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=password
 
 networks:
     frontend:
@@ -191,7 +290,7 @@ networks:
 Файл `docker-compose.yaml` описывает сервисы приложения и взаимодействия между ними. Чтобы построить контейнеры сервисов, определить инфраструктуру, необходимо выполнить команду
 
 ```bash
-docker-compose build .
+docker-compose build
 ```
 
 Чтобы запустить контейнеры сервисов, необходимо выполнить команду
@@ -211,7 +310,7 @@ docker-compose down
 Иногда возникает необходимость перестроить полностью контейнеры сервисов. Для этого необходимо выполнить команду
 
 ```bash
-docker-compose build --no-cache .
+docker-compose build --no-cache
 ```
 
 Немаловажным свойством является просмотр журналов контейнеров сервисов. Для этого необходимо выполнить команду
@@ -226,8 +325,10 @@ docker-compose logs -f <service-name>
 docker-compose exec <service-name> <command>
 ```
 
-## Полезные ссылки
+## Библиография
 
-1. [Docker Compose overview, docs.docker.com](https://docs.docker.com/compose/)
-2. [Gaël Thomas, A beginner’s guide to Docker — how to create a client/server side with docker-compose, https://www.freecodecamp.org](https://www.freecodecamp.org/news/a-beginners-guide-to-docker-how-to-create-a-client-server-side-with-docker-compose-12c8cf0ae0aa)
-3. [Gaël Thomas, Руководство по Docker Compose для начинающих, перевод статьи https://www.freecodecamp.org, habr.com](https://habr.com/ru/companies/ruvds/articles/450312/)
+1. [YAML Ain’t Markup Language (YAML™) version 1.2, yaml.org, 2021-10-01](https://yaml.org/spec/1.2.2/)
+2. [Шпаргалка по YAML](../additional/yaml.md)
+3. [Docker Compose overview, docs.docker.com](https://docs.docker.com/compose/)
+4. [Gaël Thomas, A beginner’s guide to Docker — how to create a client/server side with docker-compose, https://www.freecodecamp.org](https://www.freecodecamp.org/news/a-beginners-guide-to-docker-how-to-create-a-client-server-side-with-docker-compose-12c8cf0ae0aa)
+5. [Gaël Thomas, Руководство по Docker Compose для начинающих, перевод статьи https://www.freecodecamp.org, habr.com](https://habr.com/ru/companies/ruvds/articles/450312/)

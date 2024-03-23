@@ -50,10 +50,10 @@
     - [ ] `docker-compose.yaml`
     - [ ] `docker-image.def`
     - [ ] `image.json`
-11. Pentru a descărca un arhivă de la o adresă URL, dezarhiva și copia fișierele în imaginea de bază, se folosește comanda
+11. Pentru a descărca un arhivă de la o adresă URL și copia în imaginea se folosește comanda
     - [ ] `ADD`
     - [ ] `COPY`
-    - [ ] `UNPACK`
+    - [ ] `GET`
     - [ ] `DOWNLOAD`
 12. Executarea unei anumite comenzi la construirea imaginii containerului este determinată de directiva
     - [ ] `RUN`

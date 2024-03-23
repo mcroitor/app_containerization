@@ -48,7 +48,8 @@ YAML-файлы состоят из пар ключ-значение, котор
 ```yaml
 key: value
 parent:
-  child: value
+  child1: value1
+  child2: value2
 ```
 
 ### Комментарии
