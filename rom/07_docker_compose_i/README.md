@@ -241,7 +241,9 @@ Următorul exemplu arată descrierea unui cluster de servicii, care constă din 
 - `php-fpm` - interpretorul PHP care procesează cererile dinamice.
 - `mariadb` - serverul bazei de date care stochează datele aplicației.
 
-Site-ul este situat în directorul montat la containerele `nginx` și `php-fpm` `/path/to/web`, iar baza de date în directorul montat la containerul `mariadb` `/path/to/db`.
+Site-ul este situat în directorul montat la containerele `nginx` și `php-fpm` `./files/app`, iar baza de date în directorul montat la containerul `mariadb` `./mounts/db`.
+
+Container `nginx` expune portul 8080, container `php-fpm` utilizează port 9000. Container `nginx` este conectat la rețelele `frontend` și `backend`, iar containerele `mariadb` și `php-fpm` la rețeaua `backend`.
 
 ```yaml
 version: '3'
@@ -252,7 +254,7 @@ services:
         ports:
             - "8080:80"
         volumes:
-            - /path/to/web:/usr/share/nginx/html
+            - ./files/app:/usr/share/nginx/html
         networks:
             - frontend
             - backend
@@ -263,7 +265,7 @@ services:
     php-fpm:
         image: php:7.4-fpm
         volumes:
-            - /path/to/web:/usr/share/nginx/html
+            - ./files/app:/var/www/html
         networks:
             - backend
         environment:
@@ -273,7 +275,7 @@ services:
     mariadb:
         image: mariadb:10.5
         volumes:
-            - /path/to/db:/var/lib/mysql
+            - ./mounts/db:/var/lib/mysql
         networks:
             - backend
         environment:
@@ -283,8 +285,8 @@ services:
             - MYSQL_PASSWORD=password
 
 networks:
-    frontend:
-    backend:
+    frontend: {}
+    backend: {}
 ```
 
 ## Gestionarea clusterului de containere
