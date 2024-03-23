@@ -239,7 +239,9 @@ secrets:
 - `php-fpm` - интерпретатор PHP, который обрабатывает динамические запросы.
 - `mariadb` - сервер базы данных, который хранит данные приложения.
 
-Сайт располагается в монтируемой к контейнерам `nginx` и `php-fpm` директории `/path/to/web`, а база данных в монтируемой к контейнеру `mariadb` директории `/path/to/db`.
+Сайт располагается в монтируемой к контейнерам `nginx` и `php-fpm` директории `./files/app`, а база данных в монтируемой к контейнеру `mariadb` директории `./mounts/db`.
+
+Контейнер `nginx` пробрасывает порт 8080 на порт 80 контейнера, а контейнер `php-fpm` использует порт 9000. Контейнер `nginx` подключен к сетям `frontend` и `backend`, а контейнеры `mariadb` и `php-fpm` к сети `backend`.
 
 ```yaml
 version: '3'
@@ -250,7 +252,7 @@ services:
         ports:
             - "8080:80"
         volumes:
-            - /path/to/web:/usr/share/nginx/html
+            - ./files/app:/usr/share/nginx/html
         networks:
             - frontend
             - backend
@@ -261,7 +263,7 @@ services:
     php-fpm:
         image: php:7.4-fpm
         volumes:
-            - /path/to/web:/usr/share/nginx/html
+            - ./files/app:/var/www/html
         networks:
             - backend
         environment:
@@ -271,7 +273,7 @@ services:
     mariadb:
         image: mariadb:10.5
         volumes:
-            - /path/to/db:/var/lib/mysql
+            - ./mounts/db:/var/lib/mysql
         networks:
             - backend
         environment:
@@ -281,8 +283,8 @@ services:
             - MYSQL_PASSWORD=password
 
 networks:
-    frontend:
-    backend:
+    frontend: {}
+    backend: {}
 ```
 
 ## Управление кластером контейнеров
