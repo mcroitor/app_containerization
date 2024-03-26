@@ -22,11 +22,8 @@ De obicei este dificil să creați o aplicație compusă dintr-un singur contain
 - Fiecare componentă nu poate fi scalată independent de celelalte.
 - Fiecare componentă nu poate fi actualizată independent de celelalte.
 - Fiecare componentă nu poate fi înlocuită independent de celelalte.
-- 
-- Разработка каждой компоненты не может вестись разными командами.
-- Каждый компонент не может быть масштабирован независимо от других.
-- Каждый компонент не может быть обновлен независимо от других.
-- Каждый компонент не может быть заменен независимо от других.
+
+Fiecare componentă a aplicației Web (serverul Web, baza de date, cache-ul, coada de mesaje etc) poate fi reprezentată de un container separat, ceea ce permite să lucrați cu fiecare parte a aplicației independent. Docker Compose permite să descrieți configurația tuturor acestor containere într-un singur fișier `docker-compose.yml` și să le gestionați prin intermediul liniei de comandă.
 
 ## Sintaxa docker-compose.yml
 
