@@ -100,3 +100,34 @@
     - [ ] `ENTRYPOINT` permite redefinirea comenzii la rularea containerului, iar `CMD` - nu.
     - [ ] `CMD` și `ENTRYPOINT` efectuează aceleași acțiuni.
     - [ ] `CMD` și `ENTRYPOINT` efectuează acțiuni diferite.
+
+Întrebări de tip _răspuns scurt_:
+
+1. În Dockerfile pentru crearea unei imagini pe baza imaginii `ubuntu:20.04` se folosește comanda
+   - `FROM ubuntu:20.04`
+2. În Dockerfile pentru crearea unei imagini pe baza ultimei imagini create `nginx` se folosește comanda
+   - `FROM nginx`
+   - `FROM nginx:latest`
+3. În Dockerfile pentru crearea unei imagini pe baza unei imagini goale se folosește comanda
+   - `FROM scratch`
+4. Care comandă în Dockerfile se folosește pentru instalarea pachetului `nano` în imaginea pe baza OS Ubuntu?
+    - `RUN apt-get install -y nano`
+    - `RUN apt-get install nano -y`
+    - `RUN apt install -y nano`
+    - `RUN apt install nano -y`
+5. În Dockerfile pentru copierea fișierului `php.ini` din directorul `files` contextului de construire în imagine în directorul `/etc/php/7.4/cli` se folosește comanda
+    - `COPY files/php.ini /etc/php/7.4/cli`
+6. În Dockerfile pentru crearea directorului `/var/www` în imagine se folosește comanda
+    - `RUN mkdir /var/www`
+7. Pentru a schimba utilizatorul în imagine pe `www-data` se folosește comanda
+    - `USER www-data`
+8. Pentru a instala pachetul `nginx` în imagine pe baza OS Ubuntu se folosește comanda
+    - `RUN apt-get install -y nginx`
+    - `RUN apt-get install nginx -y`
+    - `RUN apt install -y nginx`
+    - `RUN apt install nginx -y`
+9. Pentru a executa comanda `nginx -g "daemon off;"` la rularea containerului, se folosește comanda
+    - `CMD ["nginx", "-g", "daemon off;"]`
+    - `CMD nginx -g "daemon off;"`
+10. Pentru a schimba directorul de lucru în imagine pe `/var/www` se folosește comanda
+    - `WORKDIR /var/www`
