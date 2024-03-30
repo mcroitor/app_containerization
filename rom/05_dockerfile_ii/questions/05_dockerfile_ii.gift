@@ -1,0 +1,117 @@
+// # Întrebări la tema "Comenzile suplimentare ale Dockerfile"
+
+$CATEGORY: 05_dockerfile_ii/1_knowledge
+
+::05k001:: [markdown] Pentru specificarea unei variabile de mediu în imaginea containerului, se folosește directiva{
+    =[markdown] `ENV`
+    ~[markdown] `ARG`
+    ~[markdown] `VAR`
+    ~[markdown] `VARIABLE`
+}
+
+::05k002:: [markdown] Pentru specificarea argumentului de construcție, care poate fi folosit în timpul construirii imaginii, se folosește directiva
+{
+    =[markdown] `ARG`
+    ~[markdown] `ENV`
+    ~[markdown] `BUILD_ARG`
+    ~[markdown] `VAR`
+}
+
+::05k003:: [markdown] Pentru a deschide un port al containerului, se folosește directiva
+{
+    =[markdown] `EXPOSE`
+    ~[markdown] `PORT`
+    ~[markdown] `OPEN`
+    ~[markdown] `PUBLISH`
+}
+
+::05k004:: [markdown] Pentru specificarea punctului de montare al volumului în container, se folosește directiva
+{
+    =[markdown] `VOLUME`
+    ~[markdown] `MOUNT`
+    ~[markdown] `MOUNTPOINT`
+    ~[markdown] `MOUNTVOLUME`
+}
+
+::05k005:: [markdown] Datele meta ale imaginii pot fi specificate cu ajutorul directivei
+{
+    =[markdown] `LABEL`
+    ~[markdown] `META`
+    ~[markdown] `METADATA`
+    ~[markdown] `COMMENT`
+}
+
+::05k006:: [markdown] Schimbarea shell-ului implicit în imagine se poate face cu ajutorul directivei
+{
+    =[markdown] `SHELL`
+    ~[markdown] `CMD`
+    ~[markdown] `SH`
+    ~[markdown] `BASH`
+}
+
+::05k007:: [markdown] Verificarea funcționării imaginii se poate face cu ajutorul directivei
+{
+    =[markdown] `HEALTHCHECK`
+    ~[markdown] `CHECK`
+    ~[markdown] `TEST`
+    ~[markdown] `VERIFY`
+}
+
+::05k008:: [markdown] Argumentul de construcție `DEBIAN_VERSION` în Dockerfile se poate defini astfel
+{
+    =[markdown] `ARG DEBIAN_VERSION`
+    ~[markdown] `ENV DEBIAN_VERSION`
+    ~[markdown] `VAR DEBIAN_VERSION`
+    ~[markdown] `SET DEBIAN_VERSION`
+}
+
+::05k009:: [markdown] Variabila de mediu `DEBIAN_VERSION` în Dockerfile se poate defini astfel
+{
+    =[markdown] `ENV DEBIAN_VERSION`
+    ~[markdown] `ARG DEBIAN_VERSION`
+    ~[markdown] `VAR DEBIAN_VERSION`
+    ~[markdown] `SET DEBIAN_VERSION`
+}
+
+::05k010:: [markdown] Pentru a defini argumentul de construcție `DEBIAN_VERSION` cu valoarea `10` la construirea imaginii `myimage`, se folosește comanda
+{
+    =[markdown] `docker build --build-arg DEBIAN_VERSION=10 -t myimage .`
+    ~[markdown] `docker build -e DEBIAN_VERSION=10 -t myimage .`
+    ~[markdown] `docker build --arg DEBIAN_VERSION=10 -t myimage .`
+    ~[markdown] `docker build --build-env DEBIAN_VERSION=10 -t myimage .`
+}
+
+//Вопросы типа _"короткий ответ"_:
+$CATEGORY: 05_dockerfile_ii/2_usage
+
+::05u001:: [markdown] Pentru a specifica argumentul de construcție `UBUNTU_VERSION` cu valoarea `20.04`, se adaugă în Dockerfile următoarea linie {=ARG UBUNTU_VERSION\=20.04}
+
+::05u002:: [markdown] Pentru a specifica argumentul de construcție `APP_DIR` cu valoarea `/usr/src/app`, se adaugă în Dockerfile următoarea linie {=ARG APP_DIR\=/usr/src/app}
+
+::05u003:: [markdown] Pentru a specifica variabila de mediu `APP_DIR` cu valoarea `/usr/src/app`, se adaugă în Dockerfile următoarea linie {=ENV APP_DIR\=/usr/src/app}
+
+::05u004:: [markdown] Pentru a specifica variabila de mediu `UBUNTU_VERSION` cu valoarea `20.04`, se adaugă în Dockerfile următoarea linie {=ENV UBUNTU_VERSION\=20.04}
+
+::05u005:: [markdown] Pentru a specifica argumentul de construcție `UBUNTU_VERSION` cu valoarea `20.04` la construirea imaginii `myimage`, se folosește comanda {=docker build --build-arg UBUNTU_VERSION\=20.04 -t myimage . =docker build -t myimage --build-arg UBUNTU_VERSION\=20.04 .}
+
+::05u006:: [markdown] Pentru definirea argumentului de construcție `APP_DIR` cu valoarea `/usr/src/app` la construirea imaginii `myimage`, se folosește comanda {=docker build --build-arg APP_DIR\=/usr/src/app -t myimage . =docker build -t myimage --build-arg APP_DIR\=/usr/src/app .}
+
+::05u007:: [markdown] Dockerfile este definită variabila de mediu `UBUNTU_VERSION`. Scrieți directiva care va afișa valoarea acestei variabile de mediu în timpul construirii imaginii în fișierul `/version.txt`. {=RUN echo $UBUNTU_VERSION > /version.txt =RUN echo "$UBUNTU_VERSION" > /version.txt =RUN echo $\{UBUNTU_VERSION\} > /version.txt}
+
+::05u008:: [markdown] În fișier Dockerfile este definit argumentul de construcție `UBUNTU_VERSION`. Scrieți directiva care va defini variabila de mediu `UBUNTU_VERSION` cu valoarea argumentului de construcție.{=ENV UBUNTU_VERSION\=$UBUNTU_VERSION=ENV UBUNTU_VERSION\=$\{UBUNTU_VERSION\}=ENV UBUNTU_VERSION\="$UBUNTU_VERSION"}
+
+::05u009:: [markdown] În Dockerfile este definit argumentul de construcție `UBUNTU_VERSION`. Scrieți directiva care va defini crearea imaginii pe baza imaginii `ubuntu` cu utilizarea argumentului de construcție `UBUNTU_VERSION`. {=FROM ubuntu\:$UBUNTU_VERSION=FROM ubuntu\:$\{UBUNTU_VERSION\}}
+
+::05u010:: [markdown] Pentru a deschide portul `80` în container, se adaugă în Dockerfile următoarea linie{=EXPOSE 80}
+
+::05u011:: [markdown] Pentru a deschide portul `8080` în container, se adaugă în Dockerfile următoarea linie{=EXPOSE 8080}
+
+::05u012:: [markdown] Pentru a proba portul `80` al containerului pe portul `8080` al gazdei la crearea și pornirea containerului cu imaginea `myimage`, se folosește comanda{=docker run -p 8080\:80 myimage}
+
+::05u013:: [markdown] Pentru a defini punctul de montare al volumului la directorul `/data` în container, se adaugă în Dockerfile următoarea linie{=VOLUME /data}
+
+::05u014:: [markdown] Pentru a defini punctul de montare al volumului la directorul `/var/lib/mysql` în container, se adaugă în Dockerfile următoarea linie{=VOLUME /var/lib/mysql}
+
+::05u015:: [markdown] Pentru a defini metadatele imaginii `maintainer` cu valoarea `Gicu Stirbu`, se adaugă în Dockerfile următoarea linie{=LABEL maintainer\="Gicu Stirbu"=LABEL maintainer\=Gicu Stirbu}
+
+::05u016:: [markdown] Pentru a defini metadatele imaginii `version` cu valoarea `1.0`, se adaugă în Dockerfile următoarea linie{=LABEL version\="1.0"=LABEL version\=1.0}

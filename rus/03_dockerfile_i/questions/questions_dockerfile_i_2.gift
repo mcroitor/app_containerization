@@ -3,7 +3,7 @@
 // Вопросы типа _"короткий ответ"_:
 $CATEGORY: 03_dockerfile_i/2_usage
 
-::03u001:: [markdown] В Dockerfile для создания образа на базе образа `ubuntu:20.04` используется команда {=FROM ubuntu\:20.04}
+::03u001:: [markdown] В Dockerfile для создания образа на базе образа `ubuntu\:20.04` используется команда {=FROM ubuntu\:20.04}
 
 ::03u002:: [markdown] В Dockerfile для создания образа на базе последнего созданного образа `nginx` используется команда{ =FROM nginx =FROM nginx\:latest}
 

@@ -18,7 +18,7 @@ Materialele cursului sunt disponibile pe [GitHub](https://github.com/mcroitor/ap
 6. [Interacțiunea containerelor](06_container_usage/README.md)
 7. [Crearea unui cluster de containere cu ajutorul Docker Compose](07_docker_compose_i/README.md)
 8. [docker-compose II](08_docker_compose_ii/README.md)
-9. [COnstruirea imaginilor in mai multe etape](09_multistage/README.md)
+9. [Construirea imaginilor in mai multe etape](09_multistage/README.md)
 10. [Containere în procese CI / CD](10_CI_CD/README.md)
 11. [Optimizarea imaginilor](11_image_optimization/README.md)
 12. [Practici bune în elaborarea containerelor](12_best_practicies/README.md)
