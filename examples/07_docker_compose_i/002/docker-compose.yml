@@ -5,6 +5,8 @@ services:
     build:
       context: ./files/nginx
       dockerfile: Dockerfile
+      args:
+        - NGINX_VERSION=1.23
     ports:
       - "80:80"
     networks:
@@ -16,6 +18,8 @@ services:
   backend:
     build:
       context: ./files/php
+      args:
+        PHP_VERSION: 8.1
     networks:
       - backend
       - frontend
@@ -34,8 +38,11 @@ services:
     networks:
       - backend
     volumes:
-      - ./mounts/database:/var/lib/mysql
+      - database:/var/lib/mysql
 
 networks:
   frontend: {}
   backend: {}
+
+volumes:
+  database: {}
