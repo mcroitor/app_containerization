@@ -87,8 +87,8 @@ Totodată, se pot defini șiruri pe mai multe linii folosind simbolurile `|` sau
 
 ```yaml
 multiline_literal: |
-  Hello,
-  World!
+    Hello,
+    World!
 multiline_folded: >
     Hello, World!
 ```
