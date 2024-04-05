@@ -38,9 +38,13 @@ foreach ($chunks as $chunk) {
 }
 
 // generate random number
-$random = rand(1, 80);
-// allocate memory for 1MB
+$random = rand(10, 20);
+// allocate memory for $random MB
 $memory = str_repeat("x", $random * 1024 * 1024);
+
+// pause for $random_seconds second
+$random_seconds = rand(1, 5);
+sleep($random_seconds);
 
 //file_put_contents("file://stderr", "[DEBUG] log size = {$logSize}\n");
 
