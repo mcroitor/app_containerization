@@ -3,7 +3,12 @@
 - [Optimizarea imaginii containerului](#optimizarea-imaginii-containerului)
   - [Obținerea informațiilor despre dimensiunea imaginii](#obținerea-informațiilor-despre-dimensiunea-imaginii)
   - [Imaginea de bază minimă](#imaginea-de-bază-minimă)
-  - [Construirea în mai multe etape](#construirea-în-mai-multe-etape)
+    - [Construirea în mai multe etape](#construirea-în-mai-multe-etape)
+    - [Metoda veche de construcție a imaginilor](#metoda-veche-de-construcție-a-imaginilor)
+      - [Exemplu](#exemplu)
+    - [Principiile de bază ale construcției în mai multe etape](#principiile-de-bază-ale-construcției-în-mai-multe-etape)
+      - [Exemplu multi-stage build](#exemplu-multi-stage-build)
+    - [Forma generală a construcției în mai multe etape](#forma-generală-a-construcției-în-mai-multe-etape)
   - [Ștergerea dependențelor neutilizate și a fișierelor temporare](#ștergerea-dependențelor-neutilizate-și-a-fișierelor-temporare)
   - [Reducerea numărului de straturi](#reducerea-numărului-de-straturi)
   - [Repachearea imaginii](#repachearea-imaginii)
@@ -63,9 +68,199 @@ Deasemenea, puteți folosi imaginea `scratch`, care nu conține nimic, și adău
 
 Pentru probleme concrete pot fi alese imagini specializate, care adesea oferă versiuni optimizate. De exemplu, pentru Python puteți folosi imaginea `python:alpine`, care conține un set minim de pachete pentru lucru cu Python.
 
-## Construirea în mai multe etape
+### Construirea în mai multe etape
 
 Construirea în mai multe etape permite reducerea dimensiunii imaginii containerului, deoarece în imaginea finală rămân doar fișierele și dependențele necesare. De exemplu, puteți folosi o imagine cu compilator pentru construirea aplicației, iar apoi copiați doar fișierul executabil în imaginea finală.
+
+Pentru a crea o imagine cu adevărat eficientă, mică și sigură, se recomandă să se efectueze procesul de construcție în mai multe etape. Fiecare etapă de construcție este efectuată într-un container separat, iar rezultatul său este salvat într-o imagine. În cele din urmă, în loc de o singură imagine mare, sunt create mai multe intermediare, care conțin rezultatele fiecărei etape. În imaginea finală vor fi doar fișierele necesare pentru funcționarea aplicației.
+
+### Metoda veche de construcție a imaginilor
+
+Un proces de dezvoltare a unui produs software include următoarele etape:
+
+- Configurarea mediului
+- Scrierea codului
+- Compilarea și construirea
+- Testarea
+- Implementarea
+
+În mod asemănător, construcția imaginii Docker include următoarele etape:
+
+- Configurarea mediului
+- Instalarea dependențelor
+- Construirea aplicației
+- Testarea
+- Implementarea containerului
+
+Pentru fiecare etapă se creează un container separat, care efectuează o anumită acțiune. De exemplu, pentru instalarea dependențelor se folosește un container cu un compilator și biblioteci instalate, pentru construirea aplicației - un container cu un compilator și biblioteci instalate, pentru testare - un container cu un framework de testare instalat etc. La sfârșit, rezultatele fiecărui container sunt combinate într-o singură imagine.
+
+Din acest motiv pentru fiecare etapa se crea un `Dockerfile` separat, care efectua o anumită acțiune, și un script care combina rezultatele fiecărui container într-o singură imagine.
+
+#### Exemplu
+
+Fie dată o aplicație CPP (fișier `helloworld.cpp`), pe care dorim să o rulăm într-un container.
+
+```cpp
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+```
+
+Pentru a construi imaginea, creăm următoarele fișiere:
+
+- `Dockerfile.build` - pentru construirea aplicației
+- `Dockerfile.run` - pentru rularea aplicației
+- `build.sh` - script pentru construirea imaginii
+
+`Dockefile.build`:
+
+```Dockerfile
+FROM gcc:latest AS build
+
+WORKDIR /app
+
+COPY helloworld.cpp .
+
+RUN g++ helloworld.cpp -o helloworld -static
+```
+
+`Dockerfile.run`:
+
+```Dockerfile
+FROM debian:latest
+
+WORKDIR /app
+
+COPY app/helloworld .
+
+CMD ["./helloworld"]
+```
+
+`build.sh`:
+
+```bash
+#!/bin/bash
+echo "Building helloworld-build image..."
+docker build -t helloworld-build -f Dockerfile.build .
+
+echo "Extracting helloworld binary..."
+mkdir -p app
+docker create --name extract helloworld-build
+docker cp extract:/app/helloworld app/helloworld
+docker rm -f extract
+
+echo "Building helloworld-run image..."
+docker build -t helloworld-run -f Dockerfile.run .
+rm -f app/helloworld
+```
+
+La pornirea scriptului `build.sh`:
+
+- se creează imaginea `helloworld-build`, care construiește aplicația;
+- se rulează containerul `extract`, în care aplicația construită este copiată pe mașina gazdă;
+- se șterge containerul `extract`;
+- se creează imaginea `helloworld-run`, care rulează aplicația.
+
+Utilizarea construcției în mai multe etape permite simplificarea procesului de construcție a imaginii și reducerea dimensiunii acesteia.
+
+### Principiile de bază ale construcției în mai multe etape
+
+Construirea în mai multe etape permite crearea imaginilor care conțin doar fișierele necesare pentru funcționarea aplicației, folosind un singur `Dockerfile`. Pentru aceasta se folosesc următoarele principii:
+
+- Fiecare instrucțiune folosește o imagine de bază și setează o etapă de construcție;
+- Fiecare etapă de construcție este efectuată într-un container separat;
+- Rezultatul fiecărei etape este salvat într-o imagine;
+- Se pot copia fișiere dintr-o etapă în alta.
+
+#### Exemplu multi-stage build
+
+În acest caz, exemplul nostru poate fi simplificat la un singur `Dockerfile`:
+
+```Dockerfile
+FROM gcc:latest AS build
+
+WORKDIR /app
+
+COPY helloworld.cpp .
+
+RUN g++ helloworld.cpp -o helloworld -static
+
+FROM debian:latest
+
+WORKDIR /app
+
+COPY --from=0 app/helloworld .
+
+CMD ["./helloworld"]
+```
+
+Construirea imaginii în acest caz se reduce la o singură comandă:
+
+```bash
+docker build -t helloworld-run .
+```
+
+Această este posibil datorită faptului că instrucția `COPY` poate copia fișiere dintr-o etapă în alta, fiind necesar să se specifice numărul etapei din care trebuie să se copieze fișierele.
+
+Fiecărei etape i se atribuie un număr, începând de la 0. Totodată fiecărei etape poate fi atribuit un nume, care poate fi folosit în locul numărului etapei.
+
+```Dockerfile
+FROM gcc:latest AS build
+
+WORKDIR /app
+
+COPY helloworld.cpp .
+
+RUN g++ helloworld.cpp -o helloworld
+
+FROM debian:latest AS run
+
+WORKDIR /app
+
+COPY --from=build app/helloworld .
+
+CMD ["./helloworld"]
+```
+
+### Forma generală a construcției în mai multe etape
+
+Se face clar că construcția în mai multe etape poate fi utilizată nu numai pentru construirea aplicațiilor, ci și pentru alte sarcini: testare, analiză a codului, construirea documentației etc.
+
+Forma generală a construcției în mai multe etape este următoarea:
+
+```Dockerfile
+# crearea imaginii de bază
+FROM debian:latest AS base
+
+# ...
+
+# instalarea dependențelor
+FROM base AS dependencies
+
+# ...
+
+# construirea aplicației
+FROM dependencies AS build
+
+# ...
+
+# testare
+FROM build AS test
+
+# ...
+
+# amplasarea aplicatiei
+FROM debian
+
+# copierea aplicatiei din imagine build
+COPY --from=build /app/app /app/app
+
+# pornirea aplicatiei
+CMD ["./app"]
+```
 
 ## Ștergerea dependențelor neutilizate și a fișierelor temporare
 

@@ -16,10 +16,9 @@ Course is available in two languages: [Russian](rus/README.md) and [Romanian](ro
 6. Interacting with the container
 7. docker-compose I
 8. docker-compose II
-9. Multi-stage builds
-10. Containers in CI/CD processes
-11. Image optimization
-12. Best practices for developing containers
+9. Containers in CI/CD processes
+10. Image optimization
+11. Best practices for developing containers
 
 ## Bibliography
 
