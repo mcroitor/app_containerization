@@ -39,11 +39,11 @@ site
 
 - `__construct($path)` - конструктор класса, принимает путь к файлу базы данных SQLite;
 - `Execute($sql)` - выполняет SQL запрос;
-- `Fetch($sql)` - выполняет SQL запрос и возвращает результат в виде ассоциативного массива.
+- `Fetch($sql)` - выполняет SQL запрос и возвращает результат в виде ассоциативного массива;
 - `Create($table, $data)` - создает запись в таблице `$table` с данными из ассоциативного массива `$data` и возвращает идентификатор созданной записи;
 - `Read($table, $id)` - возвращает запись из таблицы `$table` по идентификатору `$id`;
 - `Update($table, $id, $data)` - обновляет запись в таблице `$table` по идентификатору `$id` данными из ассоциативного массива `$data`;
-- `Delete($table, $id)` - удаляет запись из таблицы `$table` по идентификатору `$id`.
+- `Delete($table, $id)` - удаляет запись из таблицы `$table` по идентификатору `$id`;
 - `Count($table)` - возвращает количество записей в таблице `$table`.
 
 Файл `modules/page.php` содержит класс `Page` для работы с страницами. Класс должен содержать методы:
@@ -148,7 +148,7 @@ class TestFramework {
 }
 ```
 
-Создайте в директории `./tests` файл `test.php` со следующим содержимым:
+Создайте в директории `./tests` файл `tests.php` со следующим содержимым:
 
 ```php
 <?php
@@ -198,6 +198,30 @@ echo $tests->getResult();
 ```
 
 Добавьте в файл `./tests/test.php` тесты для всех методов класса `Database`, а также для методов класса `Page`.
+
+### Создание Dockerfile
+
+Создайте в корневом каталоге файл `Dockerfile` со следующим содержимым:
+
+```dockerfile
+FROM php:7.4-fpm as base
+
+RUN apt-get update && \
+    apt-get install -y sqlite3 libsqlite3-dev && \
+    docker-php-ext-install pdo_sqlite
+
+VOLUME ["/var/www/db"]
+
+COPY sql/schema.sql /var/www/db/schema.sql
+
+RUN echo "prepare database" && \
+    cat /var/www/db/schema.sql | sqlite3 /var/www/db/db.sqlite && \
+    chmod 777 /var/www/db/db.sqlite && \
+    rm -rf /var/www/db/schema.sql && \
+    echo "database is ready"
+
+COPY site /var/www/html
+```
 
 ### Настройка Github Actions
 
