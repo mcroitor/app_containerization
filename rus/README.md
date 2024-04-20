@@ -18,10 +18,9 @@
 6. [Взаимодействие с контейнером](06_container_usage/README.md)
 7. [docker-compose I](07_docker_compose_i/README.md)
 8. [docker-compose II](08_docker_compose_ii/README.md)
-9. [Многоэтапное построение образов](09_multistage/README.md)
-10. [Контейнеры в CI / CD процессах](10_CI_CD/README.md)
-11. [Оптимизация образов](11_image_optimization/README.md)
-12. [Рекомендации при разработке контейнеров (best practices)](12_best_practicies/README.md)
+9. [Контейнеры в CI / CD процессах](09_CI_CD/README.md)
+10. [Оптимизация образов](10_image_optimization/README.md)
+11. [Рекомендации при разработке контейнеров (best practices)](11_best_practicies/README.md)
 
 ## Библиография
 
