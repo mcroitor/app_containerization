@@ -109,7 +109,7 @@ docker-compose up -d
 
 Verificați funcționarea site-ului în browser, trecând la adresa `http://localhost`. Dacă este afișată pagina de bază `nginx`, atunci reîncărcați pagina.
 
-## Pregăirea raportului
+## Pregătirea raportului
 
 Creați în directorul `containers06` fișierul `README.md` care va conține descrierea pas cu pas a proiectului. Descrierea proiectului trebuie să conțină:
 
