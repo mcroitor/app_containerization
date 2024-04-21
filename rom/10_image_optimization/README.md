@@ -11,7 +11,7 @@
     - [Forma generală a construcției în mai multe etape](#forma-generală-a-construcției-în-mai-multe-etape)
   - [Ștergerea dependențelor neutilizate și a fișierelor temporare](#ștergerea-dependențelor-neutilizate-și-a-fișierelor-temporare)
   - [Reducerea numărului de straturi](#reducerea-numărului-de-straturi)
-  - [Repachearea imaginii](#repachearea-imaginii)
+  - [Repachetarea imaginii](#repachetarea-imaginii)
   - [Utilizarea .dockerignore](#utilizarea-dockerignore)
   - [Păstrarea datelor în afara imaginii](#păstrarea-datelor-în-afara-imaginii)
   - [Utilizarea cache-ului pentru straturile imaginii](#utilizarea-cache-ului-pentru-straturile-imaginii)
@@ -304,7 +304,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ```
 
-## Repachearea imaginii
+## Repachetarea imaginii
 
 Repachetarea imaginii permite a combina toate straturi ale imaginii într-un strat, ce micșorează volumul imaginii
 
@@ -370,3 +370,7 @@ COPY . /usr/share/nginx/html
 2. [Rafael Benevides, Keep it small: a closer look at Docker image sizing, RedHat, 2016-03-09](https://developers.redhat.com/blog/2016/03/09/more-about-docker-images-size)
 3. [Bibin Wilson, Shishir Khandelwal, How to Reduce Docker Image Size: 6 Optimization Methods, devopscube.com, 2023-08-22](https://devopscube.com/reduce-docker-image-size/)
 4. [Jeff Hale, Slimming Down Your Docker Images, towardsdatascience.com, 2019-01-31](https://towardsdatascience.com/slimming-down-your-docker-images-275f0ca9337e)
+5. [pxeno, Полное руководство по созданию Docker-образа для обслуживания системы машинного обучения в продакшене, habr.com](https://habr.com/ru/companies/vk/articles/548480/)
+6. [BOOTLOADER, Многоэтапные (multi-stage builds) сборки в Docker, habr.com](https://habr.com/ru/articles/349802/)
+7. [Использование многоэтапных (multi-stage) сборок в Docker, cloud.croc.ru](https://cloud.croc.ru/blog/about-technologies/multi-stage-v-docker/)
+8. [Docker, Multi-stage builds, docs.docker.com](https://docs.docker.com/build/building/multi-stage/)

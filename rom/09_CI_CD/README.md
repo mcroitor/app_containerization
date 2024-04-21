@@ -9,7 +9,7 @@
     - [Organizarea codului](#organizarea-codului)
     - [Model exemplar](#model-exemplar)
     - [Instrumente](#instrumente)
-  - [Infrastructura pentru CI / CD](#infrastructura-pentru-ci--cd)
+    - [Infrastructura pentru CI / CD](#infrastructura-pentru-ci--cd)
   - [Utilizarea containerelor în procesele CI / CD](#utilizarea-containerelor-în-procesele-ci--cd)
   - [Bibliografie](#bibliografie)
 
@@ -108,7 +108,7 @@ Pentru organizarea proceselor CI / CD se utilizează instrumente specializate, c
 - __Azure DevOps__ — este un instrument pentru organizarea proceselor CI / CD, integrat cu platforma cloud Microsoft Azure.
 - __Atlasian Bamboo__ — este un instrument pentru organizarea proceselor CI / CD, dezvoltat de compania Atlasian.
 
-## Infrastructura pentru CI / CD
+### Infrastructura pentru CI / CD
 
 Pentru organizarea proceselor CI / CD este necesară o infrastructură specializată, care permite automatizarea proceselor de compilare, testare și implementare a software-ului:
 
