@@ -3,7 +3,7 @@
 - [Optimizarea imaginii containerului](#optimizarea-imaginii-containerului)
   - [Obținerea informațiilor despre dimensiunea imaginii](#obținerea-informațiilor-despre-dimensiunea-imaginii)
   - [Imaginea de bază minimă](#imaginea-de-bază-minimă)
-    - [Construirea în mai multe etape](#construirea-în-mai-multe-etape)
+  - [Construirea în mai multe etape](#construirea-în-mai-multe-etape)
     - [Metoda veche de construcție a imaginilor](#metoda-veche-de-construcție-a-imaginilor)
       - [Exemplu](#exemplu)
     - [Principiile de bază ale construcției în mai multe etape](#principiile-de-bază-ale-construcției-în-mai-multe-etape)
@@ -68,7 +68,7 @@ Deasemenea, puteți folosi imaginea `scratch`, care nu conține nimic, și adău
 
 Pentru probleme concrete pot fi alese imagini specializate, care adesea oferă versiuni optimizate. De exemplu, pentru Python puteți folosi imaginea `python:alpine`, care conține un set minim de pachete pentru lucru cu Python.
 
-### Construirea în mai multe etape
+## Construirea în mai multe etape
 
 Construirea în mai multe etape permite reducerea dimensiunii imaginii containerului, deoarece în imaginea finală rămân doar fișierele și dependențele necesare. De exemplu, puteți folosi o imagine cu compilator pentru construirea aplicației, iar apoi copiați doar fișierul executabil în imaginea finală.
 
@@ -327,7 +327,7 @@ Utilizarea fișierului `.dockerignore` permite excluderea fișierelor și direct
 
 Un exemplu de fișier `.dockerignore`:
 
-```dockerfile
+```dockerignore
 # .dockerignore
 .git
 .vscode

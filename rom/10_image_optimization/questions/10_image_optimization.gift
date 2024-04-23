@@ -1,0 +1,74 @@
+// # Întrebări pe tema "Optimizarea imaginii containerului"
+
+$CATEGORY: 10_image_optimization/1_knowledge
+
+::10k001:: [markdown]Care comanda permite vizualizarea listei de imagini de container?
+{
+   = [markdown]`docker images`
+   ~ [markdown]`docker ps`
+   ~ [markdown]`docker container ls`
+   ~ [markdown]`docker inspect`
+}
+
+::10k002:: [markdown]Care comandă permite vizualizarea informațiilor despre straturile imaginii?
+{
+   = [markdown]`docker history`
+   ~ [markdown]`docker inspect`
+   ~ [markdown]`docker image ls`
+   ~ [markdown]`docker image inspect`
+}
+
+::10k003:: [markdown]Este dat Dockerfile
+   ```dockerfile
+   FROM nginx\:latest
+   COPY ./site /usr/share/nginx/html
+   ```
+   Cum se poate reduce dimensiunea imaginii rezultate?
+{
+   = [markdown]înlocuiți `nginx\:latest` cu `nginx\:alpine`
+   ~ [markdown]utilizați construcția multi-stage
+   ~ [markdown]reduceți numărul de straturi
+   ~ [markdown]utilizați `.dockerignore`
+}
+
+::10k004:: [markdown]Este dat Dockerfile
+   ```dockerfile
+   FROM nginx\:alpine
+   COPY ./site /usr/share/nginx/html
+   ```
+   Cum se poate reduce dimensiunea imaginii rezultate?
+{
+   = [markdown]păstrați site-ul într-un volum montat
+   ~ [markdown]utilizați construcția multi-stage
+   ~ [markdown]reduceți numărul de straturi
+   ~ [markdown]utilizați `.dockerignore`
+}
+
+::10k005:: [markdown]Este dat Dockerfile
+   ```dockerfile
+   FROM debian\:bookworm-slim
+   RUN apt-get update && apt-get install -y php-cli
+   RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+   ```
+   Cum se poate reduce dimensiunea imaginii rezultate?
+{
+   = [markdown]combinați straturile
+   ~ [markdown]utilizați construcția multi-stage
+   ~ [markdown]păstrați datele într-un volum montat
+   ~ [markdown]utilizați `.dockerignore`
+}
+
+::10k006:: [markdown]Este dat Dockerfile
+   ```dockerfile
+   FROM gcc\:latest
+   COPY app.cpp .
+   RUN g++ app.cpp -o app -static
+   CMD ["./app"]
+   ```
+   Cum se poate reduce dimensiunea imaginii rezultate?
+{
+   = [markdown]utilizați construcția multi-stage
+   ~ [markdown]reduceți numărul de straturi
+   ~ [markdown]păstrați datele într-un volum montat
+   ~ [markdown]utilizați `.dockerignore`
+}

@@ -2,7 +2,7 @@
 
 $CATEGORY: 06_container_usage/1_knowledge
 
-::05k001:: [markdown] Vizualizarea listei de volume existente se poate face cu ajutorul comenzii\:
+::06k001:: [markdown] Vizualizarea listei de volume existente se poate face cu ajutorul comenzii\:
 {
    =[markdown]`docker volume ls`
    ~[markdown]`docker volume list`
@@ -10,7 +10,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker volume inspect`
 }
 
-::05k002:: [markdown] Pentru a crea un volum cu numele `opt` se folosește comanda\:
+::06k002:: [markdown] Pentru a crea un volum cu numele `opt` se folosește comanda\:
 {
    =[markdown]`docker volume create opt`
    ~[markdown]`docker volume create --name opt`
@@ -18,7 +18,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker volume create name\=opt`
 }
 
-::05k003:: [markdown] Pentru a vizualiza informații despre volumul `opt` se folosește comanda\:
+::06k003:: [markdown] Pentru a vizualiza informații despre volumul `opt` se folosește comanda\:
 {
    =[markdown]`docker volume inspect opt`
    ~[markdown]`docker volume show opt`
@@ -26,7 +26,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker volume ls opt`
 }
 
-::05k004:: [markdown] Pentru a șterge volumul `opt` se folosește comanda\:
+::06k004:: [markdown] Pentru a șterge volumul `opt` se folosește comanda\:
 {
    =[markdown]`docker volume rm opt`
    ~[markdown]`docker volume remove opt`
@@ -34,7 +34,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker volume prune opt`
 }
 
-::05k005:: [markdown] Pentru a șterge toate volumele neutilizate se poate folosi comanda\:
+::06k005:: [markdown] Pentru a șterge toate volumele neutilizate se poate folosi comanda\:
 {
    =[markdown]`docker volume prune`
    ~[markdown]`docker volume remove`
@@ -42,7 +42,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker volume rm`
 }
 
-::05k006:: [markdown] Vizualizarea listei de rețele se poate face cu ajutorul comenzii\:
+::06k006:: [markdown] Vizualizarea listei de rețele se poate face cu ajutorul comenzii\:
 {
    =[markdown]`docker network ls`
    ~[markdown]`docker network list`
@@ -50,7 +50,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network inspect`
 }
 
-::05k007:: [markdown] Pentru a crea o rețea cu numele `local` se folosește comanda\:
+::06k007:: [markdown] Pentru a crea o rețea cu numele `local` se folosește comanda\:
 {
    =[markdown]`docker network create local`
    ~[markdown]`docker network make --name local`
@@ -58,7 +58,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network create name=local`
 }
 
-::05k008:: [markdown] Pentru a vizualiza informații despre rețeaua `local` se folosește comanda\:
+::06k008:: [markdown] Pentru a vizualiza informații despre rețeaua `local` se folosește comanda\:
 {
    =[markdown]`docker network inspect local`
    ~[markdown]`docker network show local`
@@ -66,7 +66,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network ls local`
 }
 
-::05k009:: [markdown] Pentru a șterge rețeaua `local` se folosește comanda\:
+::06k009:: [markdown] Pentru a șterge rețeaua `local` se folosește comanda\:
 {
    =[markdown]`docker network rm local`
    ~[markdown]`docker network remove local`
@@ -74,7 +74,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network prune local`
 }
 
-::05k010:: [markdown] Pentru a conecta containerul `frontend` la rețeaua `local` se poate folosi comanda\:
+::06k010:: [markdown] Pentru a conecta containerul `frontend` la rețeaua `local` se poate folosi comanda\:
 {
    =[markdown]`docker network connect local frontend`
    ~[markdown]`docker network connect frontend local`
@@ -82,7 +82,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network attach local frontend`
 }
 
-::05k011:: [markdown] Pentru a deconecta containerul `frontend` de la rețeaua `local` se poate folosi comanda\:
+::06k011:: [markdown] Pentru a deconecta containerul `frontend` de la rețeaua `local` se poate folosi comanda\:
 {
    =[markdown]`docker network disconnect local frontend`
    ~[markdown]`docker network disconnect frontend local`
@@ -90,7 +90,7 @@ $CATEGORY: 06_container_usage/1_knowledge
    ~[markdown]`docker network detach local frontend`
 }
 
-::05k012:: [markdown] Pentru a șterge toate rețelele neutilizate se poate folosi comanda\:
+::06k012:: [markdown] Pentru a șterge toate rețelele neutilizate se poate folosi comanda\:
 {
    =[markdown]`docker network prune`
    ~[markdown]`docker network remove`
@@ -101,24 +101,24 @@ $CATEGORY: 06_container_usage/1_knowledge
 $CATEGORY: 06_container_usage/2_usage
 // Întrebări de tip _răspuns scurt_:
 
-::05u001:: [markdown] Pentru a crea containerul `webserver` pe baza imaginii `webserver` cu redirecționarea portului `80` containerului pe portul `8000` gazdei se folosește comanda\: {=docker create --name webserver -p 8000\:80 webserver =docker create --name webserver --port 8000\:80 webserver =docker create -p 8000\:80 --name webserver webserver =docker create --port 8000\:80 --name webserver webserver}
+::06u001:: [markdown] Pentru a crea containerul `webserver` pe baza imaginii `webserver` cu redirecționarea portului `80` containerului pe portul `8000` gazdei se folosește comanda\: {=docker create --name webserver -p 8000\:80 webserver =docker create --name webserver --port 8000\:80 webserver =docker create -p 8000\:80 --name webserver webserver =docker create --port 8000\:80 --name webserver webserver}
 
-::05u002:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu redirecționarea portului `80` containerului pe portul `8080` gazdei se folosește comanda\: {=docker run --name webserver -p 8080\:80 webserver =docker run -p 8080\:80 --name webserver webserver =docker run --name webserver --port 8080\:80 webserver =docker run --port 8080\:80 --name webserver webserver}
+::06u002:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu redirecționarea portului `80` containerului pe portul `8080` gazdei se folosește comanda\: {=docker run --name webserver -p 8080\:80 webserver =docker run -p 8080\:80 --name webserver webserver =docker run --name webserver --port 8080\:80 webserver =docker run --port 8080\:80 --name webserver webserver}
 
-::05u003:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu montarea volumului `opt` în directorul `/opt` al containerului se folosește comanda\: {=docker run -v opt\:/opt --name webserver webserver =docker run --volume opt\:/opt --name webserver webserver =docker run --name webserver -v opt\:/opt webserver =docker run --name webserver --volume opt\:/opt webserver}
+::06u003:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu montarea volumului `opt` în directorul `/opt` al containerului se folosește comanda\: {=docker run -v opt\:/opt --name webserver webserver =docker run --volume opt\:/opt --name webserver webserver =docker run --name webserver -v opt\:/opt webserver =docker run --name webserver --volume opt\:/opt webserver}
 
-::05u004:: [markdown] Pentru a crea și rula containerul `nodeapp` pe baza imaginii `nodeapp` cu montarea volumului `app` în directorul `/app` al containerului se folosește comanda\: {=docker run -v app\:/app --name nodeapp nodeapp =docker run --volume app\:/app --name nodeapp nodeapp =docker run --name nodeapp -v app\:/app nodeapp =docker run --name nodeapp --volume app\:/app nodeapp}
+::06u004:: [markdown] Pentru a crea și rula containerul `nodeapp` pe baza imaginii `nodeapp` cu montarea volumului `app` în directorul `/app` al containerului se folosește comanda\: {=docker run -v app\:/app --name nodeapp nodeapp =docker run --volume app\:/app --name nodeapp nodeapp =docker run --name nodeapp -v app\:/app nodeapp =docker run --name nodeapp --volume app\:/app nodeapp}
 
-::05u005:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu conectarea la rețeaua `local` se folosește comanda\: {= docker run --name webserver --network local webserver =docker run --network local --name webserver webserver}
+::06u005:: [markdown] Pentru a crea și rula containerul `webserver` pe baza imaginii `webserver` cu conectarea la rețeaua `local` se folosește comanda\: {= docker run --name webserver --network local webserver =docker run --network local --name webserver webserver}
 
-::05u006:: [markdown] Pentru a crea și rula containerul `nodeapp` pe baza imaginii `nodeapp` cu conectarea la rețeaua `backend` se folosește comanda\: {=docker run --name nodeapp --network backend nodeapp =docker run --network backend --name nodeapp nodeapp}
+::06u006:: [markdown] Pentru a crea și rula containerul `nodeapp` pe baza imaginii `nodeapp` cu conectarea la rețeaua `backend` se folosește comanda\: {=docker run --name nodeapp --network backend nodeapp =docker run --network backend --name nodeapp nodeapp}
 
-::05u007:: [markdown] Pentru a șterge rețeaua `local` se folosește comanda\: {=docker network rm local}
+::06u007:: [markdown] Pentru a șterge rețeaua `local` se folosește comanda\: {=docker network rm local}
 
-::05u008:: [markdown] În Docker pentru a crea o rețea cu numele `local` se folosește comanda\: {=docker network create local}
+::06u008:: [markdown] În Docker pentru a crea o rețea cu numele `local` se folosește comanda\: {=docker network create local}
 
-::05u009:: [markdown] Pentru a adăuga containerul `frontend` la rețeaua `local` se folosește comanda\: {=docker network connect local frontend}
+::06u009:: [markdown] Pentru a adăuga containerul `frontend` la rețeaua `local` se folosește comanda\: {=docker network connect local frontend}
 
-::05u010:: [markdown] În Docker pentru a crea un volum cu numele `opt` se folosește comanda\: {=docker volume create opt}
+::06u010:: [markdown] În Docker pentru a crea un volum cu numele `opt` se folosește comanda\: {=docker volume create opt}
 
-::05u011:: [markdown] Pentru a șterge volumul `opt` se folosește comanda\: {=docker volume rm opt}
+::06u011:: [markdown] Pentru a șterge volumul `opt` se folosește comanda\: {=docker volume rm opt}

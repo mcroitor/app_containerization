@@ -1,0 +1,52 @@
+// # Întrebări despre "Dezvoltare și livrare continue (CI / CD)"
+
+$CATEGORY:  09_CI_CD/1_knowledge
+
+::07k001:: [markdown]Practica de dezvoltare a software-ului, în care dezvoltatorii integrează schimbările lor în ramura principală de mai multe ori pe zi, se numește
+{
+    = [markdown]Integrare continuă
+    ~ [markdown]Livrare continuă
+    ~ [markdown]Implementare continuă
+    ~ [markdown]Testare continuă
+}
+
+::07k002:: [markdown]Construire aplicației după un orar permite
+{
+    = [markdown]reducerea încărcării serverului de integrare continuă
+    ~ [markdown]reducerea timpului de testare
+    ~ [markdown]reducerea timpului de livrare
+    ~ [markdown]reducerea timpului de implementare
+}
+
+::07k003:: [markdown]Practica de dezvoltare a software-ului, în care fiecare schimbare a codului este testată automat pentru a respecta standardele de calitate și securitate și este pregătită pentru lansare, se numește
+{
+    = [markdown]Livrare continuă
+    ~ [markdown]Implementare continuă
+    ~ [markdown]Integrare continuă
+    ~ [markdown]Testare continuă
+}
+
+
+::07k004:: [markdown]Practica de dezvoltare a software-ului, în care fiecare schimbare a codului, care a trecut cu succes toate etapele de testare, este automat implementată pe serverul de producție, se numește
+{
+    = [markdown]Implementare continuă
+    ~ [markdown]Livrare continuă
+    ~ [markdown]Integrare continuă
+    ~ [markdown]Testare continuă
+}
+
+::07k005:: [markdown]Pentru a implmenta integrarea continuă, este necesar
+{
+    = [markdown]să utilizați un sistem de control al versiunilor
+    ~ [markdown]să utilizați un sistem de gestionare a proiectelor
+    ~ [markdown]să utilizați un sistem de gestionare a sarcinilor
+    ~ [markdown]să utilizați un sistem de gestionare a lansărilor
+}
+
+::07k006:: [markdown]Când se utilizează integrarea continuă, modificările codului pot fi integrate în ramura principală
+{
+    = [markdown]de mai multe ori pe zi
+    ~ [markdown]o dată pe săptămână
+    ~ [markdown]de fiecare dată când se adaugă o nouă funcționalitate
+    ~ [markdown]de fiecare dată când se lansează o versiune
+}
