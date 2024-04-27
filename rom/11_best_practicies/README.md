@@ -1,7 +1,5 @@
-# Рекомендации при разработке контейнеров
 # Bune practici pentru dezvoltarea containerelor
 
-- [Рекомендации при разработке контейнеров](#рекомендации-при-разработке-контейнеров)
 - [Bune practici pentru dezvoltarea containerelor](#bune-practici-pentru-dezvoltarea-containerelor)
   - [Privilegii excesive](#privilegii-excesive)
     - [Executarea aplicațiilor din partea unui utilizator](#executarea-aplicațiilor-din-partea-unui-utilizator)
