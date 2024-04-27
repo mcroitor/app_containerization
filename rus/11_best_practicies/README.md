@@ -230,7 +230,7 @@ __Регулярно проверяйте образы на уязвимости
 
 - [Docker Scout](https://docs.docker.com/scout/)
 - [Trivy](https://trivy.dev)
-- [Clair](https://trivy.dev)
+- [Clair](https://www.redhat.com/en/topics/containers/what-is-clair)
 
 ## Выводы
 
