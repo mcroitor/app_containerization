@@ -42,7 +42,7 @@ Un exemplu de Dockerfile:
 FROM ubuntu:20.04
 
 # crearea utilizatorului myuser
-RUN adduser -D myuser && \
+RUN adduser --no-create-home --disabled-login myuser && \
     chown -R myuser:myuser /app-data
 
 # copierea aplicației
@@ -68,7 +68,7 @@ Utilizatorul containerului destul să aibă drepturi doar pentru citire și exec
 FROM ubuntu:20.04
 
 # Crearea utilizatorului myuser
-RUN adduser -D myuser && \
+RUN adduser --no-create-home --disabled-login myuser && \
     chown -R myuser:myuser /app-data
 
 # Copierea aplicației
