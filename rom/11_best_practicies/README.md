@@ -170,6 +170,13 @@ __Nu copiați tot contextul construcției în imagine.__
 
 O practică proastă este copierea întregului context de construcție în imagine, deoarece acest lucru poate duce la scurgeri de date confidențiale.
 
+Ideea rea este următoarea:
+
+```Dockerfile
+# bad practice
+COPY . /app
+```
+
 Conform bunelor practici se recomandă crearea unei directoare pentru toate fișierele care trebuie copiate în imagine și utilizarea acestei directoare ca context de construcție. Acest lucru vă va ajuta să evitați copierea accidentală a datelor confidențiale și să reduceți dimensiunea contextului de construcție.
 
 În plus, utilizați fișiere `.dockerignore` pentru a exclude fișierele și directoarele nedorite din contextul de construcție.
@@ -197,7 +204,7 @@ Ordinea greșită a instrucțiunilor:
 ```Dockerfile
 FROM ubuntu:20.04
 
-COPY . /app
+COPY ./app /app
 
 RUN apt-get update && apt-get install -y python3
 
@@ -211,7 +218,7 @@ FROM ubuntu:20.04
 
 RUN apt-get update && apt-get install -y python3
 
-COPY . /app
+COPY ./app /app
 
 CMD ["python3", "/app/app.py"]
 ```
@@ -230,7 +237,7 @@ Este necesar să verificați regulat imaginile la existența greșelilor și vul
 
 - [Docker Scout](https://docs.docker.com/scout/)
 - [Trivy](https://trivy.dev)
-- [Clair](https://trivy.dev)
+- [Clair](https://www.redhat.com/en/topics/containers/what-is-clair)
 
 ## Concluzii
 
