@@ -1,9 +1,9 @@
-# Синтаксис Dockerfile
+# Dockerfile syntax
 
-- [Синтаксис Dockerfile](#синтаксис-dockerfile)
+- [Dockerfile syntax](#dockerfile-syntax)
   - [Docker](#docker)
   - [Dockerfile](#dockerfile)
-  - [Инструкции Dockerfile](#инструкции-dockerfile)
+  - [Dockerfile instructions](#dockerfile-instructions)
     - [FROM](#from)
     - [COPY](#copy)
     - [ADD](#add)
@@ -12,122 +12,123 @@
     - [ENTRYPOINT](#entrypoint)
     - [WORKDIR](#workdir)
     - [USER](#user)
-  - [Библиография](#библиография)
+  - [Bibliography](#bibliography)
 
 ## Docker
 
-**Docker** - это программное обеспечение для автоматизации развёртывания и управления приложениями в среде виртуализации на уровне операционной системы. Docker позволяет "упаковать" приложение со всем его окружением и зависимостями в контейнер, который может быть перенесён на любую Linux-систему с поддержкой `cgroups` в ядре, а также предоставляет среду по управлению контейнерами.
+**Docker** is a software for automating the deployment and management of applications in an operating system-level virtualization environment. Docker allows you to "package" an application with all its environment and dependencies into a container that can be moved to any Linux system with `cgroups` support in the kernel, and also provides an environment for managing containers.
 
-Для работы с Docker в ОС Unix / Linux необходимо установить [Docker Engine](https://docs.docker.com/engine/install/).
+For working with Docker in Unix / Linux OS, you need to install [Docker Engine](https://docs.docker.com/engine/install).
 
-Для работы с Docker в ОС Windows необходимо установить [Docker Desktop](https://www.docker.com/products/docker-desktop).
+For working with Docker in Windows OS, you need to install [Docker Desktop](https://www.docker.com/products/docker-desktop).
 
 ## Dockerfile
 
-Образы Docker создаются на основе файла `Dockerfile`. В этом файле описывается, какие команды нужно выполнить, чтобы собрать образ. Выполнение каждой команды создаёт промежуточный образ, называемый *слоем*, который используется для создания следующего образа. Создание промежуточных образов позволяет повторно использовать их при сборке других образов, что позволяет существенно сократить время сборки образа.
+Docker images are created based on the `Dockerfile`. This file describes what commands need to be executed to build an image. Executing each command creates an intermediate image, called a *layer*, which is used to create the next image. Creating intermediate images allows you to reuse them when building other images, which significantly reduces the time to build an image.
 
-Пример файла `Dockerfile`:
+Example of a `Dockerfile`:
+
 
 ```dockerfile
-# на основе базового образа ubuntu:18.04
+# based on ubuntu:18.04 image
 FROM ubuntu:18.04
 
-# обновление списка пакетов и самих пакетов
+# update package list and packages themselves
 RUN apt-get update && apt-get -y upgrade
-# установка пакета nginx
+# install nginx package
 RUN apt-get install -y nginx
-# создание файла index.html
+# create index.html
 RUN echo "Hello, world!" > /var/www/html/index.html
 
-# запуск nginx
+# start nginx
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-После того, как образ собран, его можно запустить и получить контейнер.
+After the image is built, it can be run and get a container.
 
-## Инструкции Dockerfile
+## Dockerfile instructions
 
-Следующая таблица содержит список команд, которые можно использовать в файле `Dockerfile`.
+The following table contains a list of commands that can be used in the `Dockerfile`.
 
-| Команда | Описание |
+| Command | Description |
 | --- | --- |
-| `FROM` | Указывает базовый образ, на основе которого будет создан новый образ. |
-| `COPY` | Копирует файлы и директории из контекста сборки в файловую систему образа. |
-| `ADD` | Копирует файлы и директории из контекста сборки в файловую систему образа. Позволяет также скачивать файлы из интернета и распаковывать архивы. |
-| `RUN` | Выполняет команду в контейнере. Результат выполнения команды сохраняется в образе. |
-| `CMD` | Задаёт команду, которая будет выполнена при запуске контейнера. |
-| `ENTRYPOINT` | Задаёт команду, которая будет выполнена при запуске контейнера. Команда, заданная в `ENTRYPOINT`, не может быть переопределена при запуске контейнера. |
-| `WORKDIR` | Задаёт рабочую директорию для команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `USER` | Задаёт пользователя, от имени которого будут выполняться команды `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `ENV` | Задаёт переменные окружения. |
-| `ARG` | Задаёт аргументы, которые можно передать при сборке образа. |
-| `EXPOSE` | Открывает порты для взаимодействия с контейнером. |
-| `VOLUME` | Создаёт точки монтирования для взаимодействия с контейнером. |
-| `SHELL` | Задаёт командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. |
-| `MAINTAINER` | Задаёт имя и адрес электронной почты автора образа. |
-| `LABEL` | Задаёт метаданные образа. |
-| `ONBUILD` | Задаёт команды, которые будут выполнены при сборке образа, на основе которого будет создан новый образ. |
-| `HEALTHCHECK` | Задаёт команду, которая будет выполняться для проверки состояния контейнера. |
-| `STOPSIGNAL` | Задаёт сигнал, который будет отправлен контейнеру для остановки. |
+| `FROM` | Specifies the base image on which the new image will be created. |
+| `COPY` | Copies files and directories from the build context to the image file system. |
+| `ADD` | Copies files and directories from the build context to the image file system. It also allows you to download files from the Internet and unpack archives. |
+| `RUN` | Executes a command in the container. The result of the command execution is saved in the image. |
+| `CMD` | Specifies the command that will be executed when the container is started. |
+| `ENTRYPOINT` | Specifies the command that will be executed when the container is started. The command specified in `ENTRYPOINT` cannot be overridden when the container is started. |
+| `WORKDIR` | Specifies the working directory for `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` commands. |
+| `USER` | Specifies the user on behalf of which the `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` commands will be executed. |
+| `ENV` | Specifies environment variables. |
+| `ARG` | Specifies arguments that can be passed when building an image. |
+| `EXPOSE` | Opens ports for interacting with the container. |
+| `VOLUME` | Creates mount points for interacting with the container. |
+| `SHELL` | Specifies the shell that will be used to execute `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` commands. |
+| `MAINTAINER` | Specifies the name and email address of the image author. |
+| `LABEL` | Specifies image metadata. |
+| `ONBUILD` | Specifies commands that will be executed when an image is built on the basis of which a new image will be created. |
+| `HEALTHCHECK` | Specifies a command that will be executed to check the container's status. |
+| `STOPSIGNAL` | Specifies the signal that will be sent to the container to stop. |
 
-Кроме того, в файле `Dockerfile` можно использовать комментарии, которые начинаются с символа `#`.
+In the `Dockerfile`, you can also use comments that start with the `#` character.
 
 ### FROM
 
-Каждый новый образ создаётся на основе базового образа. Базовый образ указывается в команде `FROM`. Например, следующая команда создаст образ на основе базового образа `ubuntu:18.04`.
+Each new image is created based on the base image. The base image is specified in the `FROM` command. For example, the following command will create an image based on the base image `ubuntu:18.04`.
 
 ```dockerfile
 FROM ubuntu:18.04
 ```
 
-Созданный образ в данном случае будет включать в себя минимальный набор файлов, необходимых для работы операционной системы Ubuntu 18.04.
+The base image in this case will include the minimum set of files needed to run the Ubuntu 18.04 operating system.
 
-Базовый образ должен быть указан в первой строке файла `Dockerfile`. Если базовый образ не указан, то будет использован базовый образ `scratch`, который не содержит никаких файлов, что эквивалентно записи `FROM scratch`.
+The base image must be specified on the first line of the `Dockerfile`. If the base image is not specified, the `scratch` base image will be used, which does not contain any files, which is equivalent to the `FROM scratch` record.
 
-Для базового образа можно указать тег, который соответствует конкретной версии базового образа. **Тегом** называется специальная текстовая метка, указывающая, например, версию образа или его характеристики. Если тег не указан, то будет использован тег `latest`, который указывает всегда на последний собранный образ.
+For the base image, you can specify a tag that corresponds to a specific version of the base image. A **tag** is a special text label that indicates, for example, the version of the image or its characteristics. If the tag is not specified, the `latest` tag will be used, which always points to the latest built image.
 
 ### COPY
 
-Команда `COPY` копирует файлы и директории из контекста сборки в файловую систему образа. **Контекст сборки** - это директория, в которой находится файл `Dockerfile`. Команда `COPY` имеет следующий синтаксис:
+The `COPY` command copies files and directories from the build context to the image file system. The **build context** is the directory in which the `Dockerfile` file is located. The `COPY` command has the following syntax:
 
 ```dockerfile
 СOPY <src> <dest>
 ```
 
-где `<src>` - путь к файлу или директории в контексте сборки, `<dest>` - путь к файлу или директории в файловой системе образа.
+where `<src>` is the path to the file or directory in the build context, `<dest>` is the path to the file or directory in the image file system.
 
 ### ADD
 
-Команда `ADD` копирует файлы и директории из контекста сборки в файловую систему образа. Позволяет также скачивать файлы из интернета и распаковывать архивы. Команда `ADD` имеет следующий синтаксис:
+The `ADD` command copies files and directories from the build context to the image file system. It also allows you to download files from the Internet and unpack archives. The `ADD` command has the following syntax:
 
 ```dockerfile
 ADD <src> <dest>
 ```
 
-где `<src>` - путь к файлу или директории в контексте сборки, `<dest>` - путь к файлу или директории в файловой системе образа. Если `<src>` - URL-адрес, то файл будет скачан из интернета. Если `<src>` - архив, то он будет распакован в файловую систему образа.
+where `<src>` is the path to the file or directory in the build context, `<dest>` is the path to the file or directory in the image file system. If `<src>` is a URL, the file will be downloaded from the Internet. If `<src>` is an archive, it will be unpacked into the image file system.
 
-Команда `ADD` работает по следующему алгоритму:
+The command `ADD` works according to the following algorithm:
 
-- Путь `<src>` работает в директории контекста сборки, то есть он не может содержать `..` и не может быть абсолютным.
-- Если `<src>` - URL-адрес, то файл будет скачан из интернета.
-- Если `<src>` - локальный архив `tar` в одном из распознаваемых сжатых форматах (gzip, bz2, xz, identity), то он будет распакован в файловую систему образа.
-- Если `<src>` - директория, то она будет скопирована целиком в файловую систему образа, включая метаданные (владельца, права доступа, дату изменения).
-- Если `<src>` - файл, то он будет скопирован в файловую систему образа. Если `<dest>` - директория, то файл будет скопирован в эту директорию. Если `<dest>` - файл, то файл будет скопирован в этот файл.
-- Если путь `<dest>` не существует, то он будет создан.
+- The path `<src>` works in the build context directory, that is, it cannot contain `..` and cannot be absolute.
+- If `<src>` is a URL, the file will be downloaded from the Internet.
+- If `<src>` is a local `tar` archive in one of the recognized compressed formats (gzip, bz2, xz, identity), it will be unpacked into the image file system.
+- If `<src>` is a directory, it will be copied entirely to the image file system, including metadata (owner, permissions, modification date).
+- If `<src>` is a file, it will be copied to the image file system. If `<dest>` is a directory, the file will be copied to this directory. If `<dest>` is a file, the file will be copied to this file.
+- If the path `<dest>` does not exist, it will be created.
 
-Команда `ADD` имеет больше возможностей, чем команда `COPY`, но в целях безопасности рекомендуется использовать команду `COPY` вместо команды `ADD`.
+The `ADD` command has more capabilities than the `COPY` command, but for security reasons, it is recommended to use the `COPY` command instead of the `ADD` command.
 
 ### RUN
 
-Команда `RUN` выполняет команду в контейнере. Результат выполнения команды сохраняется в образе. Команда `RUN` имеет следующий синтаксис:
+The `RUN` command executes a command in the container. The result of the command execution is saved in the image. The `RUN` command has the following syntax:
 
 ```dockerfile
 RUN <command>
 ```
 
-где `<command>` - команда, которая будет выполнена в контейнере.
+where `<command>` is the command that will be executed in the container.
 
-Пример обновления списка пакетов и, собственно, самих пакетов в образе Ubuntu:
+Sample update of the package list and the packages themselves in the Ubuntu image:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -137,21 +138,21 @@ RUN apt-get update && apt-get -y upgrade
 
 ### CMD
 
-Команда `CMD` задаёт команду, которая будет выполнена при запуске контейнера. Команда `CMD` имеет следующий синтаксис:
+The `CMD` command specifies the command that will be executed when the container is started. The `CMD` command has the following syntax:
 
 ```dockerfile
 CMD <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при запуске контейнера, или в виде массива:
+where `<command>` is the command that will be executed when the container is started, or as an array:
 
 ```dockerfile
 CMD ["<command>", "<arg1>", "<arg2>", ...]
 ```
 
-Разница между выполнением команды в виде строки и в виде массива заключается в том, что при выполнении команды в виде строки команда будет выполнена внутри оболочки (shell, sh, bash), а при выполнении команды в виде массива команда будет выполнена напрямую, без оболочки.
+The difference between executing a command as a string and as an array is that when executing a command as a string, the command will be executed inside the shell (shell, sh, bash), and when executing a command as an array, the command will be executed directly, without a shell.
 
-Пример запуска контейнера с командой `echo`:
+Example of running a container with the `echo` command:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -159,7 +160,7 @@ FROM ubuntu:18.04
 CMD echo "Hello, world!"
 ```
 
-или, в виде массива:
+or as an array:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -169,19 +170,19 @@ CMD ["echo", "Hello, world!"]
 
 ### ENTRYPOINT
 
-Команда `ENTRYPOINT` задаёт команду, которая будет выполнена при запуске контейнера. Команда, заданная в `ENTRYPOINT`, не может быть переопределена при запуске контейнера. Команда `ENTRYPOINT` имеет следующий синтаксис:
+The `ENTRYPOINT` command specifies the command that will be executed when the container is started. The command specified in `ENTRYPOINT` cannot be overridden when the container is started. The `ENTRYPOINT` command has the following syntax:
 
 ```dockerfile
 ENTRYPOINT <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при запуске контейнера, или в виде массива:
+where `<command>` is the command that will be executed when the container is started, or as an array:
 
 ```dockerfile
 ENTRYPOINT ["<command>", "<arg1>", "<arg2>", ...]
 ```
 
-Пример запуска контейнера с командой `echo`:
+Example of running a container with the `echo` command:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -189,19 +190,23 @@ FROM ubuntu:18.04
 ENTRYPOINT echo "Hello, world!"
 ```
 
-Разница между командами `CMD` и `ENTRYPOINT` заключается в том, что команда, заданная в `CMD`, может быть переопределена при запуске контейнера, а команда, заданная в `ENTRYPOINT`, не может быть переопределена.
+Difference between `CMD` and `ENTRYPOINT` commands:
+
+- The `CMD` command specifies the command that will be executed when the container is started. The command specified in `CMD` can be overridden when the container is started.
+- The `ENTRYPOINT` command specifies the command that will be executed when the container is started. The command specified in `ENTRYPOINT` cannot be overridden when the container is started.
+- The `CMD` command can be used in the `Dockerfile` multiple times, and the command specified in the last `CMD` command will be executed when the container is started.
 
 ### WORKDIR
 
-Команда `WORKDIR` задаёт рабочую директорию для команд `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. Команда `WORKDIR` имеет следующий синтаксис:
+The `WORKDIR` command sets the working directory for the `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` commands. The `WORKDIR` command has the following syntax:
 
 ```dockerfile
 WORKDIR <path>
 ```
 
-где `<path>` - путь к рабочей директории. Если рабочая директория не существует, то она будет создана.
+where `<path>` is the path to the working directory. If the working directory does not exist, it will be created.
 
-Пример задания рабочей директории:
+Example of setting the working directory:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -212,15 +217,15 @@ CMD ["ls", "-l"]
 
 ### USER
 
-Команда `USER` задаёт пользователя, от имени которого будут выполняться команды `RUN`, `CMD`, `ENTRYPOINT`, `COPY` и `ADD`. Команда `USER` имеет следующий синтаксис:
+The `USER` command sets the user on behalf of which the `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, and `ADD` commands will be executed. The `USER` command has the following syntax:
 
 ```dockerfile
 USER <user>
 ```
 
-где `<user>` - имя пользователя. Пользователь должен существовать в образе. По умолчанию, команды выполняются от имени пользователя `root`.
+where `<user>` is the username. The user must exist in the image. By default, commands are executed on behalf of the `root` user.
 
-Пример задания пользователя:
+Example of setting the user:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -230,9 +235,9 @@ RUN apt-get update && apt-get -y upgrade
 USER user
 ```
 
-В целях безопасности, рекомендуется выполнять команды `CMD`, `ENTRYPOINT` от имени пользователя, отличного от `root`.
+In the scope of security, it is recommended to execute `CMD`, `ENTRYPOINT` commands on behalf of a user other than `root`.
 
-## Библиография
+## Bibliography
 
 1. [Dockerfile reference, docker.com](https://docs.docker.com/engine/reference/builder/)
 2. [olemskoi, ENTRYPOINT vs CMD: назад к основам, Слёрм, Habr.com, 2017](https://habr.com/ru/companies/slurm/articles/329138/)

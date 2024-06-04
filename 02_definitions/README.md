@@ -1,125 +1,125 @@
-# Основные понятия
+# Basic concepts
 
-- [Основные понятия](#основные-понятия)
-  - [Образ](#образ)
-  - [Контейнер](#контейнер)
-  - [Репозиторий](#репозиторий)
-  - [Сервер](#сервер)
-  - [Монолитная архитектура](#монолитная-архитектура)
-  - [Многокомпонентная архитектура](#многокомпонентная-архитектура)
-  - [Сервис](#сервис)
-  - [Web сервис](#web-сервис)
-  - [Масштабирование](#масштабирование)
-  - [Кластер](#кластер)
-  - [Оркестрация](#оркестрация)
-  - [Облако](#облако)
-  - [Библиография](#библиография)
+- [Basic concepts](#basic-concepts)
+  - [Image](#image)
+  - [Container](#container)
+  - [Repository](#repository)
+  - [Server](#server)
+  - [Monolithic architecture](#monolithic-architecture)
+  - [Multicomponent architecture](#multicomponent-architecture)
+  - [Service](#service)
+  - [Web service](#web-service)
+  - [Scaling](#scaling)
+  - [Cluster](#cluster)
+  - [Orchestration](#orchestration)
+  - [Cloud](#cloud)
+  - [Bibliography](#bibliography)
 
-Для того, чтобы разбираться в какой-либо области, необходимо иметь определенный словарь терминов. В данном разделе мы попытаемся определить основные понятия, которые будут использоваться в дальнейшем.
+For understanding any area, it is necessary to have a certain vocabulary of terms. In this section, we will try to define the basic concepts that will be used in the future.
 
-## Образ
+## Image
 
-**Образом** называется файл, который содержит в себе все необходимое для запуска приложения. В него включаются: само приложение, динамические библиотеки, необходимые для запуска приложения, конфигурационные файлы, данные. Образы создаются на основе файла `Dockerfile`, который описывает, что должно включаться в образ. Образы хранятся в некотором репозитории, удаленном или локальном.
+An **image**  (**container image**) is a file that contains everything needed to run an application. It includes the application itself, dynamic libraries needed to run the application, configuration files, data. Images are created based on the `Dockerfile`, which describes what should be included in the image. Images are stored in a repository, remote or local.
 
-## Контейнер
+## Container
 
-**Контейнером** называется экземпляр образа. Контейнеры можно рассматривать как приложения, также могут быть запущены, остановлены, удалены, перезапущены и т.д. Контейнеры могут быть связаны между собой (обмениваться информацией), а также с внешними ресурсами.
+A **container** is an instance of an image. Containers can be thought of as applications, they can be started, stopped, removed, restarted, etc. Containers can be linked to each other (exchange information) and also with external resources.
 
-## Репозиторий
+## Repository
 
-**Репозиторием** называется хранилище каких-либо файлов, однако, в контексте контейнеризации в данных хранилищах содержатся образы. Репозитории могут быть публичными и приватными. Публичные репозитории доступны для скачивания всем желающим, приватные - только для определенных пользователей.
+A **repository** is a storage of some files, however, in the context of containerization, these storages contain images. Repositories can be public and private. Public repositories are available for download to everyone, private repositories are available only to certain users.
 
-Наиболее популярным публичным репозиторием является [Docker Hub](https://hub.docker.com/), в котором хранятся образы, созданные сообществом.
+The most popular public repository is [Docker Hub](https://hub.docker.com/), which stores images created by the community.
 
-## Сервер
+## Server
 
-Сервер, в зависимости от контекста, имеет различное значение.
+The term **server** has different meanings depending on the context.
 
-- **Сервер** как аппаратная часть, представляет собой специализированный компьютер, на котором запускается серверное программное обеспечение. Данные компьютеры имеют высокую производительность, надежность и доступность, что позволяет обеспечить работу приложения в течение длительного времени.
-- **Сервер** как программная часть, представляет собой программу, которая предоставляет определенные услуги клиентам. Сервер может быть запущен на любом компьютере, однако, для обеспечения высокой доступности и надежности, серверы запускаются на специализированных компьютерах. Серверы запускаются в операционной системе в фоновом режиме, в Linux они называются демонами, в Windows - службами.
+- **Server** as hardware represents a specialized computer on which server software is running. These computers have high performance, reliability, and availability, which allows the application to run for a long time.
+- **Server** as software represents a program that provides certain services to clients. The server can be run on any computer, however, to ensure high availability and reliability, servers are run on specialized computers. Servers are run in the operating system in the background, in Linux they are called daemons, in Windows - services.
 
-Основным требованием к серверам является **надежность**, так как они должны оказывать услуги (сервис) клиентам непрерывно, без перебоев. Сервер также может обладать рядом других свойств, в зависимости от решаемых им задач, например:
+The main requirement for servers is **reliability**, as they must provide services to clients continuously, without interruptions. The server can also have a number of other properties, depending on the tasks it solves, for example:
 
-- **Производительность** - способность сервера обрабатывать запросы клиентов за минимальное время.
-- **Масштабируемость** - способность сервера увеличивать производительность путем увеличения ресурсов, выделяемых для его работы.
-- **Управляемость** - способность сервера управляться удаленно, без необходимости физического присутствия администратора.
+- **Performance** - the ability of the server to process client requests in the shortest possible time.
+- **Scalability** - the ability of the server to increase performance by increasing the resources allocated to it.
+- **Manageability** - the ability of the server to be managed remotely, without the need for the physical presence of the administrator.
 
-## Монолитная архитектура
+## Monolithic architecture
 
-**Монолитной архитектурой** называется архитектура приложения, в которой весь код приложения находится в одном компоненте. Все компоненты приложения запускаются в одном процессе, в одном контейнере. Такая архитектура является простой в реализации, однако, она имеет ряд недостатков, а именно, усложняются:
+**Monolithic architecture** is an architecture of an application in which all the code of the application is in one component. All components of the application run in one process, in one container. This architecture is simple to implement, however, it has a number of drawbacks, namely, it complicates:
 
-- **понимание** - весь код приложения находится в одном компоненте, что затрудняет его чтение и понимание;
-- **поддержка** - большая кодовая база усложняет поиск необходимого для улучшения кода а также добавление кода для новой функциональности;
-- **масштабирование** - масштабирование приложения в случае монолитной архитектуры является вертикальным, что ограничивает возможности масштабирования;
-- **обновление** - в этом случае необходимо обновлять весь компонент, даже если необходимо изменилась только часть функциональности.
+- **understanding** - all the code of the application is in one component, which makes it difficult to read and understand;
+- **support** - a large code base complicates the search for what is needed to improve the code and add code for new functionality;
+- **scalability** - scaling the application in the case of a monolithic architecture is vertical, which limits the possibilities of scaling;
+- **updating** - in this case, it is necessary to update the entire component, even if only part of the functionality has changed.
 
-## Многокомпонентная архитектура
+## Multicomponent architecture
 
-Современные приложения являются сложными системами, состоящими из множества компонентов. Каждый компонент выполняет свою функцию, а взаимодействие между компонентами позволяет реализовать необходимую функциональность. Компоненты могут быть написаны на разных языках программирования, использовать разные базы данных, а также различные протоколы взаимодействия. Все это делает разработку и поддержку таких приложений сложной задачей. В случае, если приложение состоит из нескольких компонентов, то говорится, что у приложения **многокомпонентная** или **модульная архитектура**.
+Modern applications are complex systems consisting of many components. Each component performs its function, and the interaction between the components allows the necessary functionality to be implemented. Components can be written in different programming languages, use different databases, and different communication protocols. All this makes the development and maintenance of such applications a complex task. In the case where the application consists of several components, it is said that the application has a **multicomponent** or **modular architecture**.
 
-Разработка приложений с многокомпонентной архитектурой является сложной задачей, однако, она имеет ряд преимуществ, а именно:
+Developing applications with a multicomponent architecture is a complex task, however, it has a number of advantages, namely:
 
-- **понимание** - каждый компонент выполняет свою функцию, что упрощает понимание приложения;
-- **поддержка** - нет необходимости понимать весь код приложения, достаточно понимать только тот компонент, который необходимо поддерживать;
-- **масштабирование** - масштабирование приложения в случае многокомпонентной архитектуры является горизонтальным, что позволяет увеличивать производительность приложения путем увеличения количества компонентов;
-- **обновление** - в этом случае необходимо обновлять только те компоненты, которые изменились.
+- **understanding** - each component performs its function, which simplifies the understanding of the application;
+- **support** - there is no need to understand all the code of the application, it is enough to understand only the component that needs to be supported;
+- **scalability** - scaling the application in the case of a multicomponent architecture is horizontal, which allows increasing the performance of the application by increasing the number of components;
+- **updating** - in this case, it is necessary to update only those components that have changed.
 
-Частным случаем многокомпонентной архитектуры является **микросервисная архитектура**, роль модулей в которой играют web сервисы (микросервисы).
+A special case of a multicomponent architecture is the **microservices architecture**, where web services (microservices) play the role of modules.
 
-Для упрощения разработки и поддержки приложений используются контейнеры. Каждый компонент приложения запускается в отдельном контейнере, что позволяет разработчикам сосредоточиться на реализации функциональности компонента, а не на его интеграции с другими компонентами. Для запуска приложения необходимо запустить каждый контейнер, содержащий компоненты приложения, и настроить взаимодействие между ними.
+For the simplification of the development and support of applications, containers are used. Each component of the application is run in a separate container, which allows developers to focus on the implementation of the functionality of the component, rather than on its integration with other components. To run the application, it is necessary to start each container containing the components of the application and configure the interaction between them.
 
-## Сервис
+## Service
 
-**Сервисом** называется программа, обычно запускаемая на сервере, которая предоставляет узкоспециализированные услуги клиентам.
+A **service** is a program that is usually run on a server and provides specialized services to clients.
 
-В контексте Web программирование сайт может быть представлен
+In the context of Web programming, a site can be represented as
 
-- в виде одного сервиса (монолит, только одна точка входа),
-- в виде множества несвязанных друг с другом (каждая страница полностью независима) сервисов, или
-- в виде множества связанных друг с другом сервисов (микросервисная архитектура).
+- as a single service (monolith, only one entry point),
+- as a set of unrelated (each page is completely independent) services, or
+- as a set of related services (microservices architecture).
 
-## Web сервис
+## Web service
 
-**Web сервисом** называется сервис, который предоставляет услуги посредством протокола HTTP. Web сервисы могут быть доступны как в локальной сети, так и в глобальной сети Интернет. На базе взаимодействия сервисов разрабатываются приложения с микросервисной архитектурой.
+**Web service** is a service that provides services via the HTTP protocol. Web services can be available both in a local network and in the global Internet. Applications with a microservices architecture are developed based on the interaction of services.
 
-## Масштабирование
+## Scaling
 
-**Масштабированием** называется процесс увеличения производительности приложения путем увеличения количества ресурсов, выделяемых для его работы. Масштабирование может быть вертикальным и горизонтальным.
+**Scaling** is the process of increasing the performance of an application by increasing the resources allocated to it. Scaling can be vertical and horizontal.
 
-**Вертикальное масштабирование** называется увеличение производительности приложения путем увеличения ресурсов, выделяемых для его работы на одном сервере. Например, увеличение объема оперативной памяти, увеличение количества ядер процессора, увеличение объема дискового пространства.
+**Vertical scaling** is called increasing the performance of an application by increasing the resources allocated to it on one server. For example, increasing the amount of RAM, increasing the number of processor cores, increasing the amount of disk space.
 
-**Горизонтальное масштабирование** называется увеличение производительности приложения путем увеличения количества серверов, на которых запущено приложение. Например, увеличение количества серверов, на которых запущено приложение.
+**Horizontal scaling** is called increasing the performance of an application by increasing the number of servers on which the application is running. For example, increasing the number of servers on which the application is running.
 
-## Кластер
+## Cluster
 
-**Кластером** в общем смысле называется группа независимых устройств, объединенных для выполнения общей задачи.
+A **cluster** in the general sense is a group of independent devices united to perform a common task.
 
-В контексте контейнеризации кластером называется группа компьютеров, на которых запускается приложение, развернутое в контейнерах.
+In the context of containerization, a **cluster** is a group of computers on which an application deployed in containers is running.
 
-Множество контейнеров, в которых запущено приложение, называется **кластером контейнеров**.
+In the context of containerization, a **cluster of containers** (or **pod**) is a set of containers running an application.
 
-## Оркестрация
+## Orchestration
 
-**Оркестрацией** называется процесс управления кластером контейнеров. Оркестраторы позволяют запускать, останавливать, перезапускать контейнеры, а также управлять взаимодействием между ними. Оркестраторы позволяют управлять кластером контейнеров как единым целым, а не как набором отдельных контейнеров.
+**Orchestration** is the process of managing a cluster of containers. Orchestrators allow you to start, stop, restart containers, as well as manage interactions between them. Orchestrators allow you to manage a cluster of containers as a whole, not as a set of individual containers.
 
-Оркестраторы предлагают следующие возможности:
+Orchestrators offer the following capabilities:
 
-- Запуск и остановка контейнеров
-- Масштабирование приложения
-- Распределение нагрузки между контейнерами
-- Обнаружение и восстановление отказавших контейнеров
+- Starting and stopping containers
+- Scaling the application
+- Load balancing between containers
+- Detecting and recovering failed containers
 
-## Облако
+## Cloud
 
-**Облаком** называется группа компьютеров, объединенных в единую сеть, с установленным специализированным программным обеспечением, которые предоставляют услуги пользователям. Стандартные услуги облака включают в себя: вычислительные мощности, хранилище данных, сетевые ресурсы, выполнение различных приложений.
+A **cloud** is a group of computers connected to a single network, with specialized software installed, that provide services to users. Standard cloud services include: computing power, data storage, network resources, running various applications.
 
-Многие компании предоставляют услуги облака, например,
+Many companies provide cloud services, for example,
 
 - [Amazon Web Services](https://aws.amazon.com/ru/),
 - [Microsoft Azure](https://azure.microsoft.com/ru-ru/),
 - [Google Cloud](https://cloud.google.com/).
 
-## Библиография
+## Bibliography
 
 1. [**В чем разница между образами Docker и контейнерами?**, AWS Amazon](https://aws.amazon.com/ru/compare/the-difference-between-docker-images-and-containers/)
 2. [**Что такое контейнеризация?**, AWS Amazon](https://aws.amazon.com/ru/what-is/containerization/)
