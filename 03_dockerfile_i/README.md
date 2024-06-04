@@ -28,7 +28,6 @@ Docker images are created based on the `Dockerfile`. This file describes what co
 
 Example of a `Dockerfile`:
 
-
 ```dockerfile
 # based on ubuntu:18.04 image
 FROM ubuntu:18.04
