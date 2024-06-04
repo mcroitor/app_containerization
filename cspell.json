@@ -2,7 +2,7 @@
     "version": "0.2",
     "ignorePaths": [],
     "dictionaryDefinitions": [],
-    "dictionaries": ["ru-ru", "ro-ro"],
+    "dictionaries": ["en-us"],
     "words": [],
     "ignoreWords": [],
     "import": []

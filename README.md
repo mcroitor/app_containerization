@@ -4,21 +4,20 @@ Course notes "Containerization of applications". Designed for 12 theoretical les
 
 The course covers the goals of containerization, applications of containers, creating images and running containers, creating a cluster of containers and their orchestration.
 
-Course is available in two languages: [Russian](rus/README.md) and [Romanian](rom/README.md).
-
 ## Themes / Lessons
 
-1. Introduction / History
-2. Basic Concepts
-3. Dockerfile I: Application Encapsulation
-4. Running Containerized Applications
-5. Dockerfile II
-6. Interacting with the container
-7. docker-compose I
+1. [Introduction / History](01_intro/README.md)
+2. [Basic Concepts](02_definitions/README.md)
+3. [Dockerfile I: Application Encapsulation](03_dockerfile_i/README.md)
+4. [Running Containerized Applications](04_docker_run/README.md)
+5. [Dockerfile II](05_dockerfile_ii/README.md)
+6. [Interacting with the container](06_container_usage/README.md)
+7. [docker-compose I](07_docker_compose_i/README.md)
 8. docker-compose II
 9. Containers in CI/CD processes
 10. Image optimization
-11. Best practices for developing containers
+11. Secrets management
+12. Best practices for developing containers
 
 ## Bibliography
 
