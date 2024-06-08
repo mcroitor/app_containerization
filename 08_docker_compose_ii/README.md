@@ -1,16 +1,16 @@
-# Особенности настройки кластера контейнеров
+# Particularities of container cluster configuration
 
-- [Особенности настройки кластера контейнеров](#особенности-настройки-кластера-контейнеров)
-  - [Аргументы при сборке образа](#аргументы-при-сборке-образа)
-  - [Переменные окружения](#переменные-окружения)
-  - [Ограничение ресурсов](#ограничение-ресурсов)
-  - [Доступ к графическому процессору](#доступ-к-графическому-процессору)
-  - [Проверка состояния контейнера](#проверка-состояния-контейнера)
-  - [Библиография](#библиография)
+- [Particularities of container cluster configuration](#particularities-of-container-cluster-configuration)
+  - [Image build arguments](#image-build-arguments)
+  - [Environment variables](#environment-variables)
+  - [Resource limitation](#resource-limitation)
+  - [Access to the graphics processor](#access-to-the-graphics-processor)
+  - [Checking the container state](#checking-the-container-state)
+  - [Bibliography](#bibliography)
 
-## Аргументы при сборке образа
+## Image build arguments
 
-Как уже было рассказано при описании Dockerfile, при сборке образа можно передавать аргументы. Это позволяет управлять процессом сборки образа, например, передавать версию приложения или другие параметры. В Docker Compose аргументы можно задавать в файле `docker-compose.yml` с помощью ключа `build.args`:
+As already mentioned in the Dockerfile description, when building an image, arguments can be passed. This allows you to control the image building process, for example, pass the application version or other parameters. In Docker Compose, arguments can be set in the `docker-compose.yml` file using the `build.args` key:
 
 ```yaml
 version: '3.9'
@@ -23,11 +23,11 @@ services:
         - APP_VERSION=1.0.0
 ```
 
-## Переменные окружения
+## Environment variables
 
-При запуске сервиса в контейнер можно передать переменные окружения. Это позволяет управлять поведением контейнера, например, передавать параметры подключения к базе данных или другие параметры.
+When starting a service in a container, environment variables can be passed. This allows you to control the behavior of the container, for example, pass database connection parameters or other parameters.
 
-В Docker Compose переменные окружения можно передавать в файле `docker-compose.yml` с помощью ключа `environment`:
+In Docker Compose, environment variables can be passed in the `docker-compose.yml` file using the `environment` key:
 
 ```yaml
 version: '3.9'
@@ -40,7 +40,7 @@ services:
       - DB_PORT=5432
 ```
 
-Переменные окружения можно также задавать в виде словаря:
+Environment variables can also be set as a dictionary:
 
 ```yaml
 version: '3.9'
@@ -53,16 +53,16 @@ services:
       DB_PORT: 5432
 ```
 
-Не всегда удобно хранить переменные окружения в файле `docker-compose.yml`. Поэтому часто их выносят в отдельный файл. Если переменные окружения объявлены в файле `.env`, то Docker Compose автоматически подставит их в файл `docker-compose.yml`.
+Not always it is convenient to store environment variables in the `docker-compose.yml` file. Therefore, they are often placed in a separate file. If environment variables are declared in the `.env` file, Docker Compose will automatically substitute them in the `docker-compose.yml` file.
 
-Пример файла `.env`:
+Example of the `.env` file:
 
 ```env
 DB_HOST=db
 DB_PORT=5432
 ```
 
-Теперь в файле `docker-compose.yml` можно использовать переменные окружения:
+Now in the `docker-compose.yml` file you can use environment variables:
 
 ```yaml
 version: '3.9'
@@ -75,7 +75,7 @@ services:
       - DB_PORT=${DB_PORT}
 ```
 
-Также можно указать файл с переменными окружения в файле `docker-compose.yml` с помощью ключа `env_file`, причем можно перечислить несколько файлов с переменными окружения:
+You can also specify a file with environment variables in the `docker-compose.yml` file using the `env_file` key, and you can list several files with environment variables:
 
 ```yaml
 version: '3.9'
@@ -88,15 +88,15 @@ services:
       - runtime.env
 ```
 
-Следует помнить, что переменные окружения, переданные в файле `docker-compose.yml`, переопределяют переменные окружения, переданные в файле `.env`.
+It should be remembered that environment variables passed in the `docker-compose.yml` file override environment variables passed in the `.env` file.
 
-Кроме того, не рекомендуется хранить в файле `.env` пароли и другие секретные данные. Для хранения секретных данных рекомендуется использовать Docker Secrets или другие инструменты для управления секретами.
+It is also not recommended to store passwords and other secret data in the `.env` file. For storing secret data, it is recommended to use Docker Secrets or other tools for managing secrets.
 
-## Ограничение ресурсов
+## Resource limitation
 
-По умолчанию контейнеры в Docker Compose имеют доступ ко всем ресурсам хоста. Такой неограниченный доступ к ресурсам может привести к недостатку ресурсов для других контейнеров и, соответственно, к конкуренции за ресурсы. Установка явных ограничений на ресурсы позволяет избежать этих проблем.
+By default, containers in Docker Compose have access to all host resources. Such unlimited access to resources can lead to a lack of resources for other containers and, consequently, competition for resources. Setting explicit resource limitations allows you to avoid these problems.
 
-Для контейнера можно ограничить доступ к памяти и процессору. В Docker Compose это можно сделать с помощью ключа `deploy.resources`:
+For a container, you can limit access to memory and processor. In Docker Compose, this can be done using the `deploy.resources` key:
 
 ```yaml
 version: '3.9'
@@ -114,11 +114,11 @@ services:
           memory: 0.5G
 ```
 
-В данном примере контейнеру `web` доступно не более 0.5 процессора и 1 ГБ памяти. Кроме того, при запуске для контейнера резервируется не менее 0.1 процессора и 0.5 ГБ памяти.
+In this example, the `web` container has access to no more than 0.5 processor and 1 GB of memory. In addition, when starting, the container reserves at least 0.1 processor and 0.5 GB of memory.
 
-## Доступ к графическому процессору
+## Access to the graphics processor
 
-Для контейнера можно определить доступ к графическому процессору (GPU). В Docker Compose это можно сделать с помощью ключа `deploy.resources`:
+For a container, you can define access to the graphics processor (GPU). In Docker Compose, this can be done using the `deploy.resources` key:
 
 ```yaml
 version: '3.9'
@@ -135,18 +135,18 @@ services:
               driver: nvidia
 ```
 
-Данный пример указывает, что для работы контейнера `neural_network` требуется доступ к графическому процессору. Контейнеру резервируется 1 графический процессор. Для работы с графическим процессором используется драйвер `nvidia`.
+This example indicates that the `neural_network` container requires access to the graphics processor to work. The container reserves 1 graphics processor. The `nvidia` driver is used to work with the graphics processor.
 
-На данный момент поддерживаются следующие параметры для `capabilities`:
+At the moment, the following parameters are supported for `capabilities`:
 
-- `gpu` - доступ к графическому процессору;
-- `tpu` - доступ к тензорному процессору;
+- `gpu` - access to the graphics processor;
+- `tpu` - access to the tensor processor.
 
-Также могут быть использованы другие параметры для `capabilities`, зависящие от конкретного драйвера графического процессора, например, для использования акселератора CUDA драйвера `nvidia` может быть использован параметр `nvidia-compute`.
+Other parameters for `capabilities` can also be used, depending on the specific graphics processor driver. For example, to use the CUDA accelerator, the `nvidia` driver can use the `nvidia-compute` parameter.
 
-## Проверка состояния контейнера
+## Checking the container state
 
-Также можно проверить состояние контейнера после его запуска. Например, можно проверить, что контейнер успешно запустился и готов к работе. В Docker Compose это можно сделать с помощью ключа `healthcheck`:
+You can also check the container state after it starts. For example, you can check that the container has started successfully and is ready to work. In Docker Compose, this can be done using the `healthcheck` key:
 
 ```yaml
 version: '3.9'
@@ -161,9 +161,9 @@ services:
       retries: 3
 ```
 
-После запуска данного кластера контейнеров Docker Compose будет проверять состояние сервиса `web` с помощью команды `curl -f http://localhost` каждые 30 секунд. Если контейнер не ответит на запрос в течение 10 секунд, Docker Compose будет повторять запрос 3 раза. Если контейнер не ответит на запрос после 3 попыток, Docker Compose перезапустит его.
+After starting this container cluster, Docker Compose will check the state of the `web` service using the `curl -f http://localhost` command every 30 seconds. If the container does not respond to the request within 10 seconds, Docker Compose will repeat the request 3 times. If the container does not respond to the request after 3 attempts, Docker Compose will restart it.
 
-Иногда сервисы в контейнерах пытаются использовать больше ресурсов, чем им доступно. В этом случае может возникать ошибка `OOME` (Out Of Memory Error). Для предотвращения этой ошибки можно использовать правила перезапуска контейнера:
+Sometimes services in containers try to use more resources than they have available. In this case, an `OOME` (Out Of Memory Error) error may occur. To prevent this error, you can use container restart rules:
 
 ```yaml
 version: '3.9'
@@ -179,12 +179,12 @@ services:
         window: 120s
 ```
 
-В данном примере контейнер будет перезапущен в случае ошибки `OOME` не более 3 раз с интервалом 5 секунд. Если контейнер не запустится после 3 попыток, Docker Compose остановит контейнер и выдаст сообщение об ошибке. Условия перезапуска контейнера могут быть следующими:
+In this example, the container will be restarted in case of an `OOME` error no more than 3 times with an interval of 5 seconds. If the container does not start after 3 attempts, Docker Compose will stop the container and issue an error message. The conditions for restarting the container can be as follows:
 
-- `none` - контейнер не будет перезапущен;
-- `on-failure` - контейнер будет перезапущен в случае ошибки;
-- `any` - контейнер будет перезапущен в любом случае.
+- `none` - the container will not be restarted;
+- `on-failure` - the container will be restarted in case of an error;
+- `any` - the container will be restarted in any case.
 
-## Библиография
+## Bibliography
 
 1. [Docker Compose file reference](https://docs.docker.com/compose/compose-file/)
