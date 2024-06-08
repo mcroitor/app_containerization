@@ -1,40 +1,40 @@
-# Дополнительные директивы Dockerfile
+# Additional Dockerfile Directives
 
-- [Дополнительные директивы Dockerfile](#дополнительные-директивы-dockerfile)
-  - [Переменные при построении образа](#переменные-при-построении-образа)
+- [Additional Dockerfile Directives](#additional-dockerfile-directives)
+  - [Variables usage in image building](#variables-usage-in-image-building)
     - [ARG](#arg)
     - [ENV](#env)
-  - [Взаимодействие с контейнером](#взаимодействие-с-контейнером)
+  - [Interaction with the container](#interaction-with-the-container)
     - [EXPOSE](#expose)
     - [VOLUME](#volume)
-  - [Метаданные образа](#метаданные-образа)
+  - [Image metadata](#image-metadata)
     - [LABEL](#label)
-  - [Дополнительные команды](#дополнительные-команды)
+  - [Additional commands](#additional-commands)
     - [SHELL](#shell)
     - [ONBUILD](#onbuild)
     - [HEALTHCHECK](#healthcheck)
     - [STOPSIGNAL](#stopsignal)
-  - [Библиография](#библиография)
+  - [Bibliography](#bibliography)
 
-В данной главе рассматриваются дополнительные директивы `Dockerfile`, которые позволяют определить переменные при построении образа, взаимодействие с контейнером, метаданные образа и дополнительные команды.
+In this chapter, additional `Dockerfile` directives are considered, which allow you to define variables when building an image, interact with a container, image metadata, and additional commands.
 
-## Переменные при построении образа
+## Variables usage in image building
 
-При построении образа контейнера часто возникает необходимость передать в образ некоторые параметры. Например, можно иметь общий `Dockerfile` для нескольких проектов, в котором различаются только некоторые параметры. Кроме того, можно передать в образ некоторые конфиденциальные данные, такие как пароли, токены и т.п.
+When building a container image, you often need to pass some parameters to the image. For example, you can have a common `Dockerfile` for several projects, where only some parameters differ. In addition, you can pass some confidential data, such as passwords, tokens, etc., to the image.
 
-Также во время построения образа можно использовать переменные окружения, которые будут доступны во время выполнения контейнера.
+You can use variables (building arguments) in the `Dockerfile` to pass parameters when building an image. Variables can be defined using the `ARG` directive, and you can use environment variables during the image build.
 
 ### ARG
 
-Команда `ARG` задаёт аргументы, которые можно передать при сборке образа. Аргументы могут быть использованы в командах `FROM`, `RUN`, `CMD`, `LABEL` и `MAINTAINER`. Аргументы могут быть переданы при сборке образа с помощью флага `--build-arg`.
+The `ARG` directive defines arguments that can be passed when building an image. Arguments can be used in the `FROM`, `RUN`, `CMD`, `LABEL`, and `MAINTAINER` commands. Arguments can be passed when building an image using the `--build-arg` flag.
 
 ```dockerfile
 ARG <name>[=<default value>]
 ```
 
-где `<name>` - имя аргумента, `<default value>` - значение аргумента по умолчанию.
+where `<name>` is the argument name, `<default value>` is the argument default value.
 
-Пример использования аргументов:
+The sample of arguments usage:
 
 ```dockerfile
 ARG VERSION=latest
@@ -42,7 +42,7 @@ ARG VERSION=latest
 FROM ubuntu:$VERSION
 ```
 
-Пример передачи аргументов при сборке образа:
+The arguments values can be passed when building an image:
 
 ```bash
 docker build --build-arg VERSION=18.04 -t myimage .
@@ -50,15 +50,15 @@ docker build --build-arg VERSION=18.04 -t myimage .
 
 ### ENV
 
-Команда `ENV` задаёт переменные окружения. Переменные окружения будут доступны во время выполнения контейнера. Переменные окружения могут быть использованы в командах `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, `ADD` и `WORKDIR`.
+The `ENV` directive defines environment variables. Environment variables will be available during the container execution. Environment variables can be used in the `RUN`, `CMD`, `ENTRYPOINT`, `COPY`, `ADD`, and `WORKDIR` commands.
 
 ```dockerfile
 ENV <key> <value>
 ```
 
-где `<key>` - имя переменной окружения, `<value>` - значение переменной окружения.
+where `<key>` is the environment variable name, `<value>` is the environment variable value.
 
-Пример использования переменных окружения:
+The sample of environment variables usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -67,7 +67,7 @@ ENV MY_NAME="John Doe"
 RUN echo "Hello, $MY_NAME"
 ```
 
-Разница между `ARG` и `ENV` заключается в том, что `ARG` используется только во время сборки образа, а `ENV` - во время выполнения контейнера. Если необходимо передать информацию для использования во время выполнения контейнера, то можно воспользоваться определением `ENV` через `ARG`:
+The difference between `ARG` and `ENV` is that `ARG` is used only during the image build, and `ENV` is used during the container execution. If you need to pass information for use during the container execution, you can use the `ENV` definition through `ARG`:
 
 ```dockerfile
 ARG MY_NAME="John Doe"
@@ -77,27 +77,27 @@ ENV MY_NAME=$MY_NAME
 RUN echo "Hello, $MY_NAME"
 ```
 
-Переменные окружения можно переопределить при запуске контейнера с помощью флага `-e` команды `docker run`:
+Environment variables can be overridden when running a container using the `-e` flag of the `docker run` command:
 
 ```bash
 docker run -e MY_NAME="Jane Doe" myimage
 ```
 
-## Взаимодействие с контейнером
+## Interaction with the container
 
-Контейнер является изолированной сущностью, поэтому, чтобы контейнер мог взаимодействовать с внешними системами, необходимо определить некоторые параметры контейнера. Например, можно определить порты, которые контейнер будет использовать для взаимодействия с внешними системами, а также определить тома, которые контейнер будет использовать для хранения данных.
+The container is an isolated entity, so to interact with external systems, you need to define some container parameters. For example, you can define ports that the container will use to interact with external systems, as well as define volumes that the container will use to store data.
 
 ### EXPOSE
 
-Команда `EXPOSE` определяет порты, которые контейнер будет использовать для взаимодействия с внешними системами. Команда `EXPOSE` имеет следующий синтаксис:
+The `EXPOSE` directive defines the ports that the container will use to interact with external systems. The `EXPOSE` directive has the following syntax:
 
 ```dockerfile
 EXPOSE <port> [<port>...]
 ```
 
-где `<port>` - номер открываемого для доступа в контейнер порта.
+where `<port>` is the port number opened for access to the container.
 
-Пример использования команды `EXPOSE`:
+The sample of `EXPOSE` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -105,33 +105,35 @@ FROM ubuntu:18.04
 EXPOSE 80
 ```
 
-Порты, определённые командой `EXPOSE`, доступны другим контейнерам, но не доступны хосту. Их можно перенаправить на порты хоста с помощью флага `-p` (или `--publish`) команды `docker run`, например:
+The ports defined by the `EXPOSE` command are available to other containers but are not available to the host. You can redirect container ports to host ports using the `-p` (or `--publish`) flag of the `docker run` command, for example:
 
 ```bash
 docker run -p 80 myimage
 ```
 
-В этом случае порт 80 контейнера будет ассоциирован с произвольным портом хоста. Чтобы ассоциировать порт контейнера с определённым портом хоста, необходимо указать порт хоста перед двоеточием, например:
+In this case, the port 80 of the container will be associated with an arbitrary host port. To associate the container port with a specific host port, you need to specify the host port before the colon, for example:
 
 ```bash
 docker run -p 8080:80 myimage
 ```
 
-В этом случае порт 80 контейнера будет ассоциирован с портом 8080 хоста.
+In this case, the port 80 of the container will be associated with the port 8080 of the host.
+
+> __Note:__ The `EXPOSE` directive does not publish the port to the host. It is used as a hint for the user, which ports the container will use to interact with external systems.
 
 ### VOLUME
 
-Команда `VOLUME` определяет тома, которые контейнер будет использовать для хранения данных. Том обеспечивает доступ к файловой системе хоста, а также сохраняет данные, записанные контейнером, после завершения контейнера. Обычно они хранятся в каталоге `/var/lib/docker/volumes` на хосте, но могут быть перенаправлены в другие места.
+The `VOLUME` directive defines the volumes that the container will use to store data. The volume provides access to the host file system and saves the data written by the container after the container is finished. Usually, they are stored in the `/var/lib/docker/volumes` directory on the host, but can be redirected to other locations.
 
-Команда `VOLUME` имеет следующий синтаксис:
+The `VOLUME` directive has the following syntax:
 
 ```dockerfile
 VOLUME <path> [<path>...]
 ```
 
-где `<path>` - путь к тому, который будет использоваться контейнером. Данный том будет доступен для записи во время выполнения контейнера, размещается в файловой системе хоста и, по завершении контейнера, данные, записанные контейнером сохраняются.
+where `<path>` is the path to the volume that will be used by the container. This volume will be available for writing during the container execution, is located on the host file system, and after the container is finished, the data written by the container is saved.
 
-Пример использования команды `VOLUME`:
+The sample of `VOLUME` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -139,33 +141,33 @@ FROM ubuntu:18.04
 VOLUME /var/www
 ```
 
-Можно также определить томы во время выполнения контейнера с помощью флага `-v` команды `docker run`:
+You can also define volumes during the container execution using the `-v` flag of the `docker run` command:
 
 ```bash
 docker run -v /var/www myimage
 ```
 
-Также можно монтировать папки хоста в контейнер с помощью флага `-v` команды `docker run`:
+You can also mount host folders into the container using the `-v` flag of the `docker run` command:
 
 ```bash
 docker run -v /path/to/host:/path/to/container myimage
 ```
 
-## Метаданные образа
+## Image metadata
 
-Метаданные образа - это информация о создателе образа, описании образа, контактной информации и т.п. Метаданные образа могут быть использованы для поиска образов, для автоматизации процесса сборки образов, для автоматизации процесса развертывания образов.
+Image metadata is information about the image creator, image description, contact information, etc. Image metadata can be used to search for images, automate the image building process, automate the image deployment process.
 
 ### LABEL
 
-Команда `LABEL` определяет метаданные образа (метки). Команда `LABEL` имеет следующий синтаксис:
+The `LABEL` directive defines image metadata (labels). The `LABEL` directive has the following syntax:
 
 ```dockerfile
 LABEL <key> = <value> <key> = <value>...
 ```
 
-где `<key>` - ключ метки, `<value>` - её значение. Метаданные могут быть использованы для поиска образов, для автоматизации процесса сборки образов, для автоматизации процесса развертывания образов.
+where `<key>` is the label key, `<value>` is the label value. Metadata can be used to search for images, automate the image building process, automate the image deployment process.
 
-Пример использования команды `LABEL`:
+The sample of `LABEL` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -175,33 +177,33 @@ LABEL version="1.0"
 RUN echo "Hello, world"
 ```
 
-Метаданные образа можно просмотреть с помощью команды `docker inspect`:
+You can view the image metadata using the `docker inspect` command:
 
 ```bash
 docker inspect myimage
 ```
 
-При определении метаданных образа следует придерживаться следующих рекомендаций:
+When defining image metadata, the following recommendations should be followed:
 
-- авторы сторонних пакетов должны использовать префикс для ключа, который представляет инвертированную доменную запись, например, `com.example-vendor=ACME Incorporated`. Данный префикс представляет собой пространство имен;
-- используйте префиксы ключей (пространства имён) только с разрешения владельца домена;
-- префиксы `com.docker.*`, `io.docker.*`, и `org.dockerproject.*` зарезервированы для внутреннего использования Docker.
-- ключ метки должен начинаться строчной буквой и заканчиваться ею же, должен содержать только строчные буквы, цифры или символы `.`, `-`. Не разрешается последовательное использование специальных символов.
-- символ точки `.` разделяют вложенные пространства имён. Ключи меток без пространства имён используются в консольном (CLI) режиме, для того чтобы помечать объекты Docker используя короткие, дружественные для записи строки.
+- authors of third-party packages should use a prefix for the key that represents the inverted domain record, for example, `com.example-vendor=ACME Incorporated`. This prefix represents a namespace;
+- use key prefixes (namespaces) only with the permission of the domain owner;
+- prefixes `com.docker.*`, `io.docker.*`, and `org.dockerproject.*` are reserved for internal use by Docker;
+- the label key should start with a lowercase letter and end with it, should contain only lowercase letters, numbers, or `.` and `-` characters. Sequential use of special characters is not allowed;
+- the `.` character separates nested namespaces. Label keys without namespaces are used in console (CLI) mode to tag Docker objects using short, human-readable strings.
 
-## Дополнительные команды
+## Additional commands
 
 ### SHELL
 
-Команда `SHELL` определяет командную оболочку, которая будет использоваться для выполнения команд `RUN`, `CMD`, `ENTRYPOINT`. Команда `SHELL` имеет следующий синтаксис:
+The `SHELL` directive defines the shell that will be used to execute the `RUN`, `CMD`, `ENTRYPOINT` commands. The `SHELL` directive has the following syntax:
 
 ```dockerfile
 SHELL ["executable", "parameters"]
 ```
 
-где `executable` - исполняемый файл командной оболочки, `parameters` - параметры командной оболочки.
+where `executable` is the shell executable, `parameters` are the shell parameters.
 
-Пример использования команды `SHELL`:
+The sample of `SHELL` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -211,32 +213,32 @@ SHELL ["/bin/bash", "-c"]
 RUN echo "Hello, world"
 ```
 
-В описании образа оболочку можно переопределять несколько раз, и это будет влиять на все последующие команды `RUN`, `CMD` и `ENTRYPOINT`, вплоть до следующего определения команды `SHELL`:
+In the image description, the shell can be overridden several times, and this will affect all subsequent `RUN`, `CMD`, and `ENTRYPOINT` commands until the next `SHELL` command definition:
 
 ```dockerfile
 FROM microsoft/windowsservercore
 
-# проверяем оболочку по умолчанию
+# check the default shell
 RUN echo default shell is %COMSPEC%
 
-# переопределяем оболочку
+# override the shell
 SHELL ["powershell", "-Command"]
 
-# проверяем оболочку
+# check the shell
 RUN Write-Host default shell is %COMSPEC%
 ```
 
 ### ONBUILD
 
-Команда `ONBUILD` определяет команды, которые будут выполнены при сборке образа, на основе которого будет создан новый образ. Команда `ONBUILD` имеет следующий синтаксис:
+The `ONBUILD` directive defines the commands that will be executed when building an image on which a new image will be created. The `ONBUILD` directive has the following syntax:
 
 ```dockerfile
 ONBUILD <command>
 ```
 
-где `<command>` - команда, которая будет выполнена при сборке образа, на основе которого будет создан новый образ.
+where `<command>` is the command that will be executed when building an image on which a new image will be created.
 
-Пример использования команды `ONBUILD`:
+Sample of `ONBUILD` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -247,35 +249,35 @@ ONBUILD RUN /usr/local/bin/python-build --dir /app/src
 
 ### HEALTHCHECK
 
-Инструкция `HEALTHCHECK` определяет команду, которая будет выполняться для проверки состояния контейнера. Команда `HEALTHCHECK` имеет следующий синтаксис:
+The `HEALTHCHECK` directive defines the command that will be executed to check the container status. The `HEALTHCHECK` command has the following syntax:
 
 ```dockerfile
 HEALTHCHECK [OPTIONS] CMD command
 ```
 
-где `OPTIONS` - опции команды, `CMD` - команда, которая будет выполнена для проверки состояния контейнера.
+where `OPTIONS` is the command options, `CMD` is the command that will be executed to check the container status.
 
-Также можно отключить проверку состояния контейнера с помощью команды `HEALTHCHECK`:
+You can also disable the container status check using the `HEALTHCHECK` command:
 
 ```dockerfile
 HEALTHCHECK NONE
 ```
 
-Свойства, которые можно определить перед `CMD`:
+Properties that can be defined before `CMD`:
 
-- `--interval=DURATION` - интервал между проверками состояния контейнера. По умолчанию интервал составляет 30 секунд;
-- `--timeout=DURATION` - время ожидания выполнения команды проверки состояния контейнера. По умолчанию время ожидания составляет 30 секунд;
-- `--start-period=DURATION` - время ожидания перед началом выполнения команды проверки состояния контейнера. По умолчанию время ожидания составляет 0 секунд;
-- `--start-interval=DURATION` - интервал между попытками выполнения команды проверки состояния контейнера при запуске. По умолчанию интервал составляет 5 секунд. Для использования данного свойства необходимо иметь версию Docker Engine 25.0 или выше;
-- `--retries=N` - количество попыток выполнения команды проверки состояния контейнера. По умолчанию количество попыток составляет 3.
+- `--interval=DURATION` - the interval between container status checks. By default, the interval is 30 seconds;
+- `--timeout=DURATION` - the time to wait for the container status check command to complete. By default, the waiting time is 30 seconds;
+- `--start-period=DURATION` - the time to wait before starting the container status check command. By default, the waiting time is 0 seconds;
+- `--start-interval=DURATION` - the interval between attempts to execute the container status check command when starting. By default, the interval is 5 seconds. To use this property, you must have Docker Engine version 25.0 or higher;
+- `--retries=N` - the number of attempts to execute the container status check command. By default, the number of attempts is 3.
 
-Команда, указанная после `CMD`, должна возвращать код состояния
+The `CMD` command specified after `HEALTHCHECK` must return the status code:
 
-- `0` - контейнер готов к работе;
-- `1` - контейнер работает с ошибками;
-- `2` - зарезервировано для будущего использования, не использовать в настоящее время.
+- `0` - the container is ready to work;
+- `1` - the container is working with errors;
+- `2` - reserved for future use, do not use at this time.
 
-Пример использования команды `HEALTHCHECK`:
+Sample of `HEALTHCHECK` usage:
 
 ```dockerfile
 FROM ubuntu:18.04
@@ -286,26 +288,26 @@ HEALTHCHECK --interval=5m --timeout=3s \
 
 ### STOPSIGNAL
 
-Команда `STOPSIGNAL` определяет сигнал, который будет отправлен контейнеру для остановки. Команда `STOPSIGNAL` имеет следующий синтаксис:
+The `STOPSIGNAL` command defines the signal that will be sent to the container to stop. The `STOPSIGNAL` command has the following syntax:
 
 ```dockerfile
 STOPSIGNAL signal
 ```
 
-где `signal` - сигнал, который будет отправлен контейнеру для остановки. Сигнал может быть указан в виде числа или в виде имени сигнала. Наиболее часто используемые сигналы:
+where `signal` is the signal that will be sent to the container to stop. The signal can be specified as a number or as a signal name. The most commonly used signals are:
 
-- `SIGINT` - сигнал прерывания процесса, имеет числовое значение `2`;
-- `SIGQUIT` - сигнал завершения процесса, имеет числовое значение `3`;
-- `SIGTERM` - сигнал завершения процесса, имеет числовое значение `15`, по умолчанию используется данный сигнал;
-- `SIGKILL` - сигнал немедленного завершения процесса, имеет числовое значение `9`.
+- `SIGTERM` - termination signal, has a numeric value of `15`, is used by default;
+- `SIGKILL` - immediate termination signal, has a numeric value of `9`.
+- `SIGINT` - interrupt signal, has a numeric value of `2`;
+- `SIGQUIT` - termination signal, has a numeric value of `3`.
 
-Значение сигнала остановки можно переопределить при запуске контейнера с помощью флага `--stop-signal` команды `docker run`:
+The value of the `STOPSIGNAL` command can be overridden when starting the container using the `--stop-signal` flag of the `docker run` command:
 
 ```bash
 docker run --stop-signal=SIGKILL myimage
 ```
 
-## Библиография
+## Bibliography
 
 1. [Dockerfile reference, docker.com](https://docs.docker.com/engine/reference/builder/)
 2. [vsupalov, __Docker ARG vs ENV__, vsupalov.com](https://vsupalov.com/docker-arg-vs-env/)
