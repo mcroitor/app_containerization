@@ -1,26 +1,32 @@
-# Терминология
+# Glossary
 
-* _Docker_ - программное обеспечение для развёртывания приложений в контейнерах. Позволяет "упаковать" приложение со всем его окружением и зависимостями в контейнер, который может быть перенесён на любую Linux-систему с поддержкой `cgroups` в ядре, а также предоставляет среду по управлению контейнерами.
-* _Kubernetes_ - программное обеспечение для автоматизации развёртывания, масштабирования и управления контейнеризированными приложениями. Позволяет управлять работой контейнеров в кластере.
-* _Бессерверные вычисления_ - 
-* _Виртуализация_ - технология, позволяющая запускать экземпляр некоторой операционной системы в рамках другой операционной системы (называемой _хостом_).
-* _Виртуальная машина_ - 
-* _Инфраструктура_ -
-* _Кластер_ - группа компьютеров, объединённых для выполнения общего набора задач. Кластеры используются для упрощения масштабирования и повышения отказоустойчивости. Также говорят про *кластер контейнеров* в случае совместной работы группы контейнеров.
-* _Контейнеризация_ - метод виртуализации, в котором используются ресурсы ядра операционной системы, в отличие от обычной виртуализации, в которой происходит аппаратная эмуляция.
-* _Контейнер_ -
-* _Масштабирование_ -
-* _Микросервис_ -
-* _Надежность_ -
-* _Образ_ - 
-* _Облако_ -
-* _Облачная архитектура_ -
-* _Облачные вычисления_ - доставка поставщиком облачных услуг клиенту ИТ‑ресурсов (вычислительные сервисы, хранилища и базы данных) по требованию через Интернет с оплатой по факту использования.
-* _Оркестрация контейнеров_ - управление контейнерами в кластере.
-* _Под_ - абстракный объект в Kubernetes, представляющий собой группу контейнеров (или один), использующих совместно ресурсы (например, хранилища данных или IP адрес). Под представляет специфичный для приложения "логический хост" и может содержать разные контейнеры приложений, которые в общем и целом тесно связаны. Является неделимой единицей.
-* _Портативность_ - свойство программного обеспечения, позволяющее переносить его из одной среды в другую.
-* _Сервер_ - специализированный компьютер и/или программа, предоставляющие сервисы другим программам (клиентам).
-* _Сервис_ - программа, представляющая узкоспециализированные услуги для других программ (клиентов).
-* _Тег_ - текстовая метка, присваиваемая образу Docker, позволяющая идентифицировать версию образа.
-* _Узел_ - рабочая машина в Kubernetes, выполняющая под.
-* _Хост_ - компьютер (или операционная система) предоставляющий ресурсы для виртуальных машин или контейнеров.
+- _Docker_ - software for deploying applications in containers. It allows you to "package" an application with all its environment and dependencies into a container, which can be moved to any Linux system with `cgroups` support in the kernel, and also provides an environment for managing containers.
+- _Kubernetes_ - software for automating the deployment, scaling, and management of containerized applications. It allows you to manage the work of containers in a cluster.
+- _Serverless computing_ - a cloud computing model in which a cloud provider automatically manages the allocation of machine resources.
+- _Virtualization_ - technology that allows you to run an instance of an operating system within another operating system (called the _host_).
+- _Virtual machine_ - a software implementation of a computer that runs programs like a physical machine.
+- _Infrastructure_ - the physical or virtual resources that are used to support the operation of a system.
+- _Cluster_ - a group of computers combined to perform a common set of tasks. Clusters are used to simplify scaling and increase fault tolerance. Also, talk about a _container cluster_ when a group of containers work together.
+- _Containerization_ - a method of virtualization that uses the resources of the operating system kernel, as opposed to traditional virtualization, which involves hardware emulation.
+- _Container_ - an instance of an image; a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another.
+- _Scalability_ - the ability of a system to handle a growing amount of work or its potential to accommodate growth.
+- _Reliability_ - the ability of a system to maintain its functionality under different conditions.
+- _Image_ - a file that contains everything needed to run an application. It includes the application itself, dynamic libraries needed to run the application, configuration files, data.
+- _Cloud_ - a network of remote servers hosted on the Internet to store, manage, and process data in place of local servers or personal computers.
+- _Cloud architecture_ - the design of systems that use cloud computing technologies.
+- _Cloud computing_ - the delivery of IT resources (computing services, storage, and databases) by a cloud services provider to a client over the Internet on a pay-as-you-go basis.
+- _Container orchestration_ - managing containers in a cluster.
+- _Pod_ - an abstract object in Kubernetes representing a group of containers (or one) that share resources (such as data storage or an IP address). A Pod represents a specific application "logical host" and can contain different application containers that are generally closely related. It is an indivisible unit.
+- _Portability_ - the property of software that allows it to be moved from one environment to another.
+- _Server_ - a specialized computer and/or program that provides services to other programs (clients).
+- _Service_ - a program that provides narrowly specialized services to other programs (clients).
+- _Tag_ - a text label assigned to a Docker image that identifies the image version.
+- _Node_ - a working machine in Kubernetes that runs pods.
+- _Host_ - a computer (or operating system) that provides resources for virtual machines or containers.
+- _Daemon_ - a program that runs in the background and performs various tasks.
+- _Monolithic architecture_ - an architecture of an application in which all the code of the application is in one component.
+- _Multicomponent architecture_ - an architecture of an application in which the application consists of several components.
+- _Web service_ - a service that is available on the Internet.
+- _Scaling_ - the ability of a system to handle a growing amount of work by adding resources.
+- _Orchestration_ - the automated configuration, coordination, and management of computer systems and software.
+- _Repository_ - a storage of some files, in the context of containerization, these storages contain images.
