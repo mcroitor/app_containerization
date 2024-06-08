@@ -1,57 +1,77 @@
-# Лабораторная работа: Обслуживание сервера
+# Individual Work: Server Maintenance
 
-Целью данной работы является обучение обслуживанию Web серверов, работающих в контейнерах.
+The goal of this work is to learn how to maintain Web servers running in containers.
 
-> В производстве создание резервных копий часто выполняется специализированными средствами, в данной же работы рассматривается работа менеджера задач __cron__.
+> In production, creating backups is often done with specialized tools, but in this work, the task manager __cron__ is considered.
 
-> Для облегчения сбора журналов стандартной практикой является переадресация логов в стандартные потоки __STDOUT__ и __STDERR__.
+> To facilitate the collection of logs, the standard practice is to redirect logs to the standard streams __STDOUT__ and __STDERR__.
 
-## Подготовка
+## Task
 
-Проверьте, что у вас установлен и запущен _Docker Desktop_.
+Create a cluster of containers that will host the CMS Wordpress. The cluster should include the following containers:
 
-Создайте папку `additional`. В ней будет выполняться вся работа. Создайте папки `database` - для базы данных, `files` - для хранения конфигураций и `site` - в данной папке будет расположен сайт.
+1. Apache HTTP Server with the ability to process PHP scripts.
+2. PHP-FPM container.
+3. MariaDB container.
+4. Cron container.
 
-Лабораторная работа выполняется при подключении к сети Internet, так как скачиваются образы из репозитория [Docker Hub](https://hub.docker.com)
+The Apache HTTP Server container should be configured to redirect PHP requests to the PHP-FPM container. The PHP-FPM container should be configured to work with the MariaDB container.
 
-## Выполнение
+The Cron container should be configured to perform the following tasks:
 
-Скачайте [CMS Wordpress](https://wordpress.org/) и распакуйте в папку `site`. У вас должна появиться в папке `site` папка `wordpress` с исходным кодом сайта.
+1. Every 24 hours, create a backup of the CMS database.
+2. Every Monday, create a backup of the CMS directory.
+3. Every 24 hours, delete backups that were created 30 days ago.
+4. Every minute, write the message _alive, \<username\>_ to the log.
 
-### Контейнер Apache HTTP Server
+The cluster should be configured to store backups in the `./backups/` directory. The site should be stored in the `./site/wordpress/` directory.
 
-Для начала создадим конфигурационный файл для Apache HTTP Server. Для этого выполните следующие команды в консоли:
+## Preparation
+
+Check that you have _Docker Desktop_ installed and running.
+
+Create a folder `additional`. All work will be done in it. Create folders `database` - for the database, `files` - for storing configurations, and `site` - the site will be located in this folder.
+
+The Individual Work is done with an Internet connection, as images are downloaded from the [Docker Hub](https://hub.docker.com).
+
+## Execution
+
+Download [CMS Wordpress](https://wordpress.org/) and unpack it into the `site` folder. You should have a folder `wordpress` with the source code of the site in the `site` folder.
+
+### Apache HTTP Server Container
+
+First, create a configuration file for the Apache HTTP Server. To do this, run the following commands in the console:
 
 ```shell
-# команда скачивает образ httpd и запускает на его основе контейнер с именем httpd
+# download the httpd image and run a container named httpd
 docker run -d --name httpd  httpd:2.4
 
-# копируем конфигурационный файл из контейнера в папку .\files\httpd
+# copy the configuration file from the container to the .\files\httpd folder
 docker cp httpd:/usr/local/apache2/conf/httpd.conf .\files\httpd\httpd.conf
 
-# останавливаем контейнер httpd
+# stop the httpd container
 docker stop httpd
 
-# удаляем контейнер
+# remove the container
 docker rm httpd
 ```
 
-В созданном файле `.\files\httpd\httpd.conf` раскоментируйте строки, содержащие подключение расширений `mod_proxy.so`, `mod_proxy_http.so`, `mod_proxy_fcgi.so`.
+In the created file `.\files\httpd\httpd.conf`, uncomment the lines containing the connection of the extensions `mod_proxy.so`, `mod_proxy_http.so`, `mod_proxy_fcgi.so`.
 
-Найдите в конфигурационном файле объявление параметра `ServerName`. Под ним добавьте следующие строки:
+Find the declaration of the parameter `ServerName` in the configuration file. Under it, add the following lines:
 
 ```ini
-# определение доменного имени сайта
+# define the domain name of the site
 ServerName wordpress.localhost:80
-# перенаправление php запросов контейнеру php-fpm
+# redirect php requests to the php-fpm container
 ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://php-fpm:9000/var/www/html/$1
-# индексный файл
+# index file
 DirectoryIndex /index.php index.php
 ```
 
-Также найдите определение параметра `DocumentRoot` и задайте ему значение `/var/www/html`, как и в следующей за параметром строке.
+Also, find the definition of the `DocumentRoot` parameter and set its value to `/var/www/html`, as in the following line.
 
-Создайте файл `Dockerfile.httpd` со следующим содержимым:
+Create a file `Dockerfile.httpd` with the following content:
 
 ```dockerfile
 FROM httpd:2.4
@@ -61,11 +81,11 @@ RUN apt update && apt upgrade -y
 COPY ./files/httpd/httpd.conf /usr/local/apache2/conf/httpd.conf
 ```
 
-Подробноcти работы с контейнером _httpd_ можно узнать здесь: [HTTPD Container](https://hub.docker.com/_/httpd).
+Details of working with the _httpd_ container can be found here: [HTTPD Container](https://hub.docker.com/_/httpd).
 
-### Контейнер PHP-FPM
+### PHP-FPM Container
 
-Создайте файл `Dockerfile.php-fpm` со следующим содержимым:
+Create a file `Dockerfile.php-fpm` with the following content:
 
 ```dockerfile
 FROM php:7.4-fpm
@@ -79,11 +99,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd mysqli
 ```
 
-Подробноcти работы с контейнером _php_ можно узнать здесь: [PHP Container](https://hub.docker.com/_/php).
+Details of working with the _php_ container can be found here: [PHP Container](https://hub.docker.com/_/php).
 
-### Контейнер MariaDB
+### MariaDB Container
 
-Создайте файл `Dockerfile.mariadb` со следующим содержимым:
+Create a file `Dockerfile.mariadb` with the following content:
 
 ```dockerfile
 FROM mariadb:10.8
@@ -91,15 +111,13 @@ FROM mariadb:10.8
 RUN apt-get update && apt-get upgrade -y
 ```
 
-Подробноcти работы с контейнером _mariadb_ можно узнать здесь: [MariaDB Container](https://hub.docker.com/_/mariadb).
+Details of working with the _mariadb_ container can be found here: [MariaDB Container](https://hub.docker.com/_/mariadb).
 
-### Сборка решения
+### Solution assembly
 
-Создайте файл `docker-compose.yml` со следующим содержимым:
+Create a file `docker-compose.yml` with the following content:
 
 ```yaml
-version: '3.9'
-
 services:
   httpd:
     build:
@@ -136,22 +154,22 @@ networks:
   internal: {}
 ```
 
-Данный файл объявляет структуру из трех контейнеров: http как точка входа, контейнер php-fpm и контейнер с базой данных. Для взаимодействия контейнеров объявляется также сеть `internal` с настройками по умолчанию.
+This file declares a structure of three containers: http as the entry point, php-fpm container, and database container. To interact between containers, a network `internal` is also declared with default settings.
 
-### Cron сервис
+### Cron service
 
-Для резервного копирования будем использовать контейнер _cron_, который:
+For backup, we will use the _cron_ container, which:
 
-1. каждые 24 часа создаёт резервную копию базы данных CMS;
-2. каждый понедельник создаётся резервная копия директории CMS;
-3. Каждые 24 часа удаляет резервные копии, которые были созданы 30 дней назад.
-4. Каждую минуту в лог пишет сообщение _alive, \<username\>_.
+1. every 24 hours creates a backup of the CMS database;
+2. every Monday creates a backup of the CMS directory;
+3. every 24 hours deletes backups that were created 30 days ago;
+4. every minute writes the message _alive, \<username\>_ to the log.
 
-Для этого в папке `./files/` создайте папку `cron`. В папке `./files/cron/` создайте папку `scripts`. В корневом каталоге создайте папку `backups`, а в ней `mysql`, `site`.
+To do this, create a folder `./files/cron`. In the `./files/cron/` folder, create a folder `scripts`. In the root directory, create a folder `backups`, and in it `mysql`, `site`.
 
-#### сообщение о статусе
+#### Status message
 
-В папке `./files/cron/scripts/` создайте файл `01_alive.sh` со следующим содержимым:
+In the `./files/cron/scripts/` folder, create a file `01_alive.sh` with the following content:
 
 ```shell
 #!/bin/sh
@@ -159,11 +177,11 @@ networks:
 echo "alive ${USERNAME}" > /proc/1/fd/1
 ```
 
-Данный скрипт выдает сообщение `alive ${USERNAME}`.
+This script outputs the message `alive ${USERNAME}`.
 
-#### резервное копирование сайта
+#### Site backup
 
-В папке `./files/cron/scripts/` создайте файл `02_backupsite.sh` со следующим содержимым:
+In the `./files/cron/scripts/` folder, create a file `02_backupsite.sh` with the following content:
 
 ```shell
 #!/bin/sh
@@ -177,11 +195,11 @@ echo "[backup] site backup done" \
     2> /proc/1/fd/2
 ```
 
-Данный скрипт выдает архивирует папку `/var/www/html` и сохраняет архив в `/var/backups/site/`.
+This script archives the `/var/www/html` folder and saves the archive to `/var/backups/site/`.
 
-#### резервное копирование базы данных
+#### Database backup
 
-В папке `./files/cron/scripts/` создайте файл `03_mysqldump.sh` со следующим содержимым:
+In the `./files/cron/scripts/` folder, create a file `03_mysqldump.sh` with the following content:
 
 ```shell
 #!/bin/sh
@@ -194,9 +212,9 @@ echo "[backup] sql dump created" \
     > /proc/1/fd/1
 ```
 
-#### удаление старых файлов
+#### Deleting old files
 
-В папке `./files/cron/scripts/` создайте файл `04_clean.sh` со следующим содержимым:
+In the `./files/cron/scripts/` folder, create a file `04_clean.sh` with the following content:
 
 ```shell
 #!/bin/sh
@@ -215,9 +233,9 @@ echo "[backup] done" \
     2> /proc/1/fd/2
 ```
 
-#### подготовка cron
+#### Cron preparation
 
-В папке `./files/cron/scripts/` создайте файл `environment.sh` со следующим содержимым:
+In the `./files/cron/scripts/` folder, create a file `environment.sh` with the following content:
 
 ```shell
 #!/bin/sh
@@ -230,7 +248,7 @@ echo "$@"
 exec "$@"
 ```
 
-В папке `./files/cron/` создайте файл `crontab` со следующим содержимым:
+In the `./files/cron/` folder, create a file `crontab` with the following content:
 
 ```crontab
 # Example of job definition:
@@ -248,9 +266,9 @@ exec "$@"
 # Don't remove the empty line at the end of this file. It is required to run the cron job
 ```
 
-#### создание контейнера cron
+#### Creating a cron container
 
-Создайте в корневом каталоге файл `Dockerfile.cron` со следующим содержимым:
+Create a file `Dockerfile.cron` in the root directory with the following content:
 
 ```dockerfile
 FROM debian:latest
@@ -266,7 +284,7 @@ ENTRYPOINT [ "/scripts/environment.sh" ]
 CMD [ "cron", "-f" ]
 ```
 
-Отредактируйте файл `docker-compose.yml`, добавив после определения сервиса `mariadb` следующие строки:
+Edit the `docker-compose.yml` file, adding the following lines after the definition of the `mariadb` service:
 
 ```yaml
   cron:
@@ -274,7 +292,7 @@ CMD [ "cron", "-f" ]
       context: ./
       dockerfile: Dockerfile.cron
     environment:
-      USERNAME: <nume prenume>
+      USERNAME: <firstname lastname>
       MARIADB_DATABASE: sample
       MARIADB_USER: sampleuser
       MARIADB_PASSWORD: samplepassword
@@ -285,76 +303,77 @@ CMD [ "cron", "-f" ]
       - internal
 ```
 
-Замените `<nume prenume>` на ваши имя и фамилию.
+Replace `<firstname lastname>` with your name and surname.
 
-#### Ротация логов
+#### Log rotation
 
-Обратите внимание, что сборка сервера на основе контейнеров выводит логи не в файлы, а в стандартный поток вывода.
+Please note that the container assembly based on containers outputs logs not to files, but to the standard output stream.
 
-Проверьте, проанализировав файл `./files/httpd/httpd.conf`, куда выводится журнал общего назначения Apache HTTP Server? А журнал ошибок?
+Check by analyzing the file `./files/httpd/httpd.conf` where the general-purpose log of the Apache HTTP Server is output? And the error log?
 
-## Запуск и тестирование
+### Launch and testing
 
-В папке лабораторной работы откройте консоль и выполните команду:
+In the folder of the laboratory work, open the console and run the command:
 
 ```shell
 docker-compose build
 ```
 
-На основе созданных определений docker построит образы сервисов. _Сколько секунд собирался проект?_
+Based on the created definitions, Docker will build service images. _How many seconds did the project build?_
 
-Выполните команду:
+Run the command:
 
 ```shell
 docker-compose up -d
 ```
 
-На основе образов запустятся контейнеры. Откройте в браузере страницу: http://wordpress.localhost и произведите установку сайта. __Обратите внимание, что контейнеры видят друг друга по имени, поэтому, при установке сайта надо прописывать для сервера базы данных имя хоста, равное имени контейнера, то есть `mariadb`__. Имя пользователя базы данных, его пароль и название базы данных возьмите из файла `docker-compose.yml`.
+Based on the images, containers will start. Open the page in the browser: http://wordpress.localhost and install the site. __Note that the containers see each other by name, so when installing the site, you need to specify the database server host name equal to the container name, that is, `mariadb`__. The database user name, its password, and the database name are taken from the `docker-compose.yml` file.
 
-Прочите логи каждого контейнера. Для этого выполните команду
+Check the logs of each container. To do this, run the command:
 
 ```shell
 docker logs <container name>
 ```
 
-Например, для созданного контейнера _cron_ логи можно прочитать следующей командой:
+For example, for the created _cron_ container, logs can be read with the following command:
 
 ```shell
 docker logs additional-cron-1
 ```
 
-Выполните последовательно следующие команды
+Stop the containers and remove them:
 
 ```shell
-# остановить контейнеры
+# stop the containers
 docker-compose down
-# удалить контейнеры
+# remove the containers
 docker-compose rm
 ```
 
-Проверьте, открывается ли сайт http://wordpress.localhost . Снова запустите кластер контейнеров:
+Check if the site is available at http://wordpress.localhost. Run the container cluster again:
 
 ```shell
 docker-compose up -d
 ```
 
-и проверьте работоспособность сайта.
+and check the site's operability.
 
-Подождите 2-3 минуты и проверьте, что находится в папках `./backups/mysql/`  и `./backups/site/`.
+Wait 2-3 minutes and check what is in the `./backups/mysql/` and `./backups/site/` folders.
 
-Остановите контейнеры и исправьте файл `./files/cron/crontab` таким образом, чтобы
+Stop the containers and correct the `./files/cron/crontab` file so that
 
-1. каждые день в 1:00 создавалась резервная копия базы данных CMS;
-2. каждый понедельник создавалась резервная копия директории CMS;
-3. Каждые день в 2:00 удалялись резервные копии, которые были созданы 30 дней назад.
+1. every day at 1:00 a backup of the CMS database is created;
+2. every Monday a backup of the CMS directory is created;
+3. every day at 2:00 backups created 30 days ago are deleted.
 
-## Отчет
+## Report
 
-Предоставьте отчет о проделанной работе.
+Provide a report on the work done.
 
-Ответьте на вопросы:
+Answer the questions:
 
-1. Зачем необходимо создавать пользователя системы для каждого сайта?
-2. В каких случаях Web сервер должен иметь полный доступ к папкам (папке) сайта?
-3. Что означает команда `chmod -R 0755 /home/www/anydir`?
-4. В скриптах shell каждая команда оканчивается строкой `> /proc/1/fd/1`. Что это означает?
+1. Why is it necessary to create a system user for each site?
+2. What is the purpose of the `chown` command?
+3. What does the command `chmod -R 0755 /home/www/anydir` mean?
+4. What does the command `find /var/backups/mysql -type f -mtime +30 -delete` do?
+5. What does the command `echo "alive ${USERNAME}" > /proc/1/fd/1` do?

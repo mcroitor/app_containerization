@@ -1,77 +1,84 @@
-# Работа с GIT (шпаргалка)
+# Work with GIT (cheat sheet)
 
-__Git__ (произносится "гит" [^1]) — распределённая система управления версиями. Проект был создан Линусом Торвальдсом для управления разработкой ядра Linux, первая версия выпущена 7 апреля 2005 года.
+__Git__ (pronounced "git" [^1]) is a distributed version control system. The project was created by Linus Torvalds to manage the development of the Linux kernel, and the first version was released on April 7, 2005.
 
-Системы контроля версий позволяют разработчикам управлять разработкой и быть уверенным, что любое новое изменение не "поломает" код. Более подробно можно узнать из официального справочника GIT [^2].
+Version control systems allow developers to manage development and be sure that any new change will not "break" the code. More details can be found in the official GIT manual [^2].
 
-## терминология
+## Terminology
 
-* __репозиторий (англ. repository)__ - место хранения программного кода.
-* __отслеживание версий (англ. version tracking)__ - отслеживание изменений в документах (например, в программном коде). Данное отслеживание позволяет управлять историей изменений. Отслеживание версий выполняется специальными программами - _системами контроля версий_.
-* __контроль версий (англ. version control)__ - известный также как __контроль программного кода (source control)__, практика отслеживания изменений в программном коде и управления этими изменениями.
-* __система контроля версий (англ. version control system)__ - специализированный программный продукт, позволяющий выполнять контроль версий. Наиболее известные программы: [CVS](https://ru.wikipedia.org/wiki/CVS), [SVN](https://ru.wikipedia.org/wiki/Subversion), [GIT](https://ru.wikipedia.org/wiki/Git).
-* __ветвь изменений (англ. branch)__ - направление разработки, независимое от других. Ветвь представляет собой копию части хранилища (например, одного каталога), в которую можно вносить изменения, не влияющие на другие ветви. Документы в разных ветвях имеют одинаковую историю до точки ветвления и разные — после неё.
-* __изменение (сохранение изменения) (англ. commit)__ - сохранение (запоминание) изменений кода в системе контроля версий.
-* __версия проекта (англ. project version)__ - состояние проекта в определенный момент времени.
-* __вытянуть версию (англ. pull version)__ - получить версию из удаленного репозитория.
-* __опубликовать версию (англ. push version)__ - отправить версию в удаленный репозиторий.
-* __слияние ветвей (англ. merge branch)__ - объединение изменений из одной ветви в другую.
-* __запрос на вливание (англ. pull request)__ - запрос на вливание изменений из одной ветви в другую.
-* __запрос на слияние (англ. merge request)__ - запрос на слияние изменений из одной ветви в другую.
-* __конфликт слияния (англ. merge conflict)__ - ситуация, когда две ветви изменяют один и тот же файл и система контроля версий не может автоматически объединить изменения.
+* __repository__ - a place to store source code.
+* __version tracking__ - tracking changes in documents (e.g., source code). This tracking allows you to manage the history of changes. Version tracking is performed by specialized programs - _version control systems_.
+* __version control__ - also known as __source control__, the practice of tracking changes in source code and managing those changes.
+* __version control system__ - a specialized software product that allows version control. The most well-known programs are [CVS](https://en.wikipedia.org/wiki/Concurrent_Versions_System), [SVN](https://en.wikipedia.org/wiki/Apache_Subversion), [GIT](https://en.wikipedia.org/wiki/Git).
+* __branch__ - a development direction independent of others. A branch is a copy of part of the repository (e.g., one directory) where changes can be made without affecting other branches. Documents in different branches have the same history up to the branching point and different histories after it.
+* __commit__ - saving (remembering) code changes in the version control system.
+* __project version__ - the state of the project at a specific point in time.
+* __pull version__ - get a version from a remote repository.
+* __push version__ - send a version to a remote repository.
+* __merge branch__ - merging changes from one branch into another.
+* __pull request__ - a request to merge changes from one branch into another.
+* __merge request__ - a request to merge changes from one branch into another.
+* __merge conflict__ - a situation where two branches change the same file and the version control system cannot automatically merge the changes.
+* __stash__ - a temporary storage area for changes that are not ready to be committed.
+* __tag__ - a label for a specific commit.
+* __fork__ - a copy of a repository that is stored in another user's account.
+* __clone__ - a copy of a repository that is stored on the local machine.
+* __remote__ - a repository that is stored on another machine.
+* __origin__ - the default name for the remote repository.
+* __upstream__ - the original repository from which the fork was made.
 
-## шпаргалка
+## Cheat sheet
 
-| действие | команда |
-| -------- | ------- |
-| Посмотреть существующие ветки: | `git branch` |
-| Создать ветку `my-cool-branch`: | `git branch my-cool-branch` |
-| Перейти на ветку `my-cool-branch`: | `git checkout my-cool-branch` |
-| Удалить ветку `my-cool-branch`: | `git branch -D my-cool-branch` |
-| Создать и перейти: | `git checkout -B my-cool-branch` |
-| Просмотреть статус: | `git status` |
-| Добавить все файлы: | `git add *` |
-| Добавить файл `mycoolfile`: | `git add mycoolfile` |
-| Создать коммит с сообщением `test message`: | `git commit -m "test message"` |
-| Отправить изменения в удаленный репозиторий | `git push` |
+| action | command |
+| ------ | ------- |
+| View existing branches: | `git branch` |
+| Create a branch `my-cool-branch`: | `git branch my-cool-branch` |
+| Switch to the `my-cool-branch` branch: | `git checkout my-cool-branch` |
+| Delete the `my-cool-branch` branch: | `git branch -D my-cool-branch` |
+| Create and switch: | `git checkout -B my-cool-branch` |
+| View status: | `git status` |
+| Add all files: | `git add *` |
+| Add the `mycoolfile` file: | `git add mycoolfile` |
+| Create a commit with the message `test message`: | `git commit -m "test message"` |
+| Send changes to the remote repository | `git push` |
 
-## начало взаимодействия с GITHUB
+## Start working with GITHUB
 
-Создайте аккаунт на GITHUB. По завершению вы сможете создавать свои репозитории, как публичные так и приватные.
+Create an account on GITHUB. After that, you will be able to create your repositories, both public and private.
 
-Для взаимодействия с GITHUB сначала надо установить GIT. Для его скачивания и знакомства с процессом установки перейдите на страницу [Установка GIT](https://git-scm.com/book/ru/v2/Введение-Установка-Git) и выполните указанные инструкции.
+To interact with GITHUB, you need to install GIT. To download it and get acquainted with the installation process, go to the [GIT Installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) page and follow the instructions.
 
-## ключ безопасности
+## Security key
 
-Пусть вы зарегистрировали аккаунт на почтовый адрес `my@cool.email`.
+Let's say you registered an account with the email address `my@cool.email`.
 
-После установки GIT в меню ОС появится GIT BASH. Откройте эту консоль и создайте ключи аутентификации для GITHUB. Для этого выполните следующую команду:
+After installing GIT, the GIT BASH menu will appear in the OS. Open this console and create authentication keys for GITHUB. To do this, run the following command:
 
 ```shell
 ssh-keygen -C "my@cool.email"
 ```
 
-В папке пользователя компьютера (`~/.ssh`) будут созданы два файла: приватный и публичный ключи. Публичный ключ необходимо зарегистрировать в github.
-> При желании можно задать своё имя ключам, тогда необходимо создать файл `~/.ssh/config` в котором
-> прописывается имя ключа для конкретного клиента - github.
+Two files will be created in the user's computer folder (`~/.ssh`): private and public keys. The public key must be registered in GITHUB.
 
-## создание репозитория
+> If you want, you can assign your name to the keys, then you need to create a file `~/.ssh/config` in which the key name for a specific client - github is specified.
 
-Простейшим способом создания репозитория будет создание его через Web интерфейс с последующим его клонированием.
+## Creating a repository
 
-## Минимальный рабочий сценарий
+The simplest way to create a repository is to create it through the Web interface and then clone it.
 
-Минимальный рабочий сценарий включает в себя следующие шаги:
+## The minimum working scenario
 
-1. переключение на главную ветку
-2. получение последних изменений с удаленного сервера
-3. создание новой ветки (для новой функциональности) и переход на неё
-4. _реализация новой функциональности - к GIT не имеет отношения_
-5. добавление измененных файлов к отслеживаемым файлам
-6. создание точки изменения (commit, коммит)
-7. отправка точки изменения на сервер
+The minimum working scenario includes the following steps:
 
-На удаленном сервере будет создана новая ветка, которую надо будет влить в главную ветку. Для этого создаётся запрос (pull request или merge request) через web интерфейс репозитория. После проверки кода и его одобрения новая ветка вливается в главную.
+1. Switch to the main branch
+2. Get the latest changes from the remote server
+3. Create a new branch (for new functionality) and switch to it
+4. _Implement new functionality - GIT is not related to this_
+5. Add changed files to tracked files
+6. Create a checkpoint (commit)
+7. Send the checkpoint to the server
+
+After that a new branch will be created on the remote server, which will need to be merged into the main branch. To do this, a request (pull request or merge request) is created through the web interface of the repository. After the code is checked and approved, the new branch is merged into the main one.
 
 ```shell
 git checkout main
@@ -83,7 +90,7 @@ git commit -m <message>
 git push
 ```
 
-## Библиография
+## Bibliography
 
 [^1]: [Wiki GIT](https://ru.wikipedia.org/wiki/Git)
 [^2]: [Pro GIT](https://git-scm.com/book/ru/v2)

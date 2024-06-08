@@ -1,93 +1,93 @@
-# Описание Markdown формата
+# Markdown Format Description
 
-__Markdown__ [^1] - это легковесный язык разметки, созданный с целью написания читаемого и легко редактируемого текста, который может быть преобразован в HTML и другие форматы. Он был разработан Джоном Грубером и Аароном Шварцем в 2004 году.
+__Markdown__ [^1] is a lightweight markup language created with the goal of writing readable and easily editable text that can be converted to HTML and other formats. It was developed by John Gruber and Aaron Schwartz in 2004.
 
-## Форматирование текста
+## Text formatting
 
-Сплошной текст можно разбить на абзацы, разделяя их двумя переводами строки. Отделение строк только одним переводом строки не приведет к разделению абзацев [^2].
-
-```markdown
-Первый абзац.
-Тот же абзац.
-
-Второй абзац.
-```
-
-Язык разметки позволяет создавать текстовые выделения:
+The unformatted text can be divided into paragraphs by separating them with two line breaks. Separating lines with only one line break will not split the paragraphs [^2].
 
 ```markdown
-*курсив*
-**жирный**
-~~зачеркнутый~~
+The first paragraph.
+The same paragraph.
+
+The second paragraph.
 ```
 
-## Заголовки
-
-Язык разметки позволяет создавать заголовки шести уровней:
+The markup language allows you to create text highlights:
 
 ```markdown
-# Заголовок 1
-## Заголовок 2
-## Заголовок 3
-### Заголовок 4
-#### Заголовок 5
-#### Заголовок 6
+*italic*
+**bold**
+~~strikethrough~~
 ```
 
-## Списки
+## Headers
 
-Язык разметки позволяет создавать упорядоченные и неупорядоченные списки.
-
-Пример определения неупорядоченного списка:
+The markup language allows you to create headers of six levels:
 
 ```markdown
-* элемент 1
-* элемент 2
-  * вложенный элемент 2.1
-  * вложенный элемент 2.2
-* элемент 3
+# Header 1
+## Header 2
+## Header 3
+### Header 4
+#### Header 5
+#### Header 6
 ```
 
-Пример определения упорядоченного списка:
+## Lists
+
+The markup language allows you to create ordered and unordered lists.
+
+Example of defining an unordered list:
 
 ```markdown
-1. элемент 1
-2. элемент 2
-3. элемент 3
+* element 1
+* element 2
+  * nested element 2.1
+  * nested element 2.2
+* element 3
 ```
 
-## Ссылки
+Example of defining an ordered list:
 
-Ссылки определяются с помощью квадратных скобок и круглых скобок, в которых указывается текст ссылки и адрес ссылки соответственно. Пример ссылок на внешние ресурсы:
+```markdown
+1. element 1
+2. element 2
+3. element 3
+```
+
+## Links
+
+Links are defined using square brackets and round brackets, where the link text and link address are specified, respectively. Examples of links to external resources:
 
 ```markdown
 [Wiki GIT](https://ru.wikipedia.org/wiki/Git)
 [Pro GIT](https://git-scm.com/book/ru/v2)
 ```
 
-Внутренние ссылки ссылаются на заголовки внутри документа.
+Internal links refer to headers within the document.
 
 ```markdown
-[текст ссылки](#заголовок)
+[link text](#header)
 ```
 
-## Изображения
+## Images
 
-Для вставки изображений используется синтаксис ссылок, но перед адресом ссылки ставится восклицательный знак.
+To insert images, the link syntax is used, but an exclamation mark is placed before the link address.
 
 ```markdown
-![alt-текст](адрес_изображения)
+![alternate text](image-address)
 ```
 
-## Код
+## Code
 
-Для вставки кода в строке используются символы обратной кавычки.
+To insert code in a line, backticks are used.
 
 ```markdown
-`код`
+`code`
 ```
 
-Если необходимо вставить блок кода, то используются три обратные кавычки. В этом случае, сразу после открытия блока указывается язык программирования (стилей, разметки).
+If you need to insert a code block, then three backticks are used. In this case, the programming language (styles, markup) is specified immediately after opening the block.
 
 ```cpp
 #include <iostream>
@@ -98,7 +98,7 @@ int main() {
 }
 ```
 
-## Библиография
+## Bibliography
 
 [^1]: [Wiki Markdown](https://ru.wikipedia.org/wiki/Markdown)
 [^2]: [Markdown Guide](https://www.markdownguide.org/)
