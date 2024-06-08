@@ -1,48 +1,48 @@
-# Взаимодействие контейнеров
+# The interaction of containers
 
-- [Взаимодействие контейнеров](#взаимодействие-контейнеров)
-  - [Файловая система](#файловая-система)
-    - [Работа с томами](#работа-с-томами)
-    - [Прикрепление тома к контейнеру](#прикрепление-тома-к-контейнеру)
-    - [Пример](#пример)
-  - [Сеть](#сеть)
-    - [Управление сетями в Docker](#управление-сетями-в-docker)
-    - [Запуск контейнеров в сети](#запуск-контейнеров-в-сети)
-  - [Библиография](#библиография)
+- [The interaction of containers](#the-interaction-of-containers)
+  - [File system](#file-system)
+    - [Working with volumes](#working-with-volumes)
+    - [Attaching a volume to a container](#attaching-a-volume-to-a-container)
+    - [Example](#example)
+  - [Network](#network)
+    - [Managing networks in Docker](#managing-networks-in-docker)
+    - [Running containers in a network](#running-containers-in-a-network)
+  - [Bibliography](#bibliography)
 
-Сложные информационные системы являются обычно многокомпонентными. Каждый компонент может быть разработан и поддерживаться отдельной командой. В таких случаях важно обеспечить взаимодействие между компонентами.
+The interaction of containers is a key aspect of the development of complex information systems. Complex information systems are usually multi-component. Each component can be developed and maintained by a separate team. In such cases, it is important to ensure interaction between components.
 
-Взаимодействие контейнеров может быть реализовано через сеть или файловую систему.
+Containers can interact with each other through the network or file system.
 
-## Файловая система
+## File system
 
-Два контейнера могут взаимодействовать через файловую систему, если они монтируют один и тот же том. Например, контейнер `A` может записать файл в том, а контейнер `B` может прочитать этот файл. В этом случае контейнеры могут взаимодействовать между собой, даже если они запущены на разных сетях.
+Two containers can interact through the file system if they mount the same volume. For example, container `A` can write a file to the volume, and container `B` can read this file. In this case, containers can interact with each other even if they are running on different networks.
 
-### Работа с томами
+### Working with volumes
 
-Томы в Docker представляют собой механизм для хранения данных, который может быть использован несколькими контейнерами. Томы могут быть созданы, просмотрены, удалены и прикреплены к контейнеру.
+Volumes in Docker are a mechanism for storing data that can be used by multiple containers. Volumes can be created, viewed, deleted, and attached to a container.
 
-Для работы с томами используются следующие команды:
+To work with volumes, the following commands are used:
 
-- `docker volume create <VOLUME>` - создание тома с именем `<VOLUME>`
-- `docker volume ls` - просмотр списка томов
-- `docker volume rm <VOLUME>` - удаление тома с именем `<VOLUME>`
-- `docker volume inspect <VOLUME>` - просмотр информации о томе с именем `<VOLUME>`
-- `docker volume prune` - удаление всех неиспользуемых томов
+- `docker volume create <VOLUME>` - create a volume with the name `<VOLUME>`;
+- `docker volume ls` - view the list of volumes;
+- `docker volume rm <VOLUME>` - delete the volume with the name `<VOLUME>`;
+- `docker volume inspect <VOLUME>` - view information about the volume with the name `<VOLUME>`;
+- `docker volume prune` - delete all unused volumes.
 
-### Прикрепление тома к контейнеру
+### Attaching a volume to a container
 
-Для прикрепления тома к контейнеру используется опция `-v` команды `docker run`. Например, чтобы прикрепить том с именем `opt` к контейнеру `mycontainer`, используется следующая команда:
+To attach a volume to a container, the `-v` option of the `docker run` command is used. For example, to attach a volume named `opt` to the container `mycontainer`, the following command is used:
 
 ```bash
 docker run -v opt:/opt --name mycontainer myimage
 ```
 
-В этом случае том `opt` будет доступен в контейнере `mycontainer` по пути `/opt`.
+In this case, the volume `opt` will be available in the container `mycontainer` at the path `/opt`.
 
-### Пример
+### Example
 
-Рассмотрим пример, в котором один контейнер пишет каждые 5 секунд случайное число в файл, а другой контейнер читает этот файл и выводит его содержимое в консоль. Для пишущего контейнера `dockerfile.write` выглядит следующим образом:
+Consider an example in which one container writes a random number to a file every 5 seconds, and another container reads this file and outputs its contents to the console. For the writing container `dockerfile.write` looks as follows:
 
 ```Dockerfile
 FROM debian:latest
@@ -55,7 +55,7 @@ VOLUME [ "/opt" ]
 CMD ["sh", "-c", "while true; do shuf -i1-10 -n1 > /opt/data.txt; sleep ${TIMEOUT}; done"]
 ```
 
-Для читающего контейнера `dockerfile.read` выглядит следующим образом:
+For the reading container `dockerfile.read` looks as follows:
 
 ```Dockerfile
 FROM debian:latest
@@ -68,56 +68,58 @@ VOLUME [ "/opt" ]
 CMD ["sh", "-c", "while true; do cat opt/data.txt; sleep ${TIMEOUT}; done"]
 ```
 
-Сначала создадим общий том `opt`:
+First, create a common volume `opt`:
 
 ```bash
 docker volume create opt
 ```
 
-Теперь соберем оба образа:
+Now let's build both images:
 
 ```bash
 docker build -t read -f dockerfile.read .
 docker build -t write -f dockerfile.write .
 ```
 
-Запустим контейнеры:
+Up the containers:
 
 ```bash
 docker run -d -v opt:/opt --name write write
 docker run -d -v opt:/opt --name read read
 ```
 
-## Сеть
+After a while, the reading container will start displaying random numbers written by the writing container.
 
-Два контейнера могут взаимодействовать через сеть. В Docker сеть представляет собой механизм для связи контейнеров между собой. Сети могут быть созданы, просмотрены, удалены и контейнеры могут быть подключены к сети.
+## Network
 
-### Управление сетями в Docker
+Two containers can interact through the network. In Docker, a network is a mechanism for connecting containers to each other. Networks can be created, viewed, deleted, and containers can be connected to a network.
 
-Для работы с сетями используются следующие команды:
+### Managing networks in Docker
 
-- `docker network create <NETWORK>` - создание сети с именем `<NETWORK>`
-- `docker network ls` - просмотр списка сетей
-- `docker network rm <NETWORK>` - удаление сети с именем `<NETWORK>`
-- `docker network inspect <NETWORK>` - просмотр информации о сети с именем `<NETWORK>`
-- `docker network connect <NETWORK> <CONTAINER>` - подключение контейнера с именем `<CONTAINER>` к сети с именем `<NETWORK>`
-- `docker network disconnect <NETWORK> <CONTAINER>` - отключение контейнера с именем `<CONTAINER>` от сети с именем `<NETWORK>`
-- `docker network prune` - удаление всех неиспользуемых сетей
+The following commands are used to work with networks:
 
-### Запуск контейнеров в сети
+- `docker network create <NETWORK>` - create a network with the name `<NETWORK>`;
+- `docker network ls` - view the list of networks;
+- `docker network rm <NETWORK>` - delete the network with the name `<NETWORK>`;
+- `docker network inspect <NETWORK>` - view information about the network with the name `<NETWORK>`;
+- `docker network connect <NETWORK> <CONTAINER>` - connect the container with the name `<CONTAINER>` to the network with the name `<NETWORK>`;
+- `docker network disconnect <NETWORK> <CONTAINER>` - disconnect the container with the name `<CONTAINER>` from the network with the name `<NETWORK>`;
+- `docker network prune` - delete all unused networks.
 
-Существует две возможности запуска контейнеров в сети:
+### Running containers in a network
 
-- подключение контейнера к сети после его запуска;
-- подключение контейнера к сети при его запуске.
+There are two ways to run containers in a network:
 
-В первом случае используется команда `docker network connect`, во втором - опция `--network` команды `docker run`.
+- connecting a container to a network after it has started;
+- connecting a container to a network when it starts.
 
-Пусть существует два контейнера `frontend` и `backend`, для того чтобы они работали в одной сети `local`, необходимо:
+In the first case, the `docker network connect` command is used, in the second case, the `--network` option of the `docker run` command is used.
 
-- создать сеть `local`;
-- запустить контейнер `backend` в сети `local`;
-- запустить контейнер `frontend` в сети `local`.
+Consider an example. Let there be two containers `frontend` and `backend`. To make them work in the same network `local`, you need to:
+
+- create a network `local`;
+- run the `backend` container in the `local` network;
+- run the `frontend` container in the `local` network.
 
 ```bash
 docker network create local
@@ -125,7 +127,7 @@ docker run -d --name backend --network local backend
 docker run -d --name frontend --network local frontend
 ```
 
-## Библиография
+## Bibliography
 
 1. [Швалов А., Хранение данных в Docker, Слерм](https://slurm.io/blog/tpost/i5ikrm9fj1-hranenie-dannih-v-docker)
 2. [Docker Networking, Docker](https://docs.docker.com/network/)
