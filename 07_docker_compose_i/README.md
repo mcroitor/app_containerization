@@ -1,116 +1,116 @@
-# Создание кластера контейнеров при помощи Docker Compose
+# Creating a cluster of containers using Docker Compose
 
-- [Создание кластера контейнеров при помощи Docker Compose](#создание-кластера-контейнеров-при-помощи-docker-compose)
-  - [Цель Docker Compose](#цель-docker-compose)
-  - [Синтаксис docker-compose.yml](#синтаксис-docker-composeyml)
-    - [Описание сервиса](#описание-сервиса)
-    - [Описание тома](#описание-тома)
-    - [Описание сети](#описание-сети)
-    - [Описание конфигурации](#описание-конфигурации)
-    - [Описание секрета](#описание-секрета)
-  - [Пример кластера](#пример-кластера)
-  - [Управление кластером контейнеров](#управление-кластером-контейнеров)
-  - [Библиография](#библиография)
+- [Creating a cluster of containers using Docker Compose](#creating-a-cluster-of-containers-using-docker-compose)
+  - [The purpose of Docker Compose](#the-purpose-of-docker-compose)
+  - [Syntax of docker-compose.yml](#syntax-of-docker-composeyml)
+    - [Description of the service](#description-of-the-service)
+    - [Description of the volume](#description-of-the-volume)
+    - [Description of the network](#description-of-the-network)
+    - [Description of the configuration](#description-of-the-configuration)
+    - [Description of the secret](#description-of-the-secret)
+  - [Example of a cluster of containers](#example-of-a-cluster-of-containers)
+  - [Managing a cluster of containers](#managing-a-cluster-of-containers)
+  - [Bibliography](#bibliography)
 
-## Цель Docker Compose
+## The purpose of Docker Compose
 
-Docker Compose это инструментальное средство, входящее в состав Docker и предназначенное для управления кластером контейнеров. Оно позволяет описать конфигурацию кластера контейнеров в файле `docker-compose.yml` и управлять этим кластером при помощи командной строки.
+Docker Compose is an instrumental tool that is part of Docker and is designed to manage a cluster of containers. It allows you to describe the configuration of a cluster of containers in the `docker-compose.yml` file and manage this cluster from the command line.
 
-Обычно, при создании составного приложения, сложно обойтись одним только контейнером по ряду причин. Если рассматривать приложение Web, то оно состоит из нескольких независимых, но взаимодействующих между собой компонентов: веб-сервер, база данных, кэш, очередь сообщений и т.д. Включение всех этих компонент в один контейнер является неэффективным, потому что это приводит к следующим проблемам:
+Usually, when creating a composite application, it is difficult to do without just one container for several reasons. If we consider a Web application, it consists of several independent but interacting components: a web server, a database, a cache, a message queue, etc. Including all these components in one container is inefficient because it leads to the following problems:
 
-- Разработка каждой компоненты не может вестись разными командами.
-- Каждый компонент не может быть масштабирован независимо от других.
-- Каждый компонент не может быть обновлен независимо от других.
-- Каждый компонент не может быть заменен независимо от других.
+- Development of each component cannot be carried out by different teams;
+- Each component cannot be scaled independently of the others;
+- Each component cannot be updated independently of the others;
+- Each component cannot be replaced independently of the others.
 
-Каждый из этих компонентов (веб-сервер, база данных, кэш, очередь сообщений и т.д) может быть представлен отдельным контейнером, что позволяет работать с каждой частью приложения независимо. Docker Compose позволяет описать конфигурацию всех этих контейнеров в одном файле `docker-compose.yml` и управлять ими при помощи командной строки.
+Each of these components (web server, database, cache, message queue, etc.) can be represented by a separate container, which allows you to work with each part of the application independently. Docker Compose allows you to describe the configuration of all these containers in one file `docker-compose.yml` and manage them from the command line.
 
-## Синтаксис docker-compose.yml
+## Syntax of docker-compose.yml
 
-Файл `docker-compose.yml` представляет собой YAML-файл, в котором описывается конфигурация кластера контейнеров. Общая структура `docker-compose.yml` является следующей:
+The `docker-compose.yml` file is a YAML file that describes the configuration of a cluster of containers. The general structure of `docker-compose.yml` is as follows:
 
 ```yaml
-# docker compose файл должен начинаться с версии. В данном случае это версия 3 - самая свежая на момент написания статьи.
+# The docker compose file must start with a version. In this case, it is version 3 - the latest at the time of writing the article.
 version: '3'
 
-# Далее идет список сервисов, которые будут запущены в кластере контейнеров.
-# Каждый сервис представляет собой отдельный контейнер.
-# Сервисом может быть веб-сервер, база данных, кэш, очередь сообщений и т.д.
-# Раздел, описывающий сервисы, начинается с ключевого слова services:
+# Next is the list of services that will be launched in the container cluster.
+# Each service represents a separate container.
+# A service can be a web server, a database, a cache, a message queue, etc.
+# The section describing services starts with the keyword services:
 services:
-    # описание каждого сервиса начинается с его имени, которое может быть произвольным.
+    # The description of each service starts with its name, which can be arbitrary.
     <service1-name>:
-        # описание сервиса
+        # description of the service
         # ...
     <service2-name>:
-        # описание сервиса
+        # description of the service
         # ...
     # ...
 
-# Далее идет список томов, которые будут использованы в кластере контейнеров.
+# Next is the list of volumes that will be used in the container cluster.
 volumes:
-    # описание каждого тома начинается с его имени, которое может быть произвольным.
+    # The description of each volume starts with its name, which can be arbitrary.
     <volume1-name>:
-        # описание тома
+        # description of the volume
         # ...
     <volume2-name>:
-        # описание тома
+        # description of the volume
         # ...
     # ...
 
-# Далее идет список сетей, которые будут использованы в кластере контейнеров.
+# Next is the list of networks that will be used in the container cluster.
 networks:
-    # описание каждой сети начинается с ее имени, которое может быть произвольным.
+    # The description of each network starts with its name, which can be arbitrary.
     <network1-name>:
-        # описание сети
+        # description of the network
         # ...
     <network2-name>:
-        # описание сети
+        # description of the network
         # ...
     # ...
 
-# Далее идет список конфигураций, которые будут использованы в кластере контейнеров.
+# Next is the list of configurations that will be used in the container cluster.
 configs:
-    # описание каждой конфигурации начинается с ее имени, которое может быть произвольным.
+    # The description of each configuration starts with its name, which can be arbitrary.
     <config1-name>:
-        # описание конфигурации
+        # description of the configuration
         # ...
     <config2-name>:
-        # описание конфигурации
+        # description of the configuration
         # ...
     # ...
 
-# Далее идет список секретов, которые будут использованы в кластере контейнеров.
+# Next is the list of secrets that will be used in the container cluster.
 secrets:
-    # описание каждого секрета начинается с его имени, которое может быть произвольным.
+    # The description of each secret starts with its name, which can be arbitrary.
     <secret1-name>:
-        # описание секрета
+        # description of the secret
         # ...
     <secret2-name>:
-        # описание секрета
+        # description of the secret
         # ...
     # ...
 ```
 
-В стандартном описании кластера контейнеров в файле `docker-compose.yml` обязательно должен присутствовать раздел `services`, в котором описываются сервисы, представляющие собой контейнеры. Остальные разделы (`volumes`, `networks`, `configs`, `secrets`) являются опциональными и используются для описания томов, сетей, конфигураций и секретов соответственно.
+In the standard description of a container cluster in the `docker-compose.yml` file, the `services` section must be present, which describes services that are containers. The other sections (`volumes`, `networks`, `configs`, `secrets`) are optional and are used to describe volumes, networks, configurations, and secrets, respectively.
 
-### Описание сервиса
+### Description of the service
 
-Раздел `services` содержит список сервисов, каждый из которых представляет собой отдельный контейнер. Описание сервиса содержит следующие ключи:
+The `services` section contains a list of services, each of which represents a separate container. The description of the service contains the following keys:
 
-- `image` - имя образа контейнера, который будет использован для создания сервиса.
-- `build` - путь к каталогу, содержащему Dockerfile, который будет использован для создания образа контейнера, который будет использован для создания сервиса.
-- `ports` - список портов, которые будут проброшены из контейнера на хост.
-- `volumes` - список томов, которые будут использованы в контейнере.
-- `networks` - список сетей, которые будут использованы в контейнере.
-- `configs` - список конфигураций, которые будут использованы в контейнере.
-- `secrets` - список секретов, которые будут использованы в контейнере.
-- `environment` - список переменных окружения, которые будут установлены в контейнере.
-- `command` - команда, которая будет выполнена при запуске контейнера.
-- `entrypoint` - команда, которая будет выполнена при запуске контейнера.
-- `depends_on` - список сервисов, от которых зависит данный сервис.
+- `image` - the name of the container image that will be used to create the service;
+- `build` - the path to the directory containing the Dockerfile that will be used to create the container image that will be used to create the service;
+- `ports` - a list of ports that will be forwarded from the container to the host;
+- `volumes` - a list of volumes that will be used in the container;
+- `networks` - a list of networks that will be used in the container;
+- `configs` - a list of configurations that will be used in the container;
+- `secrets` - a list of secrets that will be used in the container;
+- `environment` - a list of environment variables that will be set in the container;
+- `command` - the command that will be executed when the container is started;
+- `entrypoint` - the command that will be executed when the container is started;
+- `depends_on` - a list of services that this service depends on.
 
-Пример описания сервиса:
+Example of a service description:
 
 ```yaml
 services:
@@ -136,17 +136,17 @@ services:
             - MYSQL_ROOT_PASSWORD=secret
 ```
 
-### Описание тома
+### Description of the volume
 
-Раздел `volumes` содержит список томов, которые будут использованы в кластере контейнеров. Описание тома содержит следующие ключи:
+The `volumes` section contains a list of volumes that will be used in the container cluster. The description of the volume contains the following keys:
 
-- `driver` - драйвер, который будет использован для создания тома.
-- `driver_opts` - опции драйвера, которые будут использованы для создания тома.
-- `external` - имя внешнего тома, который будет использован в кластере контейнеров.
-- `labels` - список меток, которые будут установлены для тома.
-- `name` - имя тома.
+- `driver` - the driver that will be used to create the volume;
+- `driver_opts` - the driver options that will be used to create the volume;
+- `external` - the name of the external volume that will be used in the container cluster;
+- `labels` - a list of labels that will be set for the volume;
+- `name` - the name of the volume.
 
-Пример описания тома:
+Example of a volume description:
 
 ```yaml
 volumes:
@@ -164,21 +164,21 @@ volumes:
             o: bind
 ```
 
-### Описание сети
+### Description of the network
 
-Раздел `networks` содержит список сетей, которые будут использованы в кластере контейнеров. Описание сети содержит следующие ключи:
+The `networks` section contains a list of networks that will be used in the container cluster. The description of the network contains the following keys:
 
-- `driver` - драйвер, который будет использован для создания сети.
-- `driver_opts` - опции драйвера, которые будут использованы для создания сети.
-- `external` - имя внешней сети, которая будет использована в кластере контейнеров.
-- `attachable` - флаг, который указывает, что контейнеры могут присоединяться к сети.
-- `internal` - флаг, который указывает, что сеть является внутренней сетью.
-- `labels` - список меток, которые будут установлены для сети.
-- `name` - имя сети.
-- `enable_ipv6` - флаг, который указывает, что сеть поддерживает IPv6.
-- `ipam` - параметры IPAM для сети.
+- `driver` - the driver that will be used to create the network;
+- `driver_opts` - the driver options that will be used to create the network;
+- `external` - the name of the external network that will be used in the container cluster;
+- `attachable` - a flag that indicates that containers can attach to the network;
+- `internal` - a flag that indicates that the network is an internal network;
+- `labels` - a list of labels that will be set for the network;
+- `name` - the name of the network;
+- `enable_ipv6` - a flag that indicates that the network supports IPv6;
+- `ipam` - IPAM parameters for the network.
 
-Пример описания сети:
+Example of a network description:
 
 ```yaml
 networks:
@@ -192,17 +192,17 @@ networks:
             com.docker.network.bridge.name: backend
 ```
 
-### Описание конфигурации
+### Description of the configuration
 
-Раздел `configs` содержит список конфигураций, которые будут использованы в кластере контейнеров. Описание конфигурации содержит следующие ключи:
+The `configs` section contains a list of configurations that will be used in the container cluster. The description of the configuration contains the following keys:
 
-- `file` - путь к файлу, который будет использован для создания конфигурации.
-- `environment` - список переменных окружения, которые будут установлены для конфигурации.
-- `external` - имя внешней конфигурации, которая будет использована в кластере контейнеров.
-- `name` - имя конфигурации.
-- `content` - конфигурация создается на базе содержимого.
+- `file` - the path to the file that will be used to create the configuration;
+- `environment` - a list of environment variables that will be set for the configuration;
+- `external` - the name of the external configuration that will be used in the container cluster;
+- `name` - the name of the configuration;
+- `content` - the configuration is created based on the content.
 
-Пример описания конфигурации:
+Example of a configuration description:
 
 ```yaml
 configs:
@@ -212,14 +212,14 @@ configs:
         file: /path/to/php.ini
 ```
 
-### Описание секрета
+### Description of the secret
 
-Раздел `secrets` содержит список секретов (паролей, приватных ключей, сертификатов), которые будут использованы в кластере контейнеров. Описание секрета содержит следующие ключи:
+The `secrets` section contains a list of secrets (passwords, private keys, certificates) that will be used in the container cluster. The description of the secret contains:
 
-- `file` - путь к файлу, который будет использован для создания секрета.
-- `environment` - секрет создаётся на базе переменной окружения.
+- `file` - the path to the file that will be used to create the secret;
+- `environment` - the secret is created based on the environment variable.
 
-Пример описания секрета:
+Example of a secret description:
 
 ```yaml
 secrets:
@@ -231,17 +231,17 @@ secrets:
         file: ./certificate.pem
 ```
 
-## Пример кластера
+## Example of a cluster of containers
 
-Следующий пример показывает описание сервисного приложения, состоящего из сервисов:
+The following example shows the description of a service application consisting of services:
 
-- `nginx` - веб-сервер, который обслуживает статические файлы и перенаправляет запросы к приложению.
-- `php-fpm` - интерпретатор PHP, который обрабатывает динамические запросы.
-- `mariadb` - сервер базы данных, который хранит данные приложения.
+- `nginx` - a web server that serves static files and redirects requests to the application;
+- `php-fpm` - a PHP interpreter that processes dynamic requests;
+- `mariadb` - a database server that stores application data.
 
-Сайт располагается в монтируемой к контейнерам `nginx` и `php-fpm` директории `./files/app`, а база данных в монтируемой к контейнеру `mariadb` директории `./mounts/db`.
+The site is located in the mounted to the containers `nginx` and `php-fpm` directories `./files/app`, and the database is located in the mounted to the `mariadb` container directory `./mounts/db`.
 
-Контейнер `nginx` пробрасывает порт 8080 на порт 80 контейнера, а контейнер `php-fpm` использует порт 9000. Контейнер `nginx` подключен к сетям `frontend` и `backend`, а контейнеры `mariadb` и `php-fpm` к сети `backend`.
+The `nginx` container forwards port 8080 to port 80 of the container, and the `php-fpm` container uses port 9000. The `nginx` container is connected to the `frontend` and `backend` networks, and the `mariadb` and `php-fpm` containers are connected to the `backend` network.
 
 ```yaml
 version: '3'
@@ -287,47 +287,49 @@ networks:
     backend: {}
 ```
 
-## Управление кластером контейнеров
+## Managing a cluster of containers
 
-Файл `docker-compose.yaml` описывает сервисы приложения и взаимодействия между ними. Чтобы построить контейнеры сервисов, определить инфраструктуру, необходимо выполнить команду
+The `docker-compose` utility is used to manage a cluster of containers. It is a command-line utility that allows you to build, run, and stop containers, as well as view logs and execute commands inside containers.
+
+The `docker-compose.yaml` file describes the services of the application and the interactions between them. To build the containers of the services, define the infrastructure, you need to execute the command
 
 ```bash
 docker-compose build
 ```
 
-Чтобы запустить контейнеры сервисов, необходимо выполнить команду
+To start the service containers, you need to execute the command
 
 ```bash
 docker-compose up -d
 ```
 
-Ключ `-d` означает, что контейнеры будут запущены в фоновом режиме.
+The `-d` key means that the service containers will be started in the background.
 
-Чтобы остановить контейнеры сервисов, необходимо выполнить команду
+To stop the service containers, you need to execute the command
 
 ```bash
 docker-compose down
 ```
 
-Иногда возникает необходимость перестроить полностью контейнеры сервисов. Для этого необходимо выполнить команду
+Sometimes there is a need to completely rebuild the service containers. To do this, you need to execute the command
 
 ```bash
 docker-compose build --no-cache
 ```
 
-Немаловажным свойством является просмотр журналов контейнеров сервисов. Для этого необходимо выполнить команду
+An important property is to view the logs of the service containers. To do this, you need to execute the command
 
 ```bash
 docker-compose logs -f <service-name>
 ```
 
-Наконец, для выполнения некоторой команды `command` внутри контейнера сервиса необходимо выполнить команду
+Finally, to execute a command `command` inside the service container, you need to execute the command
 
 ```bash
 docker-compose exec <service-name> <command>
 ```
 
-## Библиография
+## Bibliography
 
 1. [YAML Ain’t Markup Language (YAML™) version 1.2, yaml.org, 2021-10-01](https://yaml.org/spec/1.2.2/)
 2. [Шпаргалка по YAML](../additional/yaml.md)
