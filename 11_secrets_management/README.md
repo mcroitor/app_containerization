@@ -1,9 +1,9 @@
-# Управление секретами
+# Secrets Management
 
-## Создание секрета в Docker
+## Secrets management in Docker
 
-## Использование секретов в Docker
+## Secret usage in Docker
 
-## Использование секретов в docker-compose
+## Secret usage in docker-compose
 
-## Библиография
+## Bibliography

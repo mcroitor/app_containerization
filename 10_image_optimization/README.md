@@ -1,35 +1,35 @@
-# Оптимизация образа контейнера
+# Image Optimization
 
-- [Оптимизация образа контейнера](#оптимизация-образа-контейнера)
-  - [Получение информации о размере образа](#получение-информации-о-размере-образа)
-  - [Минимальный базовый образ](#минимальный-базовый-образ)
-  - [Многоэтапная сборка](#многоэтапная-сборка)
-    - [Устаревший подход к процессам сборки](#устаревший-подход-к-процессам-сборки)
-      - [Пример](#пример)
-    - [Основные принципы многоэтапной сборки](#основные-принципы-многоэтапной-сборки)
-      - [Пример многоэтапной сборки](#пример-многоэтапной-сборки)
-    - [Общий вид многоэтапной сборки](#общий-вид-многоэтапной-сборки)
-  - [Удаление неиспользуемых зависимостей и временных файлов](#удаление-неиспользуемых-зависимостей-и-временных-файлов)
-  - [Уменьшение количества слоев](#уменьшение-количества-слоев)
-  - [Перепаковка образа](#перепаковка-образа)
-  - [Использование .dockerignore](#использование-dockerignore)
-  - [Хранение данных вне образа](#хранение-данных-вне-образа)
-  - [Кеширование слоев образа](#кеширование-слоев-образа)
-  - [Библиография](#библиография)
+- [Image Optimization](#image-optimization)
+  - [Getting information about the image size](#getting-information-about-the-image-size)
+  - [Minimal base image](#minimal-base-image)
+  - [Multi-stage build](#multi-stage-build)
+    - [Deprecated approach to build processes](#deprecated-approach-to-build-processes)
+      - [Example](#example)
+    - [Basic principles of multi-stage build](#basic-principles-of-multi-stage-build)
+      - [Example of multi-stage build](#example-of-multi-stage-build)
+    - [General view of multi-stage build](#general-view-of-multi-stage-build)
+  - [Removing unused dependencies and temporary files](#removing-unused-dependencies-and-temporary-files)
+  - [Reducing the number of layers](#reducing-the-number-of-layers)
+  - [Image repacking](#image-repacking)
+  - [.dockerignore](#dockerignore)
+  - [Storing data outside the image](#storing-data-outside-the-image)
+  - [Image layer caching](#image-layer-caching)
+  - [Bibliography](#bibliography)
 
-Простота определения образов контейнеров позволяет их быстро создавать и использовать, а это в свою очередь ведет к допущению ошибок и созданию избыточных образов. Обычным делом является создание образа размеров в несколько гигабайт, что явно является ошибкой. Скорее всего данный образ содержит в себе данные, которые могут быть вынесены во внешние тома или вообще не нужны; ненужные зависимости, которые могут быть удалены; временные файлы и кэш, которые могут быть очищены; и т.д.
+The simplicity of defining container images allows them to be quickly created and used, which in turn leads to errors and the creation of redundant images. It is common to create an image of several gigabytes in size, which is clearly a mistake. Most likely, this image contains data that can be moved to external volumes or is not needed at all; unnecessary dependencies that can be removed; temporary files and cache that can be cleared; etc.
 
-Большой размер образа имеет следующие недостатки:
+A large image has the following disadvantages:
 
-- долгое время загрузки образа из репозитория;
-- занимает больше места на диске;
-- занимают больше места в памяти.
+- long time to load the image from the repository;
+- takes up more disk space;
+- takes up more memory.
 
-То есть большой образ требует больше ресурсов для загрузки, хранения и запуска. Поэтому оптимизация образа контейнера является важным шагом в разработке и использовании контейнеров.
+That is, a large image requires more resources to load, store, and run. Therefore, optimizing the container image is an important step in the development and use of containers.
 
-## Получение информации о размере образа
+## Getting information about the image size
 
-Чтобы просмотреть список образов, можно воспользоваться командой `docker images` (или `docker image ls`). Выполнение этой команды покажет список образов, включая их размеры. Например:
+To view the list of images, you can use the `docker images` (or `docker image ls`) command. Running this command will show a list of images, including their sizes. For example:
 
 ```shell
 $ docker images
@@ -40,7 +40,7 @@ lab07        latest    4e96acf7022c   5 days ago   468MB
 myphp        latest    ec1fdb037c54   8 days ago   162MB
 ```
 
-Получение информации о слоях образа можно выполнить с помощью команды `docker history`. Например:
+To get information about the layers of the image, you can use the `docker history` command. For example:
 
 ```shell
 $ docker history myphp
@@ -60,45 +60,45 @@ ec1fdb037c54   8 days ago   CMD ["/app/php" "-v"]                           0B  
 <missing>      9 days ago   /bin/sh -c #(nop) ADD file:5d6b639e8b6bcc011…   80.6MB
 ```
 
-## Минимальный базовый образ
+## Minimal base image
 
-Создание своего образа контейнера начинается с выбора базового образа. И чем меньше размер базового образа, тем меньше будет размер конечного образа. Например, можно использовать образ `alpine`, который имеет размер около 7 МБ, вместо `ubuntu`, который имеет размер около 80 МБ.
+Creating your own container image starts with choosing a base image. The smaller the size of the base image, the smaller the size of the final image. For example, you can use the `alpine` image, which is about 7 MB in size, instead of `ubuntu`, which is about 80 MB in size.
 
-Также можно использовать образ `scratch`, который не содержит ничего, и добавить в него только необходимые файлы и зависимости. Однако, часто разработчикам при работе их приложения нужны некоторые свойства операционной системы, поэтому они останавливаются на образе `alpine` как на минимальном базовом образе.
+You can also use the `scratch` image, which contains nothing, and add only the necessary files and dependencies to it. However, developers often stop at the `alpine` image as a minimal base image.
 
-Можно выбирать специализированные образы под конкретные задачи, которые часто предлагают оптимизированные версии. Например для Python можно использовать образ `python:alpine`, который содержит минимальный набор пакетов для работы с Python.
+You can choose specialized images for specific tasks, which often offer optimized versions. For example, for Python you can use the `python:alpine` image, which contains a minimal set of packages for working with Python.
 
-## Многоэтапная сборка
+## Multi-stage build
 
-Многоэтапная сборка позволяет уменьшить размер образа контейнера, так как в конечном образе остаются только необходимые файлы и зависимости. Например, можно использовать образ с компилятором для сборки приложения, а затем скопировать только исполняемый файл в конечный образ.
+Multi-stage build allows you to reduce the size of the container image, as only the necessary files and dependencies remain in the final image. For example, you can use an image with a compiler to build the application, and then copy only the executable file to the final image.
 
-Чтобы создать действительно эффективный, маленький и безопасный образ, рекомендуется выполнять процесс сборки в несколько этапов. Каждый этап сборки выполняется в отдельном контейнере и результат его работы сохраняется в образе. В итоге, вместо одного большого образа, создаётся несколько промежуточных, хранящих результаты работы каждого этапа. В финальном образе будут только те файлы, которые необходимы для работы приложения.
+To create a truly effective, small, and secure image, it is recommended to perform the build process in several stages. Each build stage is performed in a separate container, and the result of its work is saved in the image. As a result, instead of one large image, several intermediate images are created, storing the results of each stage. The final image will contain only the files necessary for the application to work.
 
-### Устаревший подход к процессам сборки
+### Deprecated approach to build processes
 
-Процесс разработки программного продукта включает следующие шаги:
+The process of developing a software product includes the following steps:
 
-- Настройка окружения
-- Написание кода
-- Компиляция и сборка
-- Тестирование
-- Развертывание
+- Setting up the environment
+- Writing code
+- Compilation and build
+- Testing
+- Deployment
 
-Похожим образом происходит сборка Docker-образа:
+Similarly, building a Docker image includes the following steps:
 
-- Настройка окружения
-- Установка зависимостей
-- Сборка приложения
-- Тестирование
-- Развертывание контейнера
+- Setting up the environment
+- Installing dependencies
+- Building the application
+- Testing
+- Deploying the container
 
-Для каждого этапа сборки создавался отдельный контейнер, который выполнял свою задачу. Например, для установки зависимостей использовался контейнер с установленным компилятором и библиотеками, для сборки приложения - контейнер с установленным компилятором и библиотеками, для тестирования - контейнер с установленным тестовым фреймворком и т.д. В конце результаты работы каждого контейнера объединялись в один образ.
+In the past, each step of the build process was performed in a separate container. For example, to install dependencies, a container with a compiler and libraries was used, to build the application - a container with a compiler and libraries, to test - a container with a test framework, etc. At the end, the results of each container were combined into one image.
 
-Соответственно, для каждого этапа создавался свой `Dockerfile`, который выполнял свою задачу, а также скрипт для объединения результатов работы контейнеров в один образ.
+Accordingly, for each stage, its own `Dockerfile` was created, which performed its task, as well as a script to combine the results of the work of the containers into one image.
 
-#### Пример
+#### Example
 
-Пусть у нас есть приложение CPP (файл `helloworld.cpp`), которое мы хотим запустить в контейнере.
+Let's say we have a CPP application (file `helloworld.cpp`) that we want to run in a container.
 
 ```cpp
 #include <iostream>
@@ -109,11 +109,12 @@ int main() {
 }
 ```
 
-Для сборки образа создадим следующие файлы:
+To build the image, we create the following files:
 
-- `Dockerfile.build` - для сборки приложения
-- `Dockerfile.run` - для запуска приложения
-- `build.sh` - скрипт для сборки образа
+- `helloworld.cpp` - application file
+- `Dockerfile.build` - to build the application
+- `Dockerfile.run` - to run the application
+- `build.sh` - script to build the image
 
 `Dockefile.build`:
 
@@ -157,27 +158,27 @@ docker build -t helloworld-run -f Dockerfile.run .
 rm -f app/helloworld
 ```
 
-При запуске скрипта `build.sh`:
+When running the `build.sh` script:
 
-- создается образ `helloworld-build`, который собирает приложение;
-- запускается контейнер `extract`, в котором собранное приложение копируется на хост-машину;
-- удаляется контейнер `extract`;
-- создается образ `helloworld-run`, который запускает приложение.
+- an image `helloworld-build` is created, which builds the application;
+- a container `extract` is started, in which the built application is copied to the host machine;
+- the `extract` container is deleted;
+- an image `helloworld-run` is created, which runs the application.
 
-Использование многоэтапной сборки позволяет упростить процесс сборки образа и уменьшить его размер.
+Multi-stage build allows you to simplify the image build process and reduce its size.
 
-### Основные принципы многоэтапной сборки
+### Basic principles of multi-stage build
 
-Многоэтапная сборка позволяет создавать образы, которые содержат только необходимые для работы приложения файлы, используя только один Dockerfile. Для этого используются следующие принципы:
+Multi-stage build allows you to create images that contain only the files necessary for the application to work, using only one `Dockerfile`. The following principles are used:
 
-- Каждая инструкция использует некоторый базовый образ и задаёт этап сборки;
-- Каждый этап сборки выполняется в отдельном контейнере;
-- Результат работы каждого этапа сохраняется в образе;
-- Можно копировать файлы из одного этапа в другой.
+- Each instruction uses a base image and sets a build stage;
+- Each build stage is performed in a separate container;
+- The result of each stage is saved in the image;
+- Files can be copied from one stage to another.
 
-#### Пример многоэтапной сборки
+#### Example of multi-stage build
 
-В этом случае наш пример можно упростить до одного `Dockerfile`:
+In this case, our example can be simplified to one `Dockerfile`:
 
 ```Dockerfile
 FROM gcc:latest AS build
@@ -197,15 +198,15 @@ COPY --from=0 app/helloworld .
 CMD ["./helloworld"]
 ```
 
-Сборка образа в этом случае сокращается до одной команды:
+Building the image in this case is reduced to one command:
 
 ```bash
 docker build -t helloworld-run .
 ```
 
-Это возможно благодаря тому что инструкция `COPY` может копировать файлы из одного этапа в другой, при этом необходимо указать номер этапа, из которого нужно скопировать файлы.
+This is possible because the `COPY` instruction can copy files from one stage to another, specifying the stage number from which to copy the files.
 
-Кроме того, можно этапам сборки задавать имена, чтобы обращаться к ним по имени:
+In addition, you can give names to the build stages to refer to them by name:
 
 ```Dockerfile
 FROM gcc:latest AS build
@@ -225,58 +226,58 @@ COPY --from=build app/helloworld .
 CMD ["./helloworld"]
 ```
 
-### Общий вид многоэтапной сборки
+### General view of multi-stage build
 
-Естественно, многоэтапная сборка позволяет не только собирать приложения, но и выполнять другие задачи: тестирование, анализ кода, сборку документации и т.д.
+Multi-stage build allows you not only to build applications, but also to perform other tasks: testing, code analysis, documentation generation, etc.
 
-В общем виде многоэтапная сборка может выглядеть следующим образом:
+In general, a multi-stage build can look like this:
 
 ```Dockerfile
-# создание базового образа
+# Base image creation
 FROM debian:latest AS base
 
 # ...
 
-# установка зависимостей
+# Dependencies installation
 FROM base AS dependencies
 
 # ...
 
-# сборка приложения
+# Application build
 FROM dependencies AS build
 
 # ...
 
-# тестирование приложения
+# Application testing
 FROM build AS test
 
 # ...
 
-# развертывание приложения
+# Application deployment
 FROM debian
 
-# копирование файлов из других этапов
+# copying files from other stages
 COPY --from=build /app/app /app/app
 
-# запуск приложения
+# application launch
 CMD ["./app"]
 ```
 
-## Удаление неиспользуемых зависимостей и временных файлов
+## Removing unused dependencies and temporary files
 
-Удаление неиспользуемых зависимостей позволяет уменьшить размер образа контейнера. Например, после установки пакетов можно удалить временные файлы и кэш, чтобы уменьшить размер образа.
+Removing unused dependencies allows you to reduce the size of the container image. For example, after installing packages, you can remove temporary files and cache to reduce the size of the image.
 
-Данная процедура имеет смысл в случае объединения слоёв образа или в случае перепаковки образа. В противном случае, удаление временных файлов и кэша не приведет к уменьшению размера образа.
+This procedure makes sense when combining image layers or repacking the image. Otherwise, removing temporary files and cache will not reduce the size of the image.
 
-## Уменьшение количества слоев
+## Reducing the number of layers
 
-Образ хранит информацию о каждом слое, что увеличивает его размер. Кроме того, каждый слой образа представляется промежуточным образом, хранение которого требует дополнительного места на диске.
+Each command in the `Dockerfile` creates a new layer in the image. Each layer contains the changes made by the command. The image stores information about each layer, which increases its size. In addition, each layer of the image is represented by an intermediate image, the storage of which requires additional disk space.
 
-Объединение команд в один слой позволяет уменьшить количество промежуточных образов, а также уменьшить размер образа за счет уменьшения количества метаданных. Кроме того, невозможно создать образ меньшего размера если промежуточные образы имеют больший размер.
+Combining commands into one layer reduces the number of intermediate images, as well as reduces the size of the image by reducing the amount of metadata. In addition, it is impossible to create a smaller image if the intermediate images are larger.
 
-Вместо создания временного слоя для установки пакетов и удаления кэша, можно выполнить все команды в одном слое.
+Instead of creating a temporary layer to install packages and remove cache, you can execute all commands in one layer.
 
-Например, образ, построенный на базе `Dockefile`:
+For example, an image built on the basis of a `Dockefile`:
 
 ```dockerfile
 FROM debian:bookworm-slim
@@ -284,7 +285,7 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y php-cli
 ```
 
-будет иметь примерно тот же размер, что и образ, построенный на базе `Dockerfile`:
+will have approximately the same size as the image built on the basis of the `Dockerfile`:
 
 ```dockerfile
 FROM debian:bookworm-slim
@@ -293,7 +294,7 @@ RUN apt-get update && apt-get install -y php-cli
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ```
 
-Однако объединение команд в один слой позволяет уменьшить размер образа:
+However, combining commands into one layer reduces the size of the image:
 
 ```dockerfile
 FROM debian:bookworm-slim
@@ -304,28 +305,30 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ```
 
-## Перепаковка образа
+## Image repacking
 
-Перепаковка образа позволяет слить все слои образа в один слой, что уменьшает размер образа.
+Repacking the image allows you to merge all layers of the image into one layer, reducing the size of the image.
 
-> Примечание: перепаковка образа приводит к потере преимущества совместного использования слоёв образа разными образами. Кроме того, теряются все метаданные образа, а также открываемые порты, переменные окружения и т.д. Использовать данный способ можно только если вы пытаетесь оптимизировать чужой образ.
+> __Note:__ repacking the image leads to the loss of the advantage of sharing image layers between different images. In addition, all image metadata, as well as exposed ports, environment variables, etc., are lost. This method can only be used if you are trying to optimize someone else's image.
 
-Для перепаковки образа можно воспользоваться тем фактом, что при создании контейнера сливает все слои образа в один слой. Например, можно создать контейнер из образа и затем создать образ из контейнера.
+To repack the image, you can use the fact that when creating a container, all layers of the image are merged into one layer. For example, you can create a container from an image and then create an image from the container.
 
-Если образ называется `myphp`, то перепаковка образа будет выглядеть следующим образом:
+If the image is named `myphp`, then repacking the image will look like this:
 
 ```shell
-# Создание контейнера из образа
+# Creating a container from an image
 $ docker create --name myphp myphp
-# Создание образа из контейнера
+# Creating an image from a container
 $ docker export myphp | docker import - myphp:optimized
 ```
 
-## Использование .dockerignore
+## .dockerignore
 
-Использование файла `.dockerignore` позволяет исключить из контекста сборки файлы и директории, которые не нужны для создания образа. Частой практикой является копирование всего контекста сборки, что ведет к включению в образ ненужных файлов и директорий. Поэтому рекомендуется использовать файл `.dockerignore` для исключения ненужных файлов и директорий.
+Using the `.dockerignore` file allows you to exclude files and directories that are not needed to build the image. A common practice is to copy the entire build context, which leads to unnecessary files and directories being included in the image. Therefore, it is recommended to use the `.dockerignore` file to exclude unnecessary files and directories.
 
-Пример файла `.dockerignore`:
+The `.dockerignore` file uses the same syntax as the `.gitignore` file. You can use wildcards and regular expressions to exclude files and directories.
+
+Example of the `.dockerignore` file:
 
 ```dockerfile
 # .dockerignore
@@ -335,17 +338,17 @@ __pycache__
 *.pyc
 ```
 
-## Хранение данных вне образа
+## Storing data outside the image
 
-Хранение данных вне образа позволяет уменьшить размер образа контейнера. Например, можно использовать внешние тома для хранения web приложения. Однако следует помнить, что внешние тома могут быть сетевыми дисками, что может увеличить время работы приложения за счет сетевой задержки.
+Storing data outside the image allows you to reduce the size of the container image. For example, you can use external volumes to store web applications. However, it should be remembered that external volumes can be network drives, which can increase the application's response time due to network latency.
 
-## Кеширование слоев образа
+## Image layer caching
 
-Docker активно использует кеширование слоев образа, что позволяет ускорить сборку образа. Однако, кеширование слоев образа приводит к потребления дисковой памяти. Чтобы эффективно использовать кеширование необходимо учитывать порядок команд в `Dockerfile` и использовать многоэтапную сборку.
+Docker actively uses image layer caching, which speeds up the image build process. However, image layer caching consumes disk space. To effectively use caching, you need to consider the order of commands in the `Dockerfile` and use multi-stage build.
 
-При изменении команды `RUN` все последующие команды будут пересобраны, что приведет к увеличению времени сборки образа. Поэтому необходимо сначала выполнять команды, которые меньше подвержены изменениям (например, настройка окружения), а затем выполнять команды, которые чаще изменяются (копирование приложения).
+When changing the `RUN` command, all subsequent commands will be rebuilt, which will increase the image build time. Therefore, it is necessary to first execute commands that are less likely to change (e.g., environment setup), and then execute commands that change more frequently (e.g., copying the application).
 
-В указанном примере образ будет пересобираться полностью при каждом изменении приложения:
+In the example given, the image will be completely rebuilt each time the application changes:
 
 ```dockerfile
 FROM nginx
@@ -354,7 +357,7 @@ COPY . /usr/share/nginx/html
 RUN apt-get update && apt-get install -y php-cli
 ```
 
-Однако, если поменять местами команды `RUN` и `COPY`, то при изменении приложения образ будет пересобираться только частично, что ускорит сборку образа:
+However, if you swap the `RUN` and `COPY` commands, then when the application changes, the image will be partially rebuilt, which will speed up the image build:
 
 ```dockerfile
 FROM nginx
@@ -364,7 +367,7 @@ RUN apt-get update && apt-get install -y php-cli
 COPY . /usr/share/nginx/html
 ```
 
-## Библиография
+## Bibliography
 
 1. [Predrag Rakić, Docker Image Size – Does It Matter?, semaphoreci.com, 2021-03-30](https://semaphoreci.com/blog/2018/03/14/docker-image-size.html)
 2. [Rafael Benevides, Keep it small: a closer look at Docker image sizing, RedHat, 2016-03-09](https://developers.redhat.com/blog/2016/03/09/more-about-docker-images-size)
