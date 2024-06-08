@@ -1,137 +1,145 @@
-# Непрерывные разработка и доставка (CI / CD)
+# Continuous Integration and Continuous Delivery (CI / CD)
 
-- [Непрерывные разработка и доставка (CI / CD)](#непрерывные-разработка-и-доставка-ci--cd)
-  - [Непрерывная интеграция](#непрерывная-интеграция)
-    - [Организация непрерывной интеграции](#организация-непрерывной-интеграции)
-    - [Преимущества и недостатки непрерывной интеграции](#преимущества-и-недостатки-непрерывной-интеграции)
-  - [Непрерывная доставка](#непрерывная-доставка)
-  - [Пример процесса CI / CD](#пример-процесса-ci--cd)
-    - [Организация кода](#организация-кода)
-    - [Примерная модель](#примерная-модель)
-    - [Инструменты](#инструменты)
-    - [Инфраструктура для CI / CD](#инфраструктура-для-ci--cd)
-  - [Использование контейнеров в CI / CD процессах](#использование-контейнеров-в-ci--cd-процессах)
-  - [Библиография](#библиография)
+- [Continuous Integration and Continuous Delivery (CI / CD)](#continuous-integration-and-continuous-delivery-ci--cd)
+  - [Continuous Integration](#continuous-integration)
+    - [Organizing Continuous Integration](#organizing-continuous-integration)
+    - [Advantages and disadvantages of continuous integration](#advantages-and-disadvantages-of-continuous-integration)
+  - [Continuous Delivery](#continuous-delivery)
+  - [Example of CI / CD process](#example-of-ci--cd-process)
+    - [Code organization](#code-organization)
+    - [Sample model](#sample-model)
+    - [Tools](#tools)
+    - [Infrastructure for CI / CD](#infrastructure-for-ci--cd)
+  - [Containers in CI / CD processes](#containers-in-ci--cd-processes)
+  - [Bibliography](#bibliography)
 
-Современная разработка программных продуктов похожа на организацию конвейерного производства. Каждый этап разработки программного обеспечения должен быть автоматизирован и интегрирован в общий процесс. Для этого используются специализированные инструменты и технологии, такие как _непрерывная интеграция_ (CI) и _непрерывное развертывание_ (CD).
+Modern software development is similar to organizing an assembly line. Each stage of software development must be automated and integrated into the overall process. Specialized tools and technologies such as _Continuous Integration_ (CI) and _Continuous Delivery_ (CD) are used for this purpose.
 
-## Непрерывная интеграция
+## Continuous Integration
 
-__Непрерывная интеграция__ (_Continuous Integration_, CI) — это практика разработки программного обеспечения, при которой изменения кода разработчиков интегрируются в общую кодовую базу несколько раз в день. Каждая интеграция проверяется автоматизированными сборками и тестами, что позволяет выявлять и исправлять ошибки быстрее.
+__Continuous Integration__ (CI) is a software development practice in which developers' code changes are integrated into a common code base several times a day. Each integration is verified by automated builds and tests, which helps to identify and fix errors faster.
 
-Обычно над проектом работают независимо сразу несколько разработчиков, каждый из которых может по нескольку раз в день вносить изменения в код. Чтобы избежать конфликтов и ошибок при интеграции изменений, используется практика непрерывной интеграции. Эта практика предполагает при каждом изменении кода автоматически запускать сборку и тестирование программного обеспечения.
+Usually, several developers work independently on a project, each of whom can make changes to the code several times a day. To avoid conflicts and errors during the integration of changes, the practice of continuous integration is used. This practice assumes that each time the code changes, the software is automatically built and tested.
 
-### Организация непрерывной интеграции
+### Organizing Continuous Integration
 
-Для организации процесса непрерывной интеграции необходимо выполнять следующие требования:
+To organize the continuous integration process, the following requirements must be met:
 
-- использовать систему контроля версий для хранения исходного кода;
-- настроить автоматическую сборку и тестирование кода при каждом изменении.
+- use a version control system to store the source code;
+- set up automatic build and testing of the code with each change.
 
-При непрерывной интеграции на выделенном сервере запускается специализированная служба, которая по событию выполняет следующие шаги:
+In the case of continuous integration on a dedicated server, a specialized service is launched that performs the following steps when an event occurs:
 
-1. Получение исходного кода из системы контроля версий;
-2. Сборка программного обеспечения;
-3. Развертывание программного обеспечения в тестовой среде;
-4. Запуск автоматических тестов;
-5. Отправка отчета о результатах тестирования разработчикам.
+1. Getting the source code from the version control system;
+2. Building the software;
+3. Deploying the software in a test environment;
+4. Running automated tests;
+5. Sending a test report to the developers.
 
-Могут также существовать сборки по расписанию (_daily build_ или _nightly build_). Это позволяет уменьшить нагрузку на сервер непрерывной интеграции и ускорить процесс разработки.
+Software builds can be triggered by various events, such as:
 
-### Преимущества и недостатки непрерывной интеграции
+- a new commit to the version control system;
+- a new pull request;
+- a new tag.
 
-У непрерывной интеграции выделяют следующие преимущества:
+Scheduled builds (_daily build_ or _nightly build_) can also exist. This reduces the load on the continuous integration server and speeds up the development process.
 
-- быстрое выявление и исправление ошибок;
-- немедленный и регулярный прогон тестов;
-- постоянное наличие текущей стабильной версии программного обеспечения;
-- немедленный эффект от неполного кода приучает разработчиков к работе в итеративном режиме.
+### Advantages and disadvantages of continuous integration
 
-Недостатки непрерывной интеграции:
+Continuous integration has the following advantages:
 
-- дополнительные затраты на поддержку работы непрерывной интеграции;
-- необходимость в дополнительных ресурсах для обеспечения непрерывной интеграции.
+- fast identification and correction of errors;
+- immediate and regular testing;
+- constant availability of the current stable version of the software;
+- immediate effect of incomplete code encourages developers to work in an iterative mode.
 
-## Непрерывная доставка
+Disadvantages of continuous integration:
 
-__Непрерывная доставка__ (_Continuous Delivery_, CD) — это практика разработки программного обеспечения, при которой каждое изменение кода проходит автоматизированные тесты на соответствие стандартам качества и безопасности и готово к выпуску в продукцию. Это позволяет разработчикам быстрее и надежнее доставлять изменения пользователям.
+- additional costs to support continuous integration;
+- the need for additional resources to ensure continuous integration.
 
-Кроме непрерывной доставки также может быть организовано __непрерывное развертывание__ (Continuous Deployment), при котором каждое изменение кода автоматически разворачивается в продукцию без участия разработчиков. Это позволяет сократить время между написанием кода и его выпуском, а также упростить процесс релиза. Однако непрерывное развертывание требует более тщательного контроля качества и безопасности кода.
+## Continuous Delivery
 
-Разница между непрерывной доставкой и непрерывным развертыванием заключается в том, что в первом случае разработчики решают, когда выпустить изменения в продукцию, а во втором случае это происходит автоматически.
+__Continuous Delivery__ (CD) is a software development practice in which each code change undergoes automated tests for quality and security compliance and is ready for release. This allows developers to deliver changes to users faster and more reliably.
 
-В практике организация процессов CI / CD накладывает дополнительные требования на инфраструктуру и процессы разработки.
+Continuous delivery is an extension of continuous integration. In addition to continuous integration, continuous delivery includes automated testing, deployment, and monitoring of software.
 
-## Пример процесса CI / CD
+In practice, continuous delivery can be combined with __continuous deployment__, in which each code change is automatically deployed to production without developer intervention. This reduces the time between writing code and releasing it, as well as simplifies the release process. However, continuous deployment requires more careful control of the quality and security of the code.
 
-### Организация кода
+The difference between continuous delivery and continuous deployment is that in the first case, developers decide when to release changes to production, while in the second case, this happens automatically.
 
-Один из способов организации работы с кодом может быть следующим:
+In practice, the organization of CI / CD processes imposes additional requirements on infrastructure and development processes.
 
-1. Существует главная ветка разработки (например, `main` или `master`);
-2. При разработки какой-либо функциональности создается отдельная ветка на основе главной ветки (например, `feature-branch`);
-3. После завершения разработки функциональности создаётся запрос на слияние (Pull Request) в главную ветку;
-4. После проверки кода и успешного прохождения тестов запрос на слияние сливается в главную ветку;
-5. После слияния в главную ветку запускается процесс сборки и тестирования программного обеспечения;
-6. При успешном прохождении тестов создаётся релизная ветка программного обеспечения (или помечается тегом релиза);
-7. Создание релизной ветки запускает процесс развёртывания программного обеспечения в производственную среду.
+## Example of CI / CD process
 
-### Примерная модель
+### Code organization
 
-Организация процесса CI / CD может быть представлена следующими окружениями:
+One way to organize code work can be as follows:
 
-- __local__ - локальная среда разработки, установленная у каждого разработчика на компьютере;
-- __qa__ - среда для интеграции новой функциональности;
-- __staging__ - среда для тестирования новой функциональности;
-- __production__ - среда для развертывания новой функциональности.
+1. There is a main development branch (for example, `main` or `master`);
+2. When developing a new feature, a separate branch is created based on the main branch (for example, `feature-branch`);
+3. After completing the development of the functionality, a pull request is created to merge into the main branch;
+4. After checking the code and successfully passing the tests, the pull request is merged into the main branch;
+5. After merging into the main branch, the software build and testing process is launched;
+6. If the tests pass successfully, a release branch of the software is created (or the release is tagged);
+7. Creating a release branch launches the process of deploying the software to the production environment.
 
-Разработчики работают в локальной среде, где создают новую функциональность и выполняют тестирование.
+### Sample model
 
-После завершения разработки новой функциональности создается запрос на слияние в ветку `main`. Создание запроса на слияние запускает процесс сборки и тестирования программного обеспечения в среде `qa`. В среде `qa` запускаются автоматические тесты, которые проверяют работоспособность новой функциональности.
+CI / CD process organization can be represented by the following environments:
 
-При успешном прохождении тестов в среде `qa`  выполняется слияние веток. После слияния веток код из ветки `main` развертывается в среде `staging`.
+- __local__ - local development environment installed on each developer's computer;
+- __qa__ - environment for integrating new functionality;
+- __staging__ - environment for testing new functionality;
+- __production__ - environment for deploying new functionality.
 
-Среда `staging` практически не отличается от среды `production`, за исключением того, что в ней разворачивается новая функциональность для тестирования. Тестирование в среде `staging` выполняется вручную.
+Developers work in a local environment, where they create new functionality and perform testing.
 
-При успешном прохождении тестов в среде `staging` создается релизная ветка программного обеспечения, которая запускает процесс развертывания программного обеспечения в среде `production`.
+After completing the development of new functionality, a pull request is created to merge into the `main` branch. After completing the development of new functionality, a pull request is created to merge into the `main` branch. Creating a pull request launches the build and testing process in the `qa` environment. Automated tests are run in the `qa` environment to verify the functionality.
 
-### Инструменты
+If the tests pass successfully in the `qa` environment, the branches are merged. After merging the branches, the code from the `main` branch is deployed in the `staging` environment.
 
-Для организации процессов CI / CD используются специализированные инструменты, которые позволяют автоматизировать процессы сборки, тестирования и развертывания программного обеспечения:
+The `staging` environment is almost identical to the `production` environment, except that new functionality is deployed for testing. Testing in the `staging` environment is done manually.
 
-- __Jenkins__ — это популярный инструмент для организации процессов CI / CD.
-- __GitLab CI__ — это инструмент для организации процессов CI / CD, интегрированный с системой контроля версий GitLab. GitLab CI позволяет настраивать цепочки сборки, тестирования и развертывания программного обеспечения, а также управлять ими через веб-интерфейс GitLab.
-- __TeamCity__ — это инструмент для организации процессов CI / CD, разработанный компанией JetBrains.
-- __CircleCI__ — это инструмент для организации процессов CI / CD, интегрированный с системой контроля версий GitHub.
-- __Github Actions__ — это инструмент для организации процессов CI / CD, интегрированный с системой контроля версий GitHub. Github Actions позволяет настраивать цепочки сборки, тестирования и развертывания программного обеспечения, а также управлять ими через веб-интерфейс Github Actions.
-- __AWS CodeBuild__, __AWS CodePipeline__ — это инструменты для организации процессов CI / CD, интегрированные с облачной платформой Amazon Web Services (AWS).
-- __Azure DevOps__ — это инструмент для организации процессов CI / CD, интегрированный с облачной платформой Microsoft Azure.
-- __Atlasian Bamboo__ — это инструмент для организации процессов CI / CD, разработанный компанией Atlasian.
+If the tests pass successfully in the `staging` environment, a release branch is created. Creating a release branch launches the process of deploying the software to the `production` environment.
 
-### Инфраструктура для CI / CD
+### Tools
 
-Для организации процессов CI / CD требуется специализированная инфраструктура, которая позволяет автоматизировать процессы сборки, тестирования и развертывания программного обеспечения:
+Specialized tools are used to organize CI / CD processes, which allow automating the processes of building, testing, and deploying software:
 
-- __Docker__ — это популярная платформа для разработки, доставки и запуска приложений в контейнерах. Docker позволяет упаковывать приложения и их зависимости в контейнеры, что упрощает развертывание и масштабирование приложений.
-- __Kubernetes__ — это платформа для автоматизации развертывания, масштабирования и управления контейнеризированными приложениями. Kubernetes позволяет управлять кластером серверов, на котором запущены контейнеры, и обеспечивает высокую доступность и масштабируемость приложений.
-- __Terraform__ — это инструмент для управления инфраструктурой как код. Terraform позволяет описывать инфраструктуру в виде конфигурационных файлов и автоматизировать ее развертывание и управление.
-- __Ansible__ — это инструмент для автоматизации управления конфигурацией и развертывания программного обеспечения. На базе описания конфигураций (playbook) Ansible автоматически разворачивает на целевом компьютере программное обеспечение.
+- __Jenkins__ — is a popular tool for organizing CI / CD processes;
+- __GitLab CI__ — is a tool for organizing CI / CD processes integrated with the GitLab version control system. GitLab CI allows you to configure build, test, and deployment chains of software and manage them through the GitLab web interface;
+- __TeamCity__ — is a tool for organizing CI / CD processes developed by JetBrains;
+- __CircleCI__ — is a tool for organizing CI / CD processes integrated with the GitHub version control system;
+- __Github Actions__ — is a tool for organizing CI / CD processes integrated with the GitHub version control system. Github Actions allows you to configure build, test, and deployment chains of software and manage them through the Github Actions web interface;
+- __AWS CodeBuild__, __AWS CodePipeline__ — are tools for organizing CI / CD processes integrated with the Amazon Web Services (AWS) cloud platform;
+- __Azure DevOps__ — is a tool for organizing CI / CD processes integrated with the Microsoft Azure cloud platform;
+- __Atlassian Bamboo__ — is a tool for organizing CI / CD processes developed by Atlassian.
 
-## Использование контейнеров в CI / CD процессах
+### Infrastructure for CI / CD
 
-Использование контейнеров в процессах CI / CD позволяет упростить развертывание и масштабирование приложений, а также обеспечить их изолированность и безопасность.
+To organize CI / CD processes, specialized infrastructure is required that allows automating the processes of building, testing, and deploying software:
 
-Контейнеры позволяют упаковывать приложения и их зависимости в изолированные среды, что упрощает их развертывание и управление. Кроме того, контейнеры позволяют запускать приложения в любой среде, где установлен Docker, что обеспечивает их переносимость и масштабируемость.  
+- __Docker__ — is a popular platform for developing, delivering, and running applications in containers. Docker allows you to package applications and their dependencies in containers, making it easier to deploy and scale applications;
+- __Kubernetes__ — is a platform for automating the deployment, scaling, and management of containerized applications. Kubernetes allows you to manage a cluster of servers running containers and provides high availability and scalability of applications;
+- __Terraform__ — is a tool for managing infrastructure as code. Terraform allows you to describe infrastructure in configuration files and automate its deployment and management;
+- __Ansible__ — is a tool for automating configuration management and software deployment. Based on the description of configurations (playbook), Ansible automatically deploys software on the target computer.
 
-Большинство современных инструментов для организации процессов CI / CD поддерживают работу с контейнерами, более того, они даже шаги процесса CI / CD реализуют в контейнерах, то есть:
+## Containers in CI / CD processes
 
-- сама система CI / CD работает в контейнере;
-- каждый шаг процесса CI / CD выполняется в отдельном контейнере;
-- часто конечное приложение также упаковывается в контейнер.
+Using containers in CI / CD processes simplifies the deployment and scaling of applications, as well as ensures their isolation and security.
 
-При использовании контейнеров упрощается перенос приложения из одной среды в другую, так как при сборке приложения в контейнер для `qa` среды, при успешном прохождении тестов, этот же контейнер можно использовать для `staging` и `production` сред.
+Containers allow you to package applications and their dependencies in isolated environments, making it easier to deploy and manage them. In addition, containers allow you to run applications in any environment where Docker is installed, providing portability and scalability.
 
-## Библиография
+Most modern tools for organizing CI / CD processes support working with containers, moreover, they even implement CI / CD process steps in containers, that is:
+
+- the CI / CD system itself runs in a container;
+- each step of the CI / CD process is performed in a separate container;
+- often the final application is also packaged in a container.
+
+When using containers, it is easier to move the application from one environment to another, because when building the application in a container for the `qa` environment, after successfully passing the tests, this container can be used for the `staging` and `production` environments.
+
+## Bibliography
 
 1. [Continuous Integration, Wikipedia](https://en.wikipedia.org/wiki/Continuous_integration)
 2. [Continuous Delivery, Wikipedia](https://en.wikipedia.org/wiki/Continuous_delivery)
